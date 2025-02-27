@@ -407,4 +407,5 @@ def serve_frontend():
     return send_from_directory("dist", "index.html")
 
 if __name__ == '__main__':
+    webbrowser.open("http://127.0.0.1:8081")
     socketio.run(app, debug=DEBUG, host='0.0.0.0', port=FLASK_CONTAINER_PORT, allow_unsafe_werkzeug=True)
