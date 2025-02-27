@@ -15,3 +15,5 @@ To fix the front end:
 To fix the backend:
 1. Change the .env in the telemetry-ui-server-develop
 2. Go into the file live_telemetry_class.py and line 58 and do: ->for port in self.ports if port.serial_number == '3086377C3233':
+
+To run backend it is neccessary to: pip install -r requirements.txt
