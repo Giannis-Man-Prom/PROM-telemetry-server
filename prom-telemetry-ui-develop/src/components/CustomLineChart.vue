@@ -56,7 +56,7 @@ export default defineComponent({
         }
 
         labels.push(currentTime);
-        data.push(items.value[0].value1); // Assuming items is an array and accessing the first item's value1
+        data.push(items.value[0][0]); // Assuming items is an array and accessing the first item's value1
 
         chartInstance.update();
       }

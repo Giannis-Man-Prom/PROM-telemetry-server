@@ -39,7 +39,7 @@ import StatusListComponent from '@/components/StatusListComponent.vue';
 import CustomLineChart from "@/components/CustomLineChart.vue";
 import CustomBarChart from "@/components/CustomBarChart.vue";
 import {io} from "socket.io-client";
-import {linechartItems, VehicleTelemetry_data} from "@/types/live_telemetry.ts";
+import {linechartItems, VehicleTelemetry_data} from "../types/live_telemetry.ts";
 
 const socket = io(import.meta.env.VITE_SOCKET_URL).connect()
 

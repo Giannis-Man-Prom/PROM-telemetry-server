@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue';
 import Chart, { ChartConfiguration } from 'chart.js/auto';
-//import { telemetry_data_obj } from '@/ContainerData/TelemetryData.ts';
+import telemetry_data_obj from '../App.vue';
 
 export default defineComponent({
   name: "CustomBarChart",

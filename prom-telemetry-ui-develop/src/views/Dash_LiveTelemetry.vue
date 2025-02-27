@@ -330,7 +330,7 @@ export default defineComponent({
 
       //TODO - FIXXXX
       try {
-        this.telemetry_data_obj = JSON.parse(telemetry_data.data) as VehicleTelemetry_data;
+        this.telemetry_data_obj = JSON.parse(telemetry_data.data as unknown as string) as VehicleTelemetry_data;
       } catch (e) {
         return null;
       }

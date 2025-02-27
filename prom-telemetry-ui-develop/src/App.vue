@@ -10,8 +10,8 @@ import {io} from "socket.io-client";
 import {
   variableContainer,
   VehicleTelemetry_data
-} from "@/types/live_telemetry.ts";
-import {api_res, event_connection_res} from "@/types/socketIO.types.ts";
+} from "./types/live_telemetry.ts";
+import {api_res, event_connection_res} from "./types/socketIO.types.ts";
 
 
 
@@ -58,7 +58,7 @@ export default defineComponent({
 
 
       try {
-        this.telemetry_data_obj = JSON.parse(telemetry_data.data) as VehicleTelemetry_data;
+        this.telemetry_data_obj = JSON.parse(telemetry_data.data as unknown as string) as VehicleTelemetry_data;
       } catch (e) {
         console.error('Invalid JSON string');
         return null;
@@ -95,8 +95,8 @@ export default defineComponent({
   data() {
     return {
       telemetry_data_obj: {} as VehicleTelemetry_data, //Object as typeof VehicleTelemetry_data
-      SideBarListItems: [] as variableContainer,
-      StatusItemList: [] as variableContainer,
+      SideBarListItems: [] as unknown as variableContainer,
+      StatusItemList: [] as unknown as variableContainer,
       fake_packet_obj: {} as VehicleTelemetry_data
     }
   }
