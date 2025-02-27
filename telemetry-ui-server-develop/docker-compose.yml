@@ -1,0 +1,7 @@
+services:
+  telemetry_server:
+    build: .
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
