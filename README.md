@@ -11,3 +11,7 @@ To fix the front end:
     f. For the errors (3) " Argument of type 'VehicleTelemetry_data' is not assignable to parameter of type 'string' " do: telemetry_data.data as unknown as string
     g. In ShowCustomCharts.vue in line 42: -> import {linechartItems, VehicleTelemetry_data} from "../types/live_telemetry.ts";
     h. For the errors (2) " Conversion of type 'undefined[]' to type 'variableContainer' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first. " do: ... [] as unknown as ...
+
+To fix the backend:
+1. Change the .env in the telemetry-ui-server-develop
+2. Go into the file live_telemetry_class.py and line 58 and do: ->for port in self.ports if port.serial_number == '3086377C3233':

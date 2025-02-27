@@ -55,7 +55,7 @@ class SerialRead:
 
         elif op_sys == "Windows":
 
-            for port in [port for port in self.ports if seth.search(str(port))]:
+            for port in self.ports if port.serial_number == '3086377C3233':
                 # extracting only the string necessary for the connection to the usb and to the lib
 
                 sub_string = self.__substring_extractor(r'^([^ ]+)', str(port)).group(1)
