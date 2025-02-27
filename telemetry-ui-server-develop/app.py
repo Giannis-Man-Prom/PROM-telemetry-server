@@ -1,8 +1,9 @@
 import logging
 import time
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
+import webbrowser
 from dotenv import load_dotenv
 import os
 import pandas as pd
@@ -19,7 +20,7 @@ from custom_exceptions.serial_connection_exception import SerialConnectionExcept
 
 # Declaration of variables
 # Name of the application module or package
-app = Flask(__name__)
+app = Flask(__name__, static_folder="dist", static_url_path="/")
 
 # This code allows requests from other dommains
 cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
@@ -401,6 +402,9 @@ def read_from_serial_thread(telemetry):
             socketio.emit('telemetry_data',
                       {'data': package})
 
+@app.route("/")
+def serve_frontend():
+    return send_from_directory("dist", "index.html")
 
 if __name__ == '__main__':
     socketio.run(app, debug=DEBUG, host='0.0.0.0', port=FLASK_CONTAINER_PORT, allow_unsafe_werkzeug=True)
