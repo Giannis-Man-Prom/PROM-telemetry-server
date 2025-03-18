@@ -1,4 +1,4 @@
-1. Run the run.bat
+1. Run the run.bat inside the Telemetry folder
 2. Upload the code on the ESP, the password is cargovroom
 3. Run getip.bat to get the ip of the device
 4. Connect the device to the ESP wifi hotspot as well as other devices
