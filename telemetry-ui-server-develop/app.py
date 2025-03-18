@@ -17,28 +17,34 @@ import csv
 import json
 from custom_exceptions.serial_connection_exception import SerialConnectionException
 
-# Declaration of variables
-# Name of the application module or package
+#Εδώ φτιάχουμε ενα Object τύπου Flask που επιτρέπει την διαχείριση του server και των http request που θα γινονται
+#από το front end
 app = Flask(__name__)
 
-# This code allows requests from other dommains
+#To cors είναι ένα μέτρο προστασίας των browser που δεν αφήνει άλλα domains (άλλες διευθύνσεις, ports) να κάνουν
+#access τον server, με το * αφήνουμε κάθε άλλο domain να μας κάνει requests, δηλαδή το front-end εφόσον τρέχει σε άλλο port
+#μπορουμε να το πεταξουμε αν περασουμε το front end στο ίδιο port, ίσως άχρηστο
 cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
-# Load ENV Variables
+#Φορτώνουμε μεταβλητές που βρίσκονται στο .env file
 load_dotenv()
 
-# Initializing a dictionary in order to keep and fetch all the files the user may add.
+#Φτιάχνουμε ένα Python dictionary για να κρατάμε το όνομα των αρχείων που κάνουμε log δεδομένα
 files = {}
-# Addig this dictionary to the config object of flask
+#Αποθηκεύουμε το dict που φτιάξαμε ως μεταβλητή του config της Flask εφαρμογής που φτιάξαμε, το config δουλευει σαν dict
 app.config['uploaded_files'] = files
+#Δεν κρύβουμε κάτι so who cares, ίσως άχρηστο
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
-# defining these variables to our current env
+#Με αυτόν τον τρόπο παίρνουμε το port που θα χρησιμοποιήσουμε για τον server απο το .env
 FLASK_CONTAINER_PORT = os.getenv('FLASK_CONTAINER_PORT')
 
+#Αντίστοιχα για το αν θέλουμε DEBUG ή όχι, με το DEBUG η Flask δίνει καλύτερες περιγραφές για όταν προκύπτουν
+#προβλήματα
 DEBUG = os.getenv('DEBUG')
 
-# Adding socket functionality to our server.
+#Χρειαζόμαστε sockets έτσι ώστε να έχουμε μπρος πίσω επικοινωνία μεταξύ front και back end
+#Εδώ φτιάχνουμε ενα socket object το οποίο να δουλεύει μαζί με την εφαρμογή app, πάλο βάζουμε cors κατάλληλο
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 """
@@ -47,19 +53,24 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 """
 
 
-# Define API routes
+#Για να κάνουμε request από το browser μας, μπαίνουμε σε αυτό το path, δλδ http://localhost:8081/api/v1/data_analysis
+#Τα app.route κάνουν αυτό που λέει η από κάτω συνάρτηση όταν ζητείται κάνεις access το αντίστοιχο url και χρησιμοποιείς
+#την αντίστοιχη μέθοδο, by default η μέθοδος είναι GET (παίρνω δεδομένα από τον server), μετά είναι η POST(δίνω στον server)
 @app.route('/api/v1/data_analysis', methods=['GET'])
 def data_analysis_health_check():
+    #Το request object διαχειρίζεται τα http requests Και τα δεδομενα που δινονται στον server
+    #με το args.get παίρνουμε από το http request ενα argument με όνομα test, δεν έχουμε τέτοιο
+    #argument άρα περιμένουμε None, μπορούμε να το αλλάξουμε αν βάζαμε στο link ?test=kati
     test = request.args.get('test')
     return jsonify(
         status=200,
         data=f"Data analysis alive!! {test}"
     )
 
-
+#Η από κάτω συνάρτηση είναι 
 @app.route('/api/v1/data_analysis/file_upload', methods=['POST'])
 def upload_data_file():
-    # Get the uploaded file from the request object
+    #Το request object εδώ μας δίνει το αρχείο που ανεβάζει το front end στο συγκεκριμένο site
     uploaded_file = request.files['file']
 
     if f"data_{uploaded_file.filename}" in list(dict(app.config['uploaded_files']).keys()):
