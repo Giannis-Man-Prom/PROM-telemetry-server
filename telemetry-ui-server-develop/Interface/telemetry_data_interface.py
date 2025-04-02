@@ -2,6 +2,9 @@ from pandas import DataFrame
 from flask import jsonify
 from typing import Union
 
+'''
+Δεν χρειάζεται στο app.py
+'''
 
 class TelemetryDataInterface:
     def __init__(self, df: DataFrame):
