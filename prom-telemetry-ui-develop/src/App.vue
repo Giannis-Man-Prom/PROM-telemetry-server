@@ -1,5 +1,7 @@
 <script lang="ts">
+//Εισάγουμε το Vue components
 import { defineComponent } from "vue";
+//Εισάγουμε άλλα components
 import SideBar from "@/components/SideBar.vue";
 import SideBarList from "@/components/SideBarList.vue";
 import Dashboard from "@/views/Dashboard_vd.vue"; // Import the Dashboard component
@@ -14,7 +16,7 @@ import {
 import {api_res, event_connection_res} from "./types/socketIO.types.ts";
 
 
-
+//Χρησιμοποιεί το socket για να λαμβάνει από το back-end, παίρνει την διεύθυνση απο το env.VITE_SOCKET_URL
 const socket = io(import.meta.env.VITE_SOCKET_URL).connect()
 
 export default defineComponent({
