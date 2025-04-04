@@ -40,8 +40,8 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 FLASK_CONTAINER_PORT = os.getenv('FLASK_CONTAINER_PORT')
 
 #Αντίστοιχα για το αν θέλουμε DEBUG ή όχι, με το DEBUG η Flask δίνει καλύτερες περιγραφές για όταν προκύπτουν
-#προβλήματα
-DEBUG = os.getenv('DEBUG')
+#προβλήματα, το γράφουμε έτσι καθώς ερμηνεύει το FALSE ως string και όχι ως logical
+DEBUG = os.getenv('DEBUG', 'False').lower() in ['true', '1', 'yes']
 
 #Χρειαζόμαστε sockets έτσι ώστε να έχουμε μπρος πίσω επικοινωνία μεταξύ front και back end
 #Εδώ φτιάχνουμε ενα socket object το οποίο να δουλεύει μαζί με την εφαρμογή app, πάλο βάζουμε cors κατάλληλο
