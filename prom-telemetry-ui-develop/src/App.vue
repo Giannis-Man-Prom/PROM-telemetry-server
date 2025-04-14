@@ -1,7 +1,8 @@
+//Εδώ μέσα φτιάχνουμε το script που θα δημιοργήσουμε το custom Vue component μας
 <script lang="ts">
-//Εισάγουμε το Vue components
+//Εισάγουμε το Vue definecomponent για να ορίσουμε από κάτω ένα δικό μας μαζί με το configuration του
 import { defineComponent } from "vue";
-//Εισάγουμε άλλα components
+//Εισάγουμε άλλα δικά μας components, components είναι blocks που δομούν τον κώδικα
 import SideBar from "@/components/SideBar.vue";
 import SideBarList from "@/components/SideBarList.vue";
 import Dashboard from "@/views/Dashboard_vd.vue"; // Import the Dashboard component
@@ -9,23 +10,28 @@ import StatusBar from "@/components/StatusBar.vue";
 import ShowCustomCharts from "@/views/ShowCustomCharts.vue";
 import StatusListComponent from "@/components/StatusListComponent.vue";
 import {io} from "socket.io-client";
+//Εδώ είναι το data type που χρησιμοποιείται για την τηλεμετρία
 import {
   variableContainer,
   VehicleTelemetry_data
 } from "./types/live_telemetry.ts";
+//
 import {api_res, event_connection_res} from "./types/socketIO.types.ts";
 
 
 //Χρησιμοποιεί το socket για να λαμβάνει από το back-end, παίρνει την διεύθυνση απο το env.VITE_SOCKET_URL
 const socket = io(import.meta.env.VITE_SOCKET_URL).connect()
 
+//Εδώ φτιάχνουμε το component μας
 export default defineComponent({
   name: "App",
+  //Computed???
   computed: {
     StatusListComponent() {
       return StatusListComponent
     }
   },
+  //Εδώ είναι τα components που ενσωματώνει το vue component
   components: {
     SideBar,
     StatusBar,
@@ -33,8 +39,8 @@ export default defineComponent({
     SideBarList,
     ShowCustomCharts,
   },
+  //Τρέχει όταν δημιουργείται και κάνει αρχικοποιήσεις τιμών και φροντίζει για την επικοινωνία
   created() {
-
     this.SideBarListItems = [
       { label: ['R2D']},
       { label: ['precharge_done']},
@@ -54,18 +60,15 @@ export default defineComponent({
       { label: ['radio_kbps']},
     ];
 
-
+    //Η συνάρτηση created καλείται μία φορά αλλά η επικοινωνία λειτουργεί συνέχεια
     socket.on('telemetry_data', (telemetry_data: api_res) => {
-      //Here we are updating the object every time we get a new message from the socket,
-
-
+      //Εδώ ενημερώνουμε όταν λαμβάνουμε packet από το socket
       try {
         this.telemetry_data_obj = JSON.parse(telemetry_data.data as unknown as string) as VehicleTelemetry_data;
       } catch (e) {
         console.error('Invalid JSON string');
         return null;
       }
-
 
           this.SideBarListItems = [
             { label: ['R2D'], value: [this.telemetry_data_obj.dv_R2D] },
@@ -86,14 +89,13 @@ export default defineComponent({
           { label: ['radio_kbps'], value: [this.telemetry_data_obj.radio_kbps] },
         ];
     });
-
-
-
+    
     socket.on('connection_response', (message: event_connection_res) => {
       console.log("Connection Status: " + message.status)
     });
 
   },
+  //Στο data το Vue κοιτάει τις αλλαγές σε αυτές τις τιμές και τις ενημερώνει στο website (reactive)
   data() {
     return {
       telemetry_data_obj: {} as VehicleTelemetry_data, //Object as typeof VehicleTelemetry_data
@@ -103,10 +105,15 @@ export default defineComponent({
     }
   }
 });
-</script>
+
+</script>  
+
+//Εδώ ορίζουμε πως το vue object θα φαίνεται στην html
 <template>
 <!--  <v-app class="flex min-h-screen">-->
+  <!-- ορίζει το Vue item να μοιάζει με flex box που να παίρνει minimum το height της οθόνης -->
   <div class="flex min-h-screen">
+    <!-- τα sidebar(αριστερά)/statusbar(πάνω)/router(κύρια περιοχή) είναι κομμάτια του flexbox και τους βάζουμε τα component μας -->
     <side-bar
       :items="SideBarListItems"
     />
@@ -136,7 +143,7 @@ export default defineComponent({
 <!--      </template>-->
 
       <div>
-      <!-- Here the main page and components will be rendered -->
+      <!-- Το router view αλλάζει αυτό που βλέπουμε ανάλογα με το link που είμαστε. η αντιστοιχία link-view είναι στο router.ts -->
         <router-view/>
       </div>
 
@@ -144,7 +151,7 @@ export default defineComponent({
 </template>
 
 
-
+<!-- Μαλλον σκουπίδι -->
 <style scoped>
 /* Add your scoped styles here */
 </style>
