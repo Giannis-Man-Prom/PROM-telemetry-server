@@ -1,9 +1,11 @@
+<!-- Εδώ φτιάχνουμε, όπως λέει και ο τίτλος ένα barchart -->
 <template>
   <div class="flex items-center justify-center min-h-1/2 rounded bg-gray-50 dark:bg-gray-800">
     <canvas ref="chartCanvas"></canvas>
   </div>
 </template>
 
+<!-- Εδώ πάλι θα κάνουμε definecomponent -->
 <script lang="ts">
 import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue';
 import Chart, { ChartConfiguration } from 'chart.js/auto';
@@ -11,6 +13,7 @@ import telemetry_data_obj from '../App.vue';
 
 export default defineComponent({
   name: "CustomBarChart",
+  //Εδώ είναι οι τιμές που θα χρειαστούμε
   props: {
     borderColor: {
       type: String,
@@ -26,26 +29,28 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const chartCanvas = ref<HTMLCanvasElement | null>(null);
+    const chartCanvas = ref<HTMLCanvasElement | null>(null); //το Canvas είναι έτοιμο element που χρησιμοποιείται
     let chartInstance: Chart | null = null;
     let timer: ReturnType<typeof setInterval> | null = null;
-    const maxDataPoints = 2 * 60 * 10; // 2 minutes at 100ms intervals
+    const maxDataPoints = 2 * 60 * 10; // Κρατάμε 2 λεπτά δεδομένουν που παίρνουμε ανά 100ms intervals
 
     const updateChart = () => {
 
-      const currentTime = new Date().toLocaleTimeString();
+      //Αρχικά παίρνουμε την τωρινή στιγμή και ενημερωνόμαστε με την νέα τιμή του max_cell_voltage
+      const currentTime = new Date().toLocaleTimeString(); //const εδώ σημαίνει ότι μπορούμε να αλλάξουμε τις τιμές μέσα αλλά όχι που δείχνει η μεταβλητη, πχ με ανάθεση ξανά
       const newValue = telemetry_data_obj.max_cell_voltage;
 
       if (chartInstance) {
         const labels = chartInstance.data.labels as string[];
         const data = chartInstance.data.datasets[0].data as number[];
 
-        // Maintain a buffer of data points for the last 5 minutes
+        // Φροντίζουμε ο buffer να αφορεά 2 λεπτά, όταν αυξηθεί παραπάνω κάνει shift και πετάει τις παλιές τιμές
         if (labels.length >= maxDataPoints) {
           labels.shift();
           data.shift();
         }
 
+        //Εδώ προσθέτουμε τις καινούριες
         labels.push(currentTime);
         data.push(newValue);
 
@@ -77,10 +82,11 @@ export default defineComponent({
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      // Load the saved chart data from localStorage
+      // Load the saved chart data from localStorage από πάνω
       const savedLabels = JSON.parse(localStorage.getItem('chartLabels') || '[]');
       const savedData = JSON.parse(localStorage.getItem('chartData') || '[]');
 
+      //Κάνουμε configure τα δεδομένα του chart
       const data = {
         labels: savedLabels,
         datasets: [
@@ -93,6 +99,7 @@ export default defineComponent({
         ],
       };
 
+      //Εδώ ορίζουμε πως θα μοιάζει το chart
       const config: ChartConfiguration = {
         type: 'bar',
         data: data,
@@ -109,7 +116,7 @@ export default defineComponent({
               position: 'top',
             },
             title: {
-              display: false,
+              display: true,
               text: 'Chart.js Custom Bar Chart'
             }
           }
@@ -120,6 +127,7 @@ export default defineComponent({
       timer = setInterval(updateChart, 100);
     });
 
+    //Όταν φεύγουμε από την σελίδα το κλείνουμε για να αποφύγουμε memory leaks
     onBeforeUnmount(() => {
       if (timer) {
         clearInterval(timer);

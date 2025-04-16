@@ -1,3 +1,5 @@
+<!-- Το scichart είναι ένα ιδιαίτερο chart?? -->
+
 <template>
     <div class="sci-chart-container">
         <h1>SciChart - Vue Integration</h1>

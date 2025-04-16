@@ -1,3 +1,4 @@
+<!-- Φαίνεται αχρησιμοποίητο και γενικό -->
 <script lang="ts">
 import {defineComponent, ref} from 'vue'
 import Chart from 'chart.js/auto'

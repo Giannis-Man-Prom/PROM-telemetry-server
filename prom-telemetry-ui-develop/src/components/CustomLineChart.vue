@@ -1,3 +1,5 @@
+<!-- Παρόμοια διαδικασία με το CustomBarChart -->
+
 <template>
   <div class="flex items-center justify-center min-h-1/2 rounded bg-gray-50 dark:bg-gray-800 ">
     <canvas ref="chartCanvas">

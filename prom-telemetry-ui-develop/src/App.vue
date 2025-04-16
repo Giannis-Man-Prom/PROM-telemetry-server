@@ -1,4 +1,4 @@
-//Εδώ μέσα φτιάχνουμε το script που θα δημιοργήσουμε το custom Vue component μας
+<!-- Εδώ μέσα φτιάχνουμε το script που θα δημιοργήσουμε το custom Vue component μας -->
 <script lang="ts">
 //Εισάγουμε το Vue definecomponent για να ορίσουμε από κάτω ένα δικό μας μαζί με το configuration του
 import { defineComponent } from "vue";
@@ -108,7 +108,7 @@ export default defineComponent({
 
 </script>  
 
-//Εδώ ορίζουμε πως το vue object θα φαίνεται στην html
+<!-- Εδώ ορίζουμε πως το vue object θα φαίνεται στην html -->
 <template>
 <!--  <v-app class="flex min-h-screen">-->
   <!-- ορίζει το Vue item να μοιάζει με flex box που να παίρνει minimum το height της οθόνης -->

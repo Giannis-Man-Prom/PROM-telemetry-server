@@ -1,3 +1,5 @@
+<!-- Παρόμοια με πριν -->
+
 <template>
   <aside id="default-sidebar" class="max-w-56 transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
     <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">

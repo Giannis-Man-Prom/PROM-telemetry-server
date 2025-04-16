@@ -1,3 +1,5 @@
+//Αν και υπάρχει κάτι τέτοιο και στο app.py δεν βλέπω να χρησιμοποιείται κάπου
+
 import axiosInstance from "../helpers/http-common.helper"
 import {two_col_data} from "../types/vd-dash.types.ts";
 

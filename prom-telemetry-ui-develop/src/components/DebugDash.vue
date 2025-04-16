@@ -1,3 +1,5 @@
+<!-- Ολοκληρωμένο view μάλλον για debugging αλλά λογικά δεν χρησιμοποιείται -->
+
 <script lang="ts">
 import {defineComponent, onMounted, ref} from 'vue'
 import {io} from "socket.io-client";

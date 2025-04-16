@@ -1,3 +1,4 @@
+<!-- Κάτι σαν AccuGeneralComponent -->
 <template>
   <div
       class="flex min-w-full m-2 ml-5 rounded-lg relative"

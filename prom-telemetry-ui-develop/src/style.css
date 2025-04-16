@@ -1,3 +1,5 @@
+/* Εδώ έχουμε κάποια default styles που μπορούμε να εισάγουμε */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

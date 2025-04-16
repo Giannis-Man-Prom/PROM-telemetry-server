@@ -1,3 +1,5 @@
+<!-- Εδώ φτιάχνουμε το Sidebar που δείχνει TS Active μέχρι και το dropdown -->
+
 <template>
   <aside id="default-sidebar" class="fixed transition-transform sm:translate-x-0 z-40 w-40 h-screen bg-gray-50 dark:bg-gray-800 ">
     <div class="h-full px-3 py-4 overflow-y-auto">
@@ -32,6 +34,7 @@
               </svg>
             </button>
             <ul v-if="isDropdownOpen" class="absolute left-0 z-30 w-40 mt-2 ml-0 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg dark:bg-gray-800 dark:border-gray-700">
+              <!-- Εδώ βλέπουμε πως είναι linked μέσω του router τα κουμπιά -->
               <li>
                 <router-link to="/vd/telemetry" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">VD Telemetry</router-link>
               </li>

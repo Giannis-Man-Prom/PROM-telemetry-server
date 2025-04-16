@@ -1,5 +1,5 @@
+<!-- Εδώ έχουμε το VD View που δεν είναι developped και απλά δείχνει άκυρα δεδομένα -->
 <template>
-  <!--  THIS IS THE HOME PAGEEEEEE THIS IS WHAT VUE LOADS WHEN THE USER HITS THE "/" ENDPOINT-->
   <!--&lt;!&ndash;  Here we have the sidebar component that we need for navigation and features&ndash;&gt;-->
   <div class="p-6 mx-2 min-w-full">
     <div class="grid grid-cols-2 grid-rows-2 gap-x-8 gap-y-4 h-screen">

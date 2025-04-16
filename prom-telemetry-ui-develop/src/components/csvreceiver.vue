@@ -1,3 +1,5 @@
+<!-- Σε αυτό το σημείο στέλνουμε πίσω στο backend ένα αρχείο -->
+
 <template>
   <div class="p-0 mx-0 ml-40 mt-20 min-w-full overflow-y-auto">
     <form @submit.prevent="handleFileUpload">
@@ -31,6 +33,7 @@ const handleFileUpload = async () => {
   formData.append('file', file.value);
 
   try {
+    //Αυτό το link βρίσκεται και στο app.py
     const res = await fetch('http://localhost:8000/api/v1/data_analysis/file_upload', {
       method: 'POST',
       body: formData,

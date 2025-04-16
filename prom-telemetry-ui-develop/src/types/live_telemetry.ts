@@ -1,3 +1,4 @@
+//Αυτό το datatype έχει το σύνολο των δεδομένων για την τηλεμετρία
 export type VehicleTelemetry_data = {
     accu_over_60v_dclink?: number; //----------------------- ACCU
     accu_air_m_state?: number;
@@ -29,7 +30,7 @@ export type VehicleTelemetry_data = {
     accu_power?: number; //-----------------------------------------------------------------------------------------------------
 
 
-    pdu_bms_state?: number; //////////////--------------------------------- PDU
+    pdu_bms_state?: number; //--------------------------------- PDU
     pdu_bms_last_error?: number;
     pdu_pdu_state?: number;
     pdu_pdu_last_error?: number;
@@ -247,13 +248,15 @@ export type VehicleTelemetry_data = {
 
 
 
-
+//Εδώ ορίζουμε έναν τύπο δεδομένων με optional (?) όνομα, υποχρεωτικό label list που περιέχει είτε string
+//είτε undefined και τέλος value list με αριθμούς optional
 export type variableContainer = {
     containerName?: string,
     label: (string | undefined)[]; // Indexable type for label
     value?: (number)[]; // Indexable type for value
 };
 
+//Αντίστοιχα αλλά με τις αλλαγές που φαίνονται
 export type sidebarItems = {
     label: (string)[];
     value?: (number)[];
