@@ -29,7 +29,7 @@ export default defineComponent({
       required: true
     },
     items: {
-      type: Array as () => linechartItems[],
+      type: Object as () => linechartItems,
       required: true
     },
     title: {
@@ -58,7 +58,7 @@ export default defineComponent({
         }
 
         labels.push(currentTime);
-        data.push(items.value[0][0]); // Assuming items is an array and accessing the first item's value1
+        data.push(items.value[0]); // Assuming items is an array and accessing the first item's value1
 
         chartInstance.update();
       }
@@ -103,8 +103,8 @@ export default defineComponent({
               position: 'top',
             },
             title: {
-              display: false,
-              text: 'Chart.js Custom Line Chart'
+              display: true,
+              text: props.title
             }
           }
         },

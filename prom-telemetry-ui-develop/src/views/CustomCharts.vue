@@ -1,30 +1,36 @@
 <template>
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
-    <div class="grid grid-cols-2 grid-rows-2 gap-x-8 gap-y-4 h-screen">
+    <div class="grid grid-cols-2 grid-rows-3 gap-x-8 gap-y-4 h-screen">
       <CustomLineChart
-          :labels="labels"
-          :items="LineChartItems"
-          :title='max_cell_voltage'
-          />
-      <CustomLineChart
-          :labels="labels"
-          :items="LineChartItems"
-          :title='max_cell_voltage'
+          :labels="accu_total_voltage_vs"
+          :items="accu_total_voltage_vs"
+          :title="'accu_total_voltage_vs'"
       />
       <CustomLineChart
-          :labels="labels"
-          :items="LineChartItems"
-          :title='max_cell_voltage'
+          :labels="accu_power"
+          :items="accu_power"
+          :title="'accu_power'"
       />
       <CustomLineChart
-          :labels="labels"
-          :items="LineChartItems"
-          :title='max_cell_voltage'
+          :labels="accu_max_cell_temp"
+          :items="accu_max_cell_temp"
+          :title="'accu_max_cell_temp'"
       />
-
-<!--      <CustomLineChart :labels="labels" />-->
-<!--      <CustomBarChart :labels="labels" />-->
-
+      <CustomLineChart
+          :labels="motor_temp"
+          :items="motor_temp"
+          :title="'motor_temp'"
+      />
+      <CustomLineChart
+          :labels="motor_rpm"
+          :items="motor_rpm"
+          :title="'motor_rpm'"
+      />
+      <CustomLineChart
+          :labels="motor_actual_torque"
+          :items="motor_actual_torque"
+          :title="'motor_actual_torque'"
+      />      
     </div>
   </div>
 </template>
@@ -60,13 +66,30 @@ export default defineComponent({
   created() {
     socket.on('telemetry_data', (telemetry_data) => {
       //Here we are updating the object every time we get a new message from the socket,
-
-
       const dataObj = typeof telemetry_data.data === 'string'
           ? JSON.parse(telemetry_data.data)
           : telemetry_data.data;
 
       this.telemetry_data_obj = dataObj;
+
+      if (this.telemetry_data_obj.accu_total_voltage_vs !== undefined) {
+        this.accu_total_voltage_vs.value = [this.telemetry_data_obj.accu_total_voltage_vs];
+      }
+      if (this.telemetry_data_obj.accu_total_voltage_vs !== undefined) {
+        this.accu_power.value = [this.telemetry_data_obj.accu_power];
+      }
+      if (this.telemetry_data_obj.accu_total_voltage_vs !== undefined) {
+        this.accu_max_cell_temp.value = [this.telemetry_data_obj.accu_max_cell_temp];
+      }
+      if (this.telemetry_data_obj.accu_total_voltage_vs !== undefined) {
+        this.motor_temp.value = [this.telemetry_data_obj.motor_temp];
+      }
+      if (this.telemetry_data_obj.accu_total_voltage_vs !== undefined) {
+        this.motor_rpm.value = [this.telemetry_data_obj.motor_rpm];
+      }
+      if (this.telemetry_data_obj.accu_total_voltage_vs !== undefined) {
+        this.motor_actual_torque.value = [this.telemetry_data_obj.motor_actual_torque];
+      }
 
       this.LineChartItems = [
         {label1: 'max_cell_voltage', value1: this.telemetry_data_obj.accu_max_cell_voltage},
@@ -78,8 +101,13 @@ export default defineComponent({
   data() {
     return {
       telemetry_data_obj: {} as VehicleTelemetry_data,
-      LineChartItems: [] as linechartItems[],
-      max_cell_voltage: String
+
+      accu_total_voltage_vs: {} as linechartItems[],
+      accu_power: {} as linechartItems[],
+      accu_max_cell_temp: {} as linechartItems[],
+      motor_temp: {} as linechartItems[],
+      motor_rpm: {} as linechartItems[],
+      motor_actual_torque: {} as linechartItems[]
     }
   }
 })

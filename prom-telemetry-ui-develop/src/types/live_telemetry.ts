@@ -1,6 +1,7 @@
 //Αυτό το datatype έχει το σύνολο των δεδομένων για την τηλεμετρία
 export type VehicleTelemetry_data = {
-    accu_over_60v_dclink?: number; //----------------------- ACCU
+    //ACCU
+    accu_over_60v_dclink?: number; 
     accu_air_m_state?: number;
     accu_air_m_supp?: number ;
     accu_air_p_state?: number;
@@ -27,10 +28,13 @@ export type VehicleTelemetry_data = {
     accu_max_cell_voltage_pos?: number;
     accu_last_bms_error_code?: number;
     accu_last_tsac_error_code?: number;
-    accu_power?: number; //-----------------------------------------------------------------------------------------------------
+    accu_imd_isolation_kOhms?: number;
+    accu_tsac_fans?: number;
+    accu_turbine_fans?: number;
+    accu_power?: number;
 
-
-    pdu_bms_state?: number; //--------------------------------- PDU
+    //PDU
+    pdu_bms_state?: number;
     pdu_bms_last_error?: number;
     pdu_pdu_state?: number;
     pdu_pdu_last_error?: number;
@@ -48,8 +52,8 @@ export type VehicleTelemetry_data = {
     pdu_tdkLV_overcurrent?: number;
     pdu_tdkTS_overcurrent?: number;
     pdu_pdu_error?: number;
-    pdu_DAC1?: number;
-    pdu_DAC2?: number;
+    pdu_DAC_1?: number;
+    pdu_DAC_2?: number;
     pdu_max_cell_temp?: number;
     pdu_max_cell_temp_pos?: number;
     pdu_min_cell_temp?: number;
@@ -63,9 +67,10 @@ export type VehicleTelemetry_data = {
     pdu_max_SoC?: number;
     pdu_current_sense1?: number;
     pdu_current_sense2?: number;
+    pdu_sharing_enabled?: number;
+    pdu_max_tempurature?: number;
 
-
-
+    //Sensors NOT FOUND ON MSG
     sensors_fr_channel1?: number;
     sensors_fr_channel2?: number;
     sensors_fr_channel3?: number;
@@ -116,7 +121,9 @@ export type VehicleTelemetry_data = {
     sensors_motor_temp_limit_reached?: number;
     sensors_motor_temp?: number;
 
-
+    //Inverter Left
+    left_inv_ar?: number;
+    left_inv_Imax_ar?: number;
     left_inv_critical_hw_status?: number;
     left_inv_last_error?: number;
     left_inv_can_state?: number;
@@ -142,10 +149,10 @@ export type VehicleTelemetry_data = {
     left_inv_trq_ref?: number;
     left_inv_pwr_ref?: number;
     left_inv_pwr_actual?: number;
-    left_inv_speed_limiter?: number;
-    left_inv_power_limiter?: number;
-    left_inv_stall_limiter?: number;
-    left_inv_l2t_limiter?: number;
+    left_inv_lim_speed_limiter?: number;
+    left_inv_lim_power_limiter?: number;
+    left_inv_lim_stall_limiter?: number;
+    left_inv_lim_l2t_limiter?: number;
     left_inv_motor_temp?: number;
     left_inv_igbt_temp?: number;
     left_inv_motor_rpm?: number;
@@ -156,6 +163,7 @@ export type VehicleTelemetry_data = {
     left_inv_min_velocity?: number;
     left_inv_distance?: number;
 
+    //Inverter Right
     right_inv_critical_hw_status?: number;
     right_inv_last_error?: number;
     right_inv_can_state?: number;
@@ -180,20 +188,23 @@ export type VehicleTelemetry_data = {
     right_inv_trq_ref?: number;
     right_inv_pwr_ref?: number;
     right_inv_pwr_actual?: number;
-    right_inv_speed_limiter?: number;
-    right_inv_power_limiter?: number;
-    right_inv_stall_limiter?: number;
-    right_inv_l2t_limiter?: number;
-    right_inv_motor_temp?: number;
-    right_inv_igbt_temp?: number;
+    right_inv_lim_speed_limiter?: number;
+    right_inv_lim_power_limiter?: number;
+    right_inv_lim_stall_limiter?: number;
+    right_inv_lim_l2t_limiter?: number;
+    right_inv_lim_motor_temp?: number;
+    right_inv_lim_igbt_temp?: number;
     right_inv_motor_rpm?: number;
     right_inv_num_max_trq?: number;
     right_inv_vcu_max_velocity?: number;
+    right_inv_motor_temp?: number;
+    right_inv_igbt_temp?: number;
     right_inv_trq_actual?: number;
     right_inv_max_velocity?: number;
     right_inv_min_velocity?: number;
     right_inv_distance?: number;
 
+    //VCU
     vcu_water_temp_in_right?: number;
     vcu_water_temp_out_right?: number;
     vcu_pc_flag?: number;
@@ -229,7 +240,26 @@ export type VehicleTelemetry_data = {
     vcu_gearbox_ntc_right?: number;
     vcu_water_temp_in_left?: number;
     vcu_water_temp_out_left?: number;
+    dash_power_limiter?: number;
+    dash_traction_def?: number;
+    vcu_accel_x?: number;
+    vcu_accel_y?: number;
+    vcu_accel_z?: number;
+    vcu_gyro_x?: number;
+    vcu_gyro_y?: number;
+    vcu_gyro_z?: number;
+    vcu_pc_temp?: number;
+    vcu_lap_counter?: number;
+    vcu_steering_target?: number;
+    vcu_brake_target?: number;
+    vcu_speed_target?: number;
+    vcu_Vx?: number;
+    vcu_Vy?: number;
+    vcu_yaw_rate?: number;
+    vcu_ax?: number;
+    vcu_ay?: number;
 
+    //Motor
     motor_requested_torque?: number;
     motor_actual_torque?: number;
     motor_rpm?: number;
@@ -237,8 +267,7 @@ export type VehicleTelemetry_data = {
     motor_temp_limit_reached?: number;
     motor_temp?: number;
 
-
-
+    //Radio
     radio_rssi?: number;
     radio_packet_loss?: number;
     radio_wrong_crc?: number;
