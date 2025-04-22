@@ -4,10 +4,9 @@
 import { defineComponent } from "vue";
 //Εισάγουμε άλλα δικά μας components, components είναι blocks που δομούν τον κώδικα
 import SideBar from "@/components/SideBar.vue";
-import SideBarList from "@/components/SideBarList.vue";
-import Dashboard from "@/views/Dashboard_vd.vue"; // Import the Dashboard component
+import VD_View from "@/views/VD_View.vue"; // Import the VD_View component
 import StatusBar from "@/components/StatusBar.vue";
-import ShowCustomCharts from "@/views/ShowCustomCharts.vue";
+import CustomCharts from "@/views/CustomCharts.vue";
 import {io} from "socket.io-client";
 //Εδώ είναι το data type που χρησιμοποιείται για την τηλεμετρία
 import {
@@ -28,9 +27,8 @@ export default defineComponent({
   components: {
     SideBar,
     StatusBar,
-    Dashboard,
-    SideBarList,
-    ShowCustomCharts,
+    VD_View,
+    CustomCharts,
   },
   //Τρέχει όταν δημιουργείται και κάνει αρχικοποιήσεις τιμών και φροντίζει για την επικοινωνία
   created() {

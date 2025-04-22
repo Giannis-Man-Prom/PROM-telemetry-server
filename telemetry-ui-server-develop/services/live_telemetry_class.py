@@ -66,8 +66,8 @@ class SerialRead:
         elif op_sys == "Windows":
 
             #Εδώ κοιτάμε σε κάθε port για να βρούμε σε ποιο port έχουμε τον Receiver
-            #Θέλουμε ο serial number να είναι κατάλληλος
-            for port in [port for port in self.ports if port.serial_number == '3086377C3233']:
+            #Θέλουμε ο serial number να είναι κατάλληλος, έστω και για arduino για test
+            for port in [port for port in self.ports if port.serial_number == '3086377C3233' or "Arduino" in port.description]:
                 #Μοργοποιούμε το string κατάλληλα για να προσπαθήσουμε να αρχικοποιήσουμε το connection
                 sub_string = self.__substring_extractor(r'^([^ ]+)', str(port)).group(1)
 

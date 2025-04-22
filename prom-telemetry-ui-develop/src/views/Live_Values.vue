@@ -17,7 +17,7 @@ import StatusBar from "@/App.vue";
 const socket = io(import.meta.env.VITE_SOCKET_URL).connect()
 
 export default defineComponent({
-  name: "Dash_LiveTelemetry",
+  name: "Live_Values",
   components: {
       StatusBar,
       AccuGeneralComponent,

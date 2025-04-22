@@ -2,35 +2,40 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 
 /* Εδώ κάνουμε import τα views μας */
-import Dashboard from "../views/Dashboard_vd.vue"
-import Dash_LiveTelemetry from "../views/Dash_LiveTelemetry.vue"
-
-import ShowCustomCharts from "../views/ShowCustomCharts.vue";
-import csvreceiver from "../components/csvreceiver.vue";
+import Live_Values from "../views/Live_Values.vue"
+import VD_View from "../views/VD_View.vue"
+import CustomCharts from "../views/CustomCharts.vue";
+import csvreceiver from "../views/csvreceiver.vue";
+import Debug from "../views/Debug.vue";
 import NotFound from "../views/NotFound.vue"
 
 
 /* Εδώ έχουμε την αντιστοιχία των paths του site και των views/components, μόνο τα παρακάτω χρησιμοποιούνται */
 const routes: Array<RouteRecordRaw> = [
 	{
-		path: "/vd/telemetry",
-		name: "Dashboard",
-		component: Dashboard, /* Το component που φορτώνεται όταν είμαστε στο παραπάνω link, βρίσκεται στο Dashboard_vd.vue */
+		path: "/", /* Το default path μας δίνει το live telemetry */
+		name: "Live_Values",
+		component: Live_Values,
 	},
 	{
-		path: "/", /* Το default path μας δίνει το live telemetry */
-		name: "Dash_LiveTelemetry",
-		component: Dash_LiveTelemetry,
+		path: "/vd/telemetry",
+		name: "VD_View",
+		component: VD_View, /* Το component που φορτώνεται όταν είμαστε στο παραπάνω link, βρίσκεται στο VD_View.vue */
 	},
     {
         path: "/charts",
         name: "Charts",
-        component: ShowCustomCharts,
+        component: CustomCharts,
     },
 	{
 		path: "/vd-csv",
 		name: "CSVReceiver",
 		component: csvreceiver,
+	},
+	{
+		path: "/Debug",
+		name: "Debug",
+		component: Debug,
 	},
 	{ 
 		path: "/:pathMatch(.*)*", 

@@ -19,7 +19,7 @@ const socket = io('http://0.0.0.0:8081').connect()
 
 
 export default defineComponent({
-  name: "Dash_LiveTelemetry",
+  name: "Debug",
   components: {
     StatusBar,
 

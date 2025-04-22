@@ -32,7 +32,6 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 import SideBar from '../components/SideBar.vue';
-import LineChartComponent from '@/components/LineChartComponent.vue';
 import BarChartComponent from '@/components/CustomBarChart.vue';
 
 import CustomLineChart from "@/components/CustomLineChart.vue";
@@ -44,11 +43,10 @@ const socket = io(import.meta.env.VITE_SOCKET_URL).connect()
 
 
 export default defineComponent({
-  name: 'ShowCustomCharts',
+  name: 'CustomCharts',
   components: {
     CustomBarChart,
     SideBar,
-    LineChartComponent,
     BarChartComponent,
     CustomLineChart
   },

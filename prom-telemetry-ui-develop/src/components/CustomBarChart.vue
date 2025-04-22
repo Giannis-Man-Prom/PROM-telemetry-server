@@ -44,7 +44,7 @@ export default defineComponent({
       const currentTime = new Date().toLocaleTimeString(); //const εδώ σημαίνει ότι μπορούμε να αλλάξουμε τις τιμές μέσα αλλά όχι που δείχνει η μεταβλητη, πχ με ανάθεση ξανά
       const newValue = telemetry_data_obj[props.dataKey];
 
-      if (chartInstance) {
+      if (newValue !== null && newValue !== undefined && chartInstance) {
         const labels = chartInstance.data.labels as string[];
         const data = chartInstance.data.datasets[0].data as number[];
 
