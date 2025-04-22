@@ -1,4 +1,4 @@
-<!-- Εδώ φτιάχνουμε το Sidebar που δείχνει TS Active μέχρι και το dropdown -->
+<!-- Εδώ φτιάχνουμε το Sidebar που δείχνει το εικονίδιο μέχρι και το dropdown -->
 
 <template>
   <aside id="default-sidebar" class="fixed transition-transform sm:translate-x-0 z-40 w-40 h-screen bg-gray-50 dark:bg-gray-800 ">
@@ -36,10 +36,10 @@
             <ul v-if="isDropdownOpen" class="absolute left-0 z-30 w-40 mt-2 ml-0 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg dark:bg-gray-800 dark:border-gray-700">
               <!-- Εδώ βλέπουμε πως είναι linked μέσω του router τα κουμπιά -->
               <li>
-                <router-link to="/vd/telemetry" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">VD Telemetry</router-link>
+                <router-link to="/" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Live Values</router-link>
               </li>
               <li>
-                <router-link to="/" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">LIVE Telemetry</router-link>
+                <router-link to="/vd/telemetry" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">VD View</router-link>
               </li>
               <li>
                 <router-link to="/charts" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Custom Charts</router-link>

@@ -25,7 +25,6 @@
 <!--      <CustomLineChart :labels="labels" />-->
 <!--      <CustomBarChart :labels="labels" />-->
 
-<!--      <StatusListComponent/>-->
     </div>
   </div>
 </template>
@@ -35,7 +34,7 @@ import { defineComponent, reactive } from 'vue';
 import SideBar from '../components/SideBar.vue';
 import LineChartComponent from '@/components/LineChartComponent.vue';
 import BarChartComponent from '@/components/CustomBarChart.vue';
-import StatusListComponent from '@/components/StatusListComponent.vue';
+
 import CustomLineChart from "@/components/CustomLineChart.vue";
 import CustomBarChart from "@/components/CustomBarChart.vue";
 import {io} from "socket.io-client";
@@ -51,7 +50,6 @@ export default defineComponent({
     SideBar,
     LineChartComponent,
     BarChartComponent,
-    StatusListComponent,
     CustomLineChart
   },
   setup() {

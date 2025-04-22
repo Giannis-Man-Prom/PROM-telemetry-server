@@ -7,7 +7,7 @@
       <LineChartComponent :labels="['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']" :chart_data="[12, 19, 3, 5, 2, 3]"/>
       <LineChartComponent :labels="['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']" :chart_data="[12, 19, 3, 5, 2, 3]"/>
       <LineChartComponent :labels="['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']" :chart_data="[12, 19, 3, 5, 2, 3]"/>
-      <StatusListComponent/>
+      <CustomBarChart :labels="[]" dataKey="max_cell_voltage" borderColor="green" backgroundColor="rgba(0,255,0,0.3)"/>
 
     </div>
   </div>
@@ -18,7 +18,6 @@
 import {defineComponent} from "vue"
 import SideBar from "../components/SideBar.vue";
 import LineChartComponent from "@/components/LineChartComponent.vue";
-import StatusListComponent from "@/components/StatusListComponent.vue";
 
 
 export default defineComponent({
@@ -26,7 +25,6 @@ export default defineComponent({
   components: {
     SideBar,
     LineChartComponent,
-    StatusListComponent
   },
   data() {
     return {

@@ -8,14 +8,13 @@ import SideBarList from "@/components/SideBarList.vue";
 import Dashboard from "@/views/Dashboard_vd.vue"; // Import the Dashboard component
 import StatusBar from "@/components/StatusBar.vue";
 import ShowCustomCharts from "@/views/ShowCustomCharts.vue";
-import StatusListComponent from "@/components/StatusListComponent.vue";
 import {io} from "socket.io-client";
 //Εδώ είναι το data type που χρησιμοποιείται για την τηλεμετρία
 import {
   variableContainer,
   VehicleTelemetry_data
 } from "./types/live_telemetry.ts";
-//
+
 import {api_res, event_connection_res} from "./types/socketIO.types.ts";
 
 
@@ -25,12 +24,6 @@ const socket = io(import.meta.env.VITE_SOCKET_URL).connect()
 //Εδώ φτιάχνουμε το component μας
 export default defineComponent({
   name: "App",
-  //Computed???
-  computed: {
-    StatusListComponent() {
-      return StatusListComponent
-    }
-  },
   //Εδώ είναι τα components που ενσωματώνει το vue component
   components: {
     SideBar,
@@ -44,11 +37,6 @@ export default defineComponent({
     this.SideBarListItems = [
       { label: ['R2D']},
       { label: ['precharge_done']},
-      { label: ['TS ACTIVE']},
-      { label: ['TS ACTIVE']},
-      { label: ['TS ACTIVE']},
-      { label: ['TS ACTIVE']},
-      { label: ['TS ACTIVE'] },
       { label: ['TS ACTIVE']},
       { label: ['max_cell_voltage']}
     ];
@@ -70,24 +58,19 @@ export default defineComponent({
         return null;
       }
 
-          this.SideBarListItems = [
-            { label: ['R2D'], value: [this.telemetry_data_obj.dv_R2D] },
-            { label: ['precharge_done'], value: [this.telemetry_data_obj.accu_precharge_state] },
-            { label: ['TS ACTIVE'], value: [this.telemetry_data_obj.accu_ts_active] },
-            { label: ['TS ACTIVE'], value: [this.telemetry_data_obj.accu_ts_active] },
-            { label: ['TS ACTIVE'], value: [this.telemetry_data_obj.accu_ts_active] },
-            { label: ['TS ACTIVE'], value: [this.telemetry_data_obj.accu_ts_active] },
-            { label: ['TS ACTIVE'], value: [this.telemetry_data_obj.accu_ts_active] },
-            { label: ['TS ACTIVE'], value: [this.telemetry_data_obj.accu_ts_active] },
-            { label: ['max_cell_voltage'], value: [this.telemetry_data_obj.accu_max_cell_voltage] }
-          ];
+      this.SideBarListItems = [
+        { label: ['R2D'], value: [this.telemetry_data_obj.dv_R2D] },
+        { label: ['precharge_done'], value: [this.telemetry_data_obj.accu_precharge_state] },
+        { label: ['TS ACTIVE'], value: [this.telemetry_data_obj.accu_ts_active] },
+        { label: ['max_cell_voltage'], value: [this.telemetry_data_obj.accu_max_cell_voltage] }
+      ];
 
-        this.StatusItemList = [
-          { label: ['radio_rssi'], value: [this.telemetry_data_obj.radio_rssi] },
-          { label: ['radio_packet_loss'], value: [parseFloat(this.telemetry_data_obj.radio_packet_loss.toFixed(3))] },
-          { label: ['radio_wrong_crc'], value: [this.telemetry_data_obj.radio_wrong_crc] },
-          { label: ['radio_kbps'], value: [this.telemetry_data_obj.radio_kbps] },
-        ];
+      this.StatusItemList = [
+        { label: ['radio_rssi'], value: [this.telemetry_data_obj.radio_rssi] },
+        { label: ['radio_packet_loss'], value: [parseFloat(this.telemetry_data_obj.radio_packet_loss.toFixed(3))] },
+        { label: ['radio_wrong_crc'], value: [this.telemetry_data_obj.radio_wrong_crc] },
+        { label: ['radio_kbps'], value: [this.telemetry_data_obj.radio_kbps] },
+      ];
     });
     
     socket.on('connection_response', (message: event_connection_res) => {
@@ -121,37 +104,15 @@ export default defineComponent({
     <StatusBar
       :items="StatusItemList"
     />
-<!--      <template v-slot:custom-list>-->
-<!--        &lt;!&ndash; Here we will add our own list items that we need to the vd dashboard component &ndash;&gt;-->
-<!--&lt;!&ndash;        <SideBarList&ndash;&gt;-->
-<!--&lt;!&ndash;            :R2D="R2D"&ndash;&gt;-->
-<!--&lt;!&ndash;            :Precharge_done="Precharge_done"&ndash;&gt;-->
-<!--&lt;!&ndash;            :SDC_open="SDC_open"&ndash;&gt;-->
-<!--&lt;!&ndash;            :min_accu="min_accu"&ndash;&gt;-->
-<!--&lt;!&ndash;            :min_LV="min_LV"&ndash;&gt;-->
-<!--&lt;!&ndash;            :max_accu="max_accu"&ndash;&gt;-->
-<!--&lt;!&ndash;            :max_LV="max_LV"&ndash;&gt;-->
-<!--&lt;!&ndash;            :SoC="SoC"&ndash;&gt;-->
-<!--&lt;!&ndash;        />&ndash;&gt;-->
 
-
-<!--        &lt;!&ndash; Add more custom list items as needed &ndash;&gt;-->
-<!--        <ul class="space-y-2 font-medium">-->
-<!--          &lt;!&ndash; Add more custom list items as needed &ndash;&gt;-->
-<!--        </ul>-->
-<!--        &lt;!&ndash; End of custom list items &ndash;&gt;-->
-<!--      </template>-->
-
-      <div>
-      <!-- Το router view αλλάζει αυτό που βλέπουμε ανάλογα με το link που είμαστε. η αντιστοιχία link-view είναι στο router.ts -->
-        <router-view/>
-      </div>
+    <div>
+    <!-- Το router view αλλάζει αυτό που βλέπουμε ανάλογα με το link που είμαστε. η αντιστοιχία link-view είναι στο router.ts -->
+      <router-view/>
+    </div>
 
   </div>
 </template>
 
-
-<!-- Μαλλον σκουπίδι -->
 <style scoped>
 /* Add your scoped styles here */
 </style>

@@ -27,6 +27,10 @@ export default defineComponent({
       type: Array as () => string[],
       required: true
     },
+    dataKey: {
+      type: String,
+      required: true
+    }
   },
   setup(props) {
     const chartCanvas = ref<HTMLCanvasElement | null>(null); //το Canvas είναι έτοιμο element που χρησιμοποιείται
@@ -38,13 +42,13 @@ export default defineComponent({
 
       //Αρχικά παίρνουμε την τωρινή στιγμή και ενημερωνόμαστε με την νέα τιμή του max_cell_voltage
       const currentTime = new Date().toLocaleTimeString(); //const εδώ σημαίνει ότι μπορούμε να αλλάξουμε τις τιμές μέσα αλλά όχι που δείχνει η μεταβλητη, πχ με ανάθεση ξανά
-      const newValue = telemetry_data_obj.max_cell_voltage;
+      const newValue = telemetry_data_obj[props.dataKey];
 
       if (chartInstance) {
         const labels = chartInstance.data.labels as string[];
         const data = chartInstance.data.datasets[0].data as number[];
 
-        // Φροντίζουμε ο buffer να αφορεά 2 λεπτά, όταν αυξηθεί παραπάνω κάνει shift και πετάει τις παλιές τιμές
+        // Φροντίζουμε ο buffer να αφορά 2 λεπτά, όταν αυξηθεί παραπάνω κάνει shift και πετάει τις παλιές τιμές
         if (labels.length >= maxDataPoints) {
           labels.shift();
           data.shift();
