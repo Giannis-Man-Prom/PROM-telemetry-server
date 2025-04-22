@@ -55,6 +55,6 @@
 
 <script>
 export default {
-	name: "404.vue"
+	name: "NotFound"
 }
 </script>
