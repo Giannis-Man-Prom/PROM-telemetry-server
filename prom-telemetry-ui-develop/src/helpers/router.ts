@@ -7,6 +7,7 @@ import Dash_LiveTelemetry from "../views/Dash_LiveTelemetry.vue"
 
 import ShowCustomCharts from "../views/ShowCustomCharts.vue";
 import csvreceiver from "../components/csvreceiver.vue";
+import NotFound from "../views/NotFound.vue"
 
 
 /* Εδώ έχουμε την αντιστοιχία των paths του site και των views/components, μόνο τα παρακάτω χρησιμοποιούνται */
@@ -16,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
 		name: "Dashboard",
 		component: Dashboard, /* Το component που φορτώνεται όταν είμαστε στο παραπάνω link, βρίσκεται στο Dashboard_vd.vue */
 	},
-		{
+	{
 		path: "/", /* Το default path μας δίνει το live telemetry */
 		name: "Dash_LiveTelemetry",
 		component: Dash_LiveTelemetry,
@@ -30,6 +31,11 @@ const routes: Array<RouteRecordRaw> = [
 		path: "/vd-csv",
 		name: "CSVReceiver",
 		component: csvreceiver,
+	},
+	{ 
+		path: "/:pathMatch(.*)*", 
+		name: "NotFound", 
+		component: NotFound,
 	}
 ]
 
