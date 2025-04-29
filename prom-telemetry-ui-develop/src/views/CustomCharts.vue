@@ -26,11 +26,11 @@
           :items="motor_rpm"
           :title="'motor_rpm'"
       />
-      <CustomLineChart
+      <CustomGauge
           :labels="motor_actual_torque"
           :items="motor_actual_torque"
           :title="'motor_actual_torque'"
-      />      
+      />
     </div>
   </div>
 </template>
@@ -42,6 +42,7 @@ import BarChartComponent from '@/components/CustomBarChart.vue';
 
 import CustomLineChart from "@/components/CustomLineChart.vue";
 import CustomBarChart from "@/components/CustomBarChart.vue";
+import CustomGauge from "@/components/GaugeChart.vue";
 import {io} from "socket.io-client";
 import {linechartItems, VehicleTelemetry_data} from "../types/live_telemetry.ts";
 
@@ -54,7 +55,8 @@ export default defineComponent({
     CustomBarChart,
     SideBar,
     BarChartComponent,
-    CustomLineChart
+    CustomLineChart,
+    CustomGauge
   },
   setup() {
     const labels = reactive<string[]>([]);
