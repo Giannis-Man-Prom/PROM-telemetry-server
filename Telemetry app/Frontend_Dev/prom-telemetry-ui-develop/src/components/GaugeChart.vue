@@ -23,7 +23,7 @@
             required: true
         },
         items: {
-            type: Object as () => variableContainer,
+            type: Number,
             required: true
         },
         title: {
@@ -71,7 +71,7 @@
                 fontSize: '22px',
                 offsetY: 10,
                 formatter: function (val: number) {
-                    const actualValue = Math.round((val / 100) * (props.max - props.min) + props.min);
+                    const actualValue = (val / 100) * (props.max - props.min) + props.min;
                     return `${actualValue}`;
                 }
                 }
@@ -83,9 +83,9 @@
 
   
       // Update series when items prop changes
-      watch(() => props.items, (newItems) => {
-        if (newItems && newItems.value !== undefined) {
-            const rawValue = newItems.value;
+      watch(() => props.items, (newItems: number) => {
+        if (newItems && newItems !== undefined) {
+            const rawValue = newItems;
             const normalized = ((rawValue - props.min) / (props.max - props.min)) * 100;
             series.value = [Math.max(0, Math.min(100, normalized))]; // Clamp between 0–100
         }

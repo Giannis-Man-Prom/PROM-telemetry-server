@@ -103,17 +103,17 @@ export default defineComponent({
       { label: ['last_tsac_error_code'] },
       { label: ['power'] },
       { label: ['tsac_fans'] },
-      { label: ['turbine_fans'] }
-      { label: ['pdu_max_temperature'] }
-      { label: ['pdu_current_sense'] }
-      { label: ['accu_state'] }
-      { label: ['accu_last_error'] }
-      { label: ['error_position'] }
-      { label: ['precharge_state'] }
-      { label: ['comm_error_ids'] }
-      { label: ['HVroom_humidity'] }
-      { label: ['HVroom_temperature'] }
-      { label: ['precharge_voltage'] }
+      { label: ['turbine_fans'] },
+      { label: ['pdu_max_temperature'] },
+      { label: ['pdu_current_sense'] },
+      { label: ['accu_state'] },
+      { label: ['accu_last_error'] },
+      { label: ['error_position'] },
+      { label: ['precharge_state'] },
+      { label: ['comm_error_ids'] },
+      { label: ['HVroom_humidity'] },
+      { label: ['HVroom_temperature'] },
+      { label: ['precharge_voltage'] },
       { label: ['precharge_time'] }
 
     ];

@@ -47,7 +47,7 @@ export default defineComponent({
       const currentTime = new Date().toLocaleTimeString();
       const { items } = toRefs(props);
 
-      if (chartInstance && items.value.length > 0) {
+      if (chartInstance) {
         const labels = chartInstance.data.labels as string[];
         const data = chartInstance.data.datasets[0].data as number[];
 
