@@ -1,0 +1,104 @@
+<template>
+    <div class="flex items-start justify-center min-h-1/2 rounded bg-gray-50 dark:bg-gray-800 ">
+        <apexchart 
+            type="radialBar" 
+            :options="chartOptions" 
+            :series="series" 
+            width="125%" 
+            height="125%"
+        />
+    </div>
+  </template>
+  
+  <script lang="ts">
+  import { defineComponent, ref, watch, onMounted, onBeforeUnmount } from 'vue';
+  import VueApexCharts from "vue3-apexcharts";
+  import { variableContainer } from "../types/live_telemetry.ts";
+  
+  export default defineComponent({
+    name: "CustomGauge",
+    props: {
+        labels: {
+            type: Array as () => string[],
+            required: true
+        },
+        items: {
+            type: Object as () => variableContainer,
+            required: true
+        },
+        title: {
+            type: String,
+            required: true
+        },
+        min: {
+            type: Number,
+            default: 0,
+            required: true
+        },
+        max: {
+            type: Number,
+            default: 100,
+            required: true
+        }
+    },
+    components: {
+      apexchart: VueApexCharts,
+    },
+    setup(props) {
+      const series = ref<number[]>([0]);
+        const chartOptions = ref({
+        chart: {
+            type: 'radialBar',
+        },
+        plotOptions: {
+            radialBar: {
+            startAngle: -120,
+            endAngle: 120,
+            hollow: {
+                size: '65%',
+            },
+            track: {
+                background: '#f0f0f0',
+                strokeWidth: '100%',
+                margin: 10,
+            },
+            dataLabels: {
+                name: {
+                offsetY: -10,
+                fontSize: '16px',
+                },
+                value: {
+                fontSize: '22px',
+                offsetY: 10,
+                formatter: function (val: number) {
+                    const actualValue = Math.round((val / 100) * (props.max - props.min) + props.min);
+                    return `${actualValue}`;
+                }
+                }
+            }
+            }
+        },
+        labels: [props.title],
+        });
+
+  
+      // Update series when items prop changes
+      watch(() => props.items, (newItems) => {
+        if (newItems && newItems.value !== undefined) {
+            const rawValue = newItems.value;
+            const normalized = ((rawValue - props.min) / (props.max - props.min)) * 100;
+            series.value = [Math.max(0, Math.min(100, normalized))]; // Clamp between 0–100
+        }
+      }, { immediate: true });
+  
+      // Optional: setup a periodic update, if needed (not from server now, but from props)
+      // You don't actually need setInterval here if items are coming via props
+  
+      return {
+        series,
+        chartOptions
+      };
+    }
+  });
+  </script>
+  
