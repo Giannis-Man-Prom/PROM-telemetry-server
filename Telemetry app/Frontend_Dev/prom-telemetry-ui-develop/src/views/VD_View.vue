@@ -17,6 +17,10 @@
           :items="yaw_rate"
           :title="'yaw_rate'"
       />
+      <CurrentAccelerationScatterPlot
+          :xAcceleration="ax"
+          :yAcceleraion="ay"
+      />
     </div>
   </div>
 </template>
@@ -26,8 +30,9 @@ import { defineComponent, reactive } from 'vue';
 import SideBar from '../components/SideBar.vue';
 import BarChartComponent from '@/components/CustomBarChart.vue';
 
-import CustomLineChart from "@/components/CustomLineChart.vue";
+import CustomLine from "@/components/CustomLine.vue";
 import CustomGauge from "@/components/GaugeChart.vue";
+import CurrentAccelerationScatterPlot from "@/components/AccelChart.vue";
 import {io} from "socket.io-client";
 import {api_res, event_connection_res} from "../types/socketIO.types.ts"; //"@" instead of ".."
 import {linechartItems, VehicleTelemetry_data} from "../types/live_telemetry.ts";
@@ -38,7 +43,7 @@ const socket = io(import.meta.env.VITE_SOCKET_URL).connect()
 export default defineComponent({
   name: 'CustomCharts',
   components: {
-    CustomLineChart,
+    CustomLine,
     CustomGauge
   },
   setup() {
@@ -51,7 +56,6 @@ export default defineComponent({
   created() {
     socket.on('telemetry_data', (telemetry_data : api_res) => {
       //Here we are updating the object every time we get a new message from the socket,
-      console.log("Ok");
       try {
         this.telemetry_data_obj = JSON.parse(telemetry_data.data as unknown as string) as VehicleTelemetry_data;
       } catch (e) {
@@ -59,6 +63,12 @@ export default defineComponent({
       }
       if (this.telemetry_data_obj.max_cell_temp !== undefined) {
         this.max_cell_temp.value = [this.telemetry_data_obj.max_cell_temp];
+      }
+      if (this.telemetry_data_obj.accu_air_m_supp !== undefined) {
+        this.ax = [this.telemetry_data_obj.accu_air_m_supp];
+      }
+      if (this.telemetry_data_obj.accu_air_m_supp !== undefined) {
+        this.ax = [this.telemetry_data_obj.accu_air_m_supp];
       }
     });
   },

@@ -1,35 +1,21 @@
 <template>
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
     <div class="grid grid-cols-2 grid-rows-3 gap-x-8 gap-y-4 h-screen">
-      <LineChart
-          :labels="'max_cell_temp'"
-          :items="max_cell_temp"
-          :title="'max_cell_temp'"
+      <CustomLine
+          :labels="'air_m_supp'"
+          :items="air_m_supp"
+          :title="'air_m_supp'"
       />
-      <CustomLineChart
-          :labels="'wh_consumed'"
-          :items="wh_consumed"
-          :title="'wh_consumed'"
-      />
-      <CustomLineChart
-          :labels="'accu_max_cell_temp'"
-          :items="accu_max_cell_temp"
-          :title="'accu_max_cell_temp'"
-      />
-      <CustomLineChart
-          :labels="'motor_temp'"
-          :items="motor_temp"
-          :title="'motor_temp'"
-      />
-      <CustomLineChart
-          :labels="'motor_rpm'"
-          :items="motor_rpm"
-          :title="'motor_rpm'"
+      <CustomLine
+          :labels="'air_p_state'"
+          :items="air_p_state"
+          :title="'air_p_state'"
+          :update_ms="300"
       />
       <CustomGauge
-          :labels="'left_inv_igbt_temp'"
-          :items="left_inv_igbt_temp"
-          :title="'left_inv_igbt_temp'"
+          :labels="'accu_over_60v_dclink'"
+          :items="accu_over_60v_dclink"
+          :title="'accu_over_60v_dclink'"
       />
     </div>
   </div>
@@ -40,7 +26,7 @@ import { defineComponent, reactive } from 'vue';
 import SideBar from '../components/SideBar.vue';
 import BarChartComponent from '@/components/CustomBarChart.vue';
 
-import CustomLineChart from "@/components/CustomLineChart.vue";
+import CustomLine from "@/components/CustomLine.vue";
 import CustomBarChart from "@/components/CustomBarChart.vue";
 import CustomGauge from "@/components/GaugeChart.vue";
 import {io} from "socket.io-client";
@@ -55,7 +41,7 @@ export default defineComponent({
     CustomBarChart,
     SideBar,
     BarChartComponent,
-    CustomLineChart,
+    CustomLine,
     CustomGauge
   },
   setup() {
@@ -74,36 +60,28 @@ export default defineComponent({
         return null;
       }
 
-      if (this.telemetry_data_obj.max_cell_temp !== undefined) {
-        this.max_cell_temp.value = [this.telemetry_data_obj.max_cell_temp];
+      if (this.telemetry_data_obj.accu_air_m_supp !== undefined) {
+        this.air_m_supp = this.telemetry_data_obj.accu_air_m_supp;
       }
+      //console.log(this.air_m_supp.value[0]);
+      //console.log(this.telemetry_data_obj.accu_air_p_state);
+      if (this.telemetry_data_obj.accu_air_p_state !== undefined) {
+        this.air_p_state = this.telemetry_data_obj.accu_air_p_state;
+      }
+      //console.log(this.air_p_state);
       if (this.telemetry_data_obj.accu_over_60v_dclink !== undefined) {
-        this.accu_over_60v_dclink.value = [this.telemetry_data_obj.accu_over_60v_dclink];
+        this.accu_over_60v_dclink = this.telemetry_data_obj.accu_over_60v_dclink;
       }
-      if (this.telemetry_data_obj.accu_max_cell_temp !== undefined) {
-        this.accu_max_cell_temp.value = [this.telemetry_data_obj.accu_max_cell_temp];
-      }
-      if (this.telemetry_data_obj.motor_temp !== undefined) {
-        this.motor_temp.value = [this.telemetry_data_obj.motor_temp];
-      }
-      if (this.telemetry_data_obj.max_cell_temp !== undefined) {
-        this.max_cell_temp = [this.telemetry_data_obj.max_cell_temp];
-      }
-      if (this.telemetry_data_obj.left_inv_igbt_temp !== undefined) {
-        this.left_inv_igbt_temp = this.telemetry_data_obj.left_inv_igbt_temp;
-      }
+      //console.log(this.accu_over_60v_dclink);
     });
   },
   data() {
     return {
       telemetry_data_obj: {} as VehicleTelemetry_data,
 
-      max_cell_temp: {} as linechartItems[],
-      wh_consumed: {} as linechartItems[],
-      accu_max_cell_temp: {} as linechartItems[],
-      motor_temp: {} as linechartItems[],
-      motor_rpm: {} as linechartItems[],
-      left_inv_igbt_temp: 0
+      air_m_supp: Number,
+      air_p_state: Number,
+      accu_over_60v_dclink: 0
     }
   }
 })

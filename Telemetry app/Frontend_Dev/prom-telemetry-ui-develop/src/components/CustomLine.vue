@@ -14,7 +14,7 @@ import Chart, { ChartConfiguration } from 'chart.js/auto';
 import { linechartItems } from "../types/live_telemetry.ts";
 
 export default defineComponent({
-  name: "CustomLineComponent",
+  name: "CustomLine",
   props: {
     borderColor: {
       type: String,
@@ -29,12 +29,16 @@ export default defineComponent({
       required: true
     },
     items: {
-      type: Object as () => linechartItems,
+      type: Number,
       required: true
     },
     title: {
       type: String,
       required: true
+    },
+    update_ms: {
+      type: Number,
+      default: 1000
     }
   },
   setup(props) {
@@ -45,7 +49,8 @@ export default defineComponent({
 
     const updateChart = () => {
       const currentTime = new Date().toLocaleTimeString();
-      const { items } = toRefs(props);
+      const items = toRefs(props);
+      //console.log(items.items.value);
 
       if (chartInstance) {
         const labels = chartInstance.data.labels as string[];
@@ -58,7 +63,7 @@ export default defineComponent({
         }
 
         labels.push(currentTime);
-        data.push(items.value[0]); // Assuming items is an array and accessing the first item's value1
+        data.push(items.items.value); // Assuming items is an array and accessing the first item's value1
 
         chartInstance.update();
       }
@@ -111,7 +116,7 @@ export default defineComponent({
       };
 
       chartInstance = new Chart(ctx, config);
-      timer = setInterval(updateChart, 1000); // Update every second
+      timer = setInterval(updateChart, props.update_ms); // Update every second
     });
 
     onBeforeUnmount(() => {
