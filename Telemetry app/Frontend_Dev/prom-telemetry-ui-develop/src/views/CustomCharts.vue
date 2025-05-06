@@ -17,6 +17,9 @@
           :items="accu_over_60v_dclink"
           :title="'accu_over_60v_dclink'"
       />
+      <LiveThermometer
+          :temperature="accu_over_60v_dclink"
+      />
     </div>
   </div>
 </template>
@@ -29,6 +32,8 @@ import BarChartComponent from '@/components/CustomBarChart.vue';
 import CustomLine from "@/components/CustomLine.vue";
 import CustomBarChart from "@/components/CustomBarChart.vue";
 import CustomGauge from "@/components/GaugeChart.vue";
+import LiveThermometer from "../components/Thermometer.vue";
+import VueThermometer from 'vuejs-thermometer'
 import {io} from "socket.io-client";
 import {linechartItems, VehicleTelemetry_data} from "../types/live_telemetry.ts";
 
@@ -42,7 +47,9 @@ export default defineComponent({
     SideBar,
     BarChartComponent,
     CustomLine,
-    CustomGauge
+    CustomGauge,
+    LiveThermometer,
+    VueThermometer
   },
   setup() {
     const labels = reactive<string[]>([]);
