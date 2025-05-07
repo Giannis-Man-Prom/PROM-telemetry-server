@@ -72,7 +72,6 @@
             if (clampedValue < 0) {
               barWidthLeft.value = Math.abs(clampedValue);  // Left bar for negative values
               barWidthRight.value = 0;  // Reset right bar for negative values
-              console.log("Left bar width (negative):", barWidthLeft.value);
             } else {
               barWidthLeft.value = 0;  // Reset left bar for positive values
               barWidthRight.value = clampedValue;  // Right bar for positive values

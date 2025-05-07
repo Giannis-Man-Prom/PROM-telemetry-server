@@ -19,7 +19,7 @@
       />
       <LiveThermometer
           :temperature="temperature"
-          :title="'aek'"
+          :title="'whatever'"
       />
       <div class="flex items-start justify-center min-h-1/2 rounded bg-gray-50 dark:bg-gray-800 pt-16">
         <VueSpeedometer
@@ -41,14 +41,14 @@
       </div>
       <HorizontalBar
         :value="-50"
-        :title="'aek'"
+        :title="'whatever'"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 import SideBar from '../components/SideBar.vue';
 import BarChartComponent from '@/components/CustomBarChart.vue';
 
