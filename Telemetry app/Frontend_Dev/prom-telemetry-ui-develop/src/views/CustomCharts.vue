@@ -18,7 +18,30 @@
           :title="'accu_over_60v_dclink'"
       />
       <LiveThermometer
-          :temperature="accu_over_60v_dclink"
+          :temperature="temperature"
+          :title="'aek'"
+      />
+      <div class="flex items-start justify-center min-h-1/2 rounded bg-gray-50 dark:bg-gray-800 pt-16">
+        <VueSpeedometer
+        :value="333"
+        :minValue="0"
+        :maxValue="1000"
+        :segments="5"
+        :needleHeightRatio="0.7"
+        :needleTransitionDuration="4000"
+        needleTransition="easeElastic"
+        needleColor="steelblue"
+        :segmentColors='["firebrick", "tomato", "gold", "limegreen"]'
+        :customSegmentStops="[0, 500, 750, 900, 1000]"
+        :maxSegmentLabels="5"
+        currentValueText="Speedometer"
+        :ringWidth="47"
+        textColor="#d8dee9"
+      />
+      </div>
+      <HorizontalBar
+        :value="-50"
+        :title="'aek'"
       />
     </div>
   </div>
@@ -33,7 +56,8 @@ import CustomLine from "@/components/CustomLine.vue";
 import CustomBarChart from "@/components/CustomBarChart.vue";
 import CustomGauge from "@/components/GaugeChart.vue";
 import LiveThermometer from "../components/Thermometer.vue";
-import VueThermometer from 'vuejs-thermometer'
+import HorizontalBar from "../components/HorizontalBar.vue";
+import VueSpeedometer from 'vue-speedometer';
 import {io} from "socket.io-client";
 import {linechartItems, VehicleTelemetry_data} from "../types/live_telemetry.ts";
 
@@ -49,7 +73,8 @@ export default defineComponent({
     CustomLine,
     CustomGauge,
     LiveThermometer,
-    VueThermometer
+    VueSpeedometer,
+    HorizontalBar
   },
   setup() {
     const labels = reactive<string[]>([]);
@@ -70,16 +95,15 @@ export default defineComponent({
       if (this.telemetry_data_obj.accu_air_m_supp !== undefined) {
         this.air_m_supp = this.telemetry_data_obj.accu_air_m_supp;
       }
-      //console.log(this.air_m_supp.value[0]);
-      //console.log(this.telemetry_data_obj.accu_air_p_state);
       if (this.telemetry_data_obj.accu_air_p_state !== undefined) {
         this.air_p_state = this.telemetry_data_obj.accu_air_p_state;
       }
-      //console.log(this.air_p_state);
       if (this.telemetry_data_obj.accu_over_60v_dclink !== undefined) {
         this.accu_over_60v_dclink = this.telemetry_data_obj.accu_over_60v_dclink;
       }
-      //console.log(this.accu_over_60v_dclink);
+      if (this.telemetry_data_obj.accu_over_60v_dclink !== undefined) {
+        this.temperature = this.telemetry_data_obj.accu_over_60v_dclink;
+      }
     });
   },
   data() {
@@ -88,7 +112,8 @@ export default defineComponent({
 
       air_m_supp: Number,
       air_p_state: Number,
-      accu_over_60v_dclink: 0
+      accu_over_60v_dclink: 0,
+      temperature: 0
     }
   }
 })
