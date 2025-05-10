@@ -25,7 +25,7 @@ export default defineComponent({
       default: 'rgba(255, 255, 255, 0.6)',
     },
     labels: {
-      type: Array as () => string[],
+      type: String,
       required: true
     },
     items: {

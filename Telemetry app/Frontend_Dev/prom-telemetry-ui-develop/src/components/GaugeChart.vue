@@ -19,7 +19,7 @@
     name: "CustomGauge",
     props: {
         labels: {
-            type: Array as () => string[],
+            type: String,
             required: true
         },
         items: {
