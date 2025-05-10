@@ -43,6 +43,11 @@
         :value="test"
         :title="'whatever'"
       />
+      <CustomBarChart
+          :title="'air_p_state'"
+          :value="valueX"
+          :update_ms="300"
+      />
     </div>
   </div>
 </template>

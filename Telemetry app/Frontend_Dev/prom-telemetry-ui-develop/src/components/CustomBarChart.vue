@@ -7,7 +7,7 @@
 
 <!-- Εδώ πάλι θα κάνουμε definecomponent -->
 <script lang="ts">
-import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue';
+import { defineComponent, ref, onMounted, onBeforeUnmount, toRefs } from 'vue';
 import Chart, { ChartConfiguration } from 'chart.js/auto';
 import telemetry_data_obj from '../App.vue';
 
@@ -23,13 +23,17 @@ export default defineComponent({
       type: String,
       default: 'rgba(255, 255, 255, 0.6)',
     },
-    labels: {
-      type: Array as () => string[],
-      required: true
-    },
-    dataKey: {
+    title: {
       type: String,
       required: true
+    },
+    value: {
+      type: Number,
+      required: true
+    },
+    update_ms: {
+      type: Number,
+      default: 1000
     }
   },
   setup(props) {
@@ -42,7 +46,7 @@ export default defineComponent({
 
       //Αρχικά παίρνουμε την τωρινή στιγμή και ενημερωνόμαστε με την νέα τιμή του max_cell_voltage
       const currentTime = new Date().toLocaleTimeString(); //const εδώ σημαίνει ότι μπορούμε να αλλάξουμε τις τιμές μέσα αλλά όχι που δείχνει η μεταβλητη, πχ με ανάθεση ξανά
-      const newValue = telemetry_data_obj[props.dataKey];
+      const newValue = toRefs(props);
 
       if (newValue !== null && newValue !== undefined && chartInstance) {
         const labels = chartInstance.data.labels as string[];
@@ -56,24 +60,24 @@ export default defineComponent({
 
         //Εδώ προσθέτουμε τις καινούριες
         labels.push(currentTime);
-        data.push(newValue);
+        data.push(newValue.value.value);
 
         // Save the current chart data to localStorage
-        localStorage.setItem('chartLabels', JSON.stringify(labels));
-        localStorage.setItem('chartData', JSON.stringify(data));
+        // localStorage.setItem('chartLabels', JSON.stringify(labels));
+        // localStorage.setItem('chartData', JSON.stringify(data));
 
         // Dynamically adjust x-axis minimum and maximum values to center the chart
-        const startIndex = Math.max(0, labels.length - maxDataPoints);
-        const endIndex = labels.length - 1;
-        const visibleDataPoints = Math.min(maxDataPoints, labels.length);
-        const middleIndex = Math.floor(visibleDataPoints / 2);
-        const centerIndex = startIndex + middleIndex;
-        const centerLabel = labels[centerIndex];
-        const startLabel = labels[Math.max(0, centerIndex - middleIndex)];
-        const endLabel = labels[Math.min(labels.length - 1, centerIndex + middleIndex)];
+        // const startIndex = Math.max(0, labels.length - maxDataPoints);
+        // const endIndex = labels.length - 1;
+        // const visibleDataPoints = Math.min(maxDataPoints, labels.length);
+        // const middleIndex = Math.floor(visibleDataPoints / 2);
+        // const centerIndex = startIndex + middleIndex;
+        // const centerLabel = labels[centerIndex];
+        // const startLabel = labels[Math.max(0, centerIndex - middleIndex)];
+        // const endLabel = labels[Math.min(labels.length - 1, centerIndex + middleIndex)];
 
-        chartInstance.options.scales!.x!.min = startLabel;
-        chartInstance.options.scales!.x!.max = endLabel;
+        // chartInstance.options.scales!.x!.min = startLabel;
+        // chartInstance.options.scales!.x!.max = endLabel;
 
         chartInstance.update('none');
       }
@@ -121,14 +125,14 @@ export default defineComponent({
             },
             title: {
               display: true,
-              text: 'Chart.js Custom Bar Chart'
+              text: props.title
             }
           }
         },
       };
 
       chartInstance = new Chart(ctx, config);
-      timer = setInterval(updateChart, 100);
+      timer = setInterval(updateChart, props.update_ms);
     });
 
     //Όταν φεύγουμε από την σελίδα το κλείνουμε για να αποφύγουμε memory leaks
