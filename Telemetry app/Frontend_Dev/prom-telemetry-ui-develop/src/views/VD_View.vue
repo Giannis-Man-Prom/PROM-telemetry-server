@@ -1,7 +1,7 @@
 <!-- Εδώ έχουμε το VD View που δεν είναι developped και απλά δείχνει άκυρα δεδομένα -->
 <template>
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
-    <div class="grid grid-cols-3 grid-rows-6 gap-x-8 gap-y-4 h-screen">
+    <div class="grid grid-cols-2 grid-rows-6 gap-x-8 gap-y-4 h-screen">
       <CustomLine
           :labels="'vcu_Accel_x'"
           :items="vcu_Accel_x"

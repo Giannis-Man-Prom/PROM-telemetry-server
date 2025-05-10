@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-center min-h-1/2 rounded bg-gray-50 dark:bg-gray-800">
-    <div class="thermometer-container">
+    <div class="thermometer-container min-h-[200px]"> <!-- Set a minimum height for the container -->
       <!-- Label at the top -->
       <div class="thermometer-top-label">{{ title }}</div>
 
@@ -15,6 +15,7 @@
     </div>
   </div>
 </template>
+
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';

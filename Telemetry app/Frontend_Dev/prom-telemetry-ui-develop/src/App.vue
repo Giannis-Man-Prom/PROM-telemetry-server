@@ -102,7 +102,7 @@ export default defineComponent({
       :items="StatusItemList"
     />
 
-    <div>
+    <div class="flex-grow">
     <!-- Το router view αλλάζει αυτό που βλέπουμε ανάλογα με το link που είμαστε. η αντιστοιχία link-view είναι στο router.ts -->
       <router-view/>
     </div>

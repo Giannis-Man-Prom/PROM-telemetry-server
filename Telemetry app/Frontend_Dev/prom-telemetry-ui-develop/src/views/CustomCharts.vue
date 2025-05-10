@@ -40,10 +40,9 @@
       />
       </div>
       <HorizontalBar
-        :value="-50"
+        :value="test"
         :title="'whatever'"
       />
-      <SPScatter :point="{ x: valueX, y: valueY }" />
     </div>
   </div>
 </template>
@@ -58,7 +57,6 @@ import CustomBarChart from "@/components/CustomBarChart.vue";
 import CustomGauge from "@/components/GaugeChart.vue";
 import LiveThermometer from "../components/Thermometer.vue";
 import HorizontalBar from "../components/HorizontalBar.vue";
-import SPScatter from '../components/SPScatter.vue'
 import VueSpeedometer from 'vue-speedometer';
 import {io} from "socket.io-client";
 import {linechartItems, VehicleTelemetry_data} from "../types/live_telemetry.ts";
@@ -77,7 +75,6 @@ export default defineComponent({
     LiveThermometer,
     VueSpeedometer,
     HorizontalBar,
-    SPScatter
   },
   setup() {
     const labels = reactive<string[]>([]);
@@ -85,6 +82,26 @@ export default defineComponent({
     return {
       labels,
     };
+  },
+  mounted() {
+    // Simulate data for every chart
+    setInterval(() => {
+      // Simulate values for line charts
+      this.air_m_supp = Math.random() * 20 - 10; // Random between -10 and 10
+      this.air_p_state = Math.random() * 20 - 10;
+
+      // Simulate values for the gauge chart
+      this.accu_over_60v_dclink = Math.random() * 20 - 10;
+
+      // Simulate temperature for the thermometer chart
+      this.temperature = Math.random() * 100;
+
+      // Simulate values for scatter chart
+      this.valueX = Math.random() * 20 - 10; // Random between -10 and 10
+      this.valueY = Math.random() * 20 - 10;
+
+      this.test = Math.random() * 100;
+    }, 1000); // Update every 1 second
   },
   created() {
     socket.on('telemetry_data', (telemetry_data) => {
@@ -117,6 +134,7 @@ export default defineComponent({
       air_p_state: 0,
       accu_over_60v_dclink: 0,
       temperature: 0,
+      test: 0,
       valueX: 0,
       valueY: 0
     }

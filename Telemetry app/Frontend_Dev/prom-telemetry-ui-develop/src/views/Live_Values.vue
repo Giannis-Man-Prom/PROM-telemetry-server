@@ -906,12 +906,12 @@ this.sensors_containeritems = [
 <template>
     <!-- Main content -->
   <div class="p-0 mx-0 ml-35 mt-15 min-w-full overflow-y-auto"> <!-- ml==40 because max-w of side bar == 40 AND mt==20 bc statusbar height==3 -->
-    <div class="grid grid-rows-20 grid-cols-12 gap-5">
+    <div class="grid grid-rows-20 grid-cols-10 gap-5">
       <AccuGeneralComponent
           :items="accu_containeritems"
-          :numRows="7"
+          :numRows="10"
           :numCols="5"
-          class="ml-5 row-span-2 col-span-5 row-start-1 col-start-1"
+          class="ml-5 row-span-10 col-span-5 row-start-1 col-start-1"
       />
 
       <GeneralComponent
@@ -919,37 +919,37 @@ this.sensors_containeritems = [
           :numRows="7"
           :numCols="5"
           containername="VCU"
-          class=" ml-5 row-span-2 col-span-5"
+          class="row-span-7 col-span-5 row-start-1 col-start-6"
       />
 
       <GeneralComponent
           :items="left_inv_containeritems"
-          :numRows="7"
-          :numCols="6"
+          :numRows="9"
+          :numCols="5"
           containername="Left_INV"
-          class="row-span-5 col-span-5 col-start-1 "
+          class="ml-5 row-span-9 col-span-5 row-start-11 col-start-1"
       />
 
       <GeneralComponent
           :items="right_inv_containeritems"
           :numRows="7"
-          :numCols="6"
+          :numCols="5"
           containername="Right_INV"
-          class="ml-15 row-span-5 col-span-5  col-start-6"
+          class="row-span-7 col-span-5 row-start-11 col-start-6"
       />
       <GeneralComponent
           :items="dv_containeritems"
-          :numRows="2"
-          :numCols="6"
+          :numRows="5"
+          :numCols="5"
           containername="DV"
-          class="row-span-5 col-span-5 col-start-1 "
+          class="ml-5 row-span-5 col-span-5 row-start-15 col-start-1"
       />
 	  <GeneralComponent
           :items="sensors_containeritems"
-          :numRows="3"
-          :numCols="6"
+          :numRows="2"
+          :numCols="5"
           containername="Sensors"
-          class="row-span-5 col-span-5 col-start-1 "
+          class="row-span-2 col-span-5 row-start-15 col-start-6"
       />
     </div>
   </div>
