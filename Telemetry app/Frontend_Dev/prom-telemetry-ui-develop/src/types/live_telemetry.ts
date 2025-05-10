@@ -15,7 +15,7 @@ export type VehicleTelemetry_data = {
     accu_min_cell_temp?: number;
     accu_dcdc_temp?: number;
     accu_max_humidity?: number;
-    accu_bms_error?: number;
+    accu_bms_error_code?: number;
     accu_tsac_error_code?: number;
     accu_max_soc?: number;
     accu_min_soc?: number;
@@ -33,7 +33,8 @@ export type VehicleTelemetry_data = {
     accu_tsac_fans?: number;
     accu_turbine_fans?: number;
     pdu_max_temperature?: number;
-    pdu_current_sense?: number;
+    pdu_current?: number;
+    
     accu_state?: number;
     accu_last_error?: number;
     accu_dynamic_mode?: number;
@@ -46,8 +47,6 @@ export type VehicleTelemetry_data = {
 
     //vcu
     vcu_dtorque?: number
-    vcu_requested_torque_left?: number;
-    vcu_requested_torque_right?: number;
     vcu_water_temp_in_right?: number;
     vcu_water_temp_out_right?: number;
     vcu_bspdState?: number;
@@ -55,32 +54,30 @@ export type VehicleTelemetry_data = {
     vcu_fan_left?: number;
     vcu_pump_right?: number;
     vcu_pump_left?: number;
-    vcu_apps1?: number;
-    vcu_apps2?: number;
-    vcu_brake_front?: number;
-    vcu_brake_rear?: number;
-    vcu_hall_fr?: number;
-    vcu_hall_fl?: number;
     vcu_apps_right_implausibility?: number;
     vcu_apps_left_implausibility?: number;
     vcu_apps_deviation?: number;
     vcu_GE_right_dutyCycle?: number;
-    vcu_GE_left_dutyCycle?: number;
     vcu_initial_check_state?: number;
-    vcu_node_status?: number;
     vcu_water_temp_in_left?: number;
     vcu_water_temp_out_left?: number;
     dash_power_limiter?: number;
     dash_traction_def?: number;
-    vcu_velx?: number;
-    vcu_vely?: number;
-    vcu_accel_x?: number;
-    vcu_accel_y?: number;
-    vcu_accel_z?: number;
-    vcu_yaw_rate?: number;
-    vcu_gyro_x?: number;
-    vcu_gyro_y?: number;
-    vcu_gyro_z?: number;
+    vcu_yaw_rate_ref?: number;
+    vcu_torque_left?: number;
+    vcu_torque_right?: number;
+    vcu_dw?: number;
+    vcu_TVtrqLeft?: number;
+    vcu_TVtrqRight?: number;
+    vcu_antiw?: number;
+    vcu_error?: number;
+    vcu_integral?: number;
+    vcu_integral_error?: number
+    vcu_m_z_nonsat?: number;
+    vcu_m_z_sat?: number;
+    vcu_prevError?: number;
+    vcu_SteeringLinear_mm?: number;
+    vcu_proportional?: number;
 
     //right_inv
     right_inv_critical_hw_status?: number;
@@ -122,6 +119,7 @@ export type VehicleTelemetry_data = {
     right_inv_max_velocity?: number;
     right_inv_min_velocity?: number;
     right_inv_distance?: number;
+    vcu_requested_torque_right?: number;
 
     //left_inv
     left_inv_ar?: number;
@@ -166,6 +164,7 @@ export type VehicleTelemetry_data = {
     left_inv_max_velocity?: number;
     left_inv_min_velocity?: number;
     left_inv_distance?: number;
+    vcu_requested_torque_left?: number;
 
     //dv
     vcu_as_ready?: number;
@@ -177,18 +176,38 @@ export type VehicleTelemetry_data = {
     vcu_res_radio_quality?: number;
     vcu_as_status?: number;
     vcu_dv_status?: number;
+    vcu_node_status?: number;
     vcu_steering_target?: number;
     vcu_brake_target?: number;
     vcu_speed_target?: number;
     vcu_pc_temp?: number;
     vcu_lap_counter?: number;
-    vcu_dv_velx?: number;
-    vcu_dv_vely?: number;
+    vcu_DV_Velx?: number;
+    vcu_DV_Vely?: number;
     vcu_dv_accel_x?: number;
     vcu_dv_accel_y?: number;
     vcu_dv_yaw_rate?: number;
     vcu_pc_flag?: number;
     vcu_as_ready_delay_passed?: number;
+
+    //sensors
+    sensors_linear_rl?: number;
+    sensors_linear_rr?: number;
+    vcu_apps1?: number;
+    vcu_apps2?: number;
+    vcu_brake_front?: number;
+    vcu_brake_rear?: number;
+    vcu_hall_fr?: number;
+    vcu_hall_fl?: number;
+    vcu_VelX?: number;
+    vcu_VelY?: number;
+    vcu_yaw_rate?: number;
+    vcu_Accel_x?: number;
+    vcu_Accel_y?: number;
+    vcu_Accel_z?: number;
+    vcu_Gyro_x?: number;
+    vcu_Gyro_y?: number;
+    vcu_Gyro_z?: number;
 
     //radio
     radio_rssi?: number;
