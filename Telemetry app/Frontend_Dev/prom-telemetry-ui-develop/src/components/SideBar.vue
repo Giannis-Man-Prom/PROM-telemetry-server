@@ -39,6 +39,18 @@
                 <router-link to="/" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Live Values</router-link>
               </li>
               <li>
+                <router-link to="/accuview" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">ACCU</router-link>
+              </li>
+              <li>
+                <router-link to="/invview" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">INVERTERS</router-link>
+              </li>
+              <li>
+                <router-link to="/sensorsview" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">SENSORS</router-link>
+              </li>
+              <li>
+                <router-link to="/vcuview" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">VCU</router-link>
+              </li>
+              <li>
                 <router-link to="/vd/telemetry" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">VD View</router-link>
               </li>
               <li>
