@@ -48,9 +48,30 @@ class SerialRead:
         seth = re.compile(r'.*(usbserial|usbmodem|serial|stm|STM|STM32|Σειριακή συσκευή ).*')
 
         if op_sys == "Linux":
+            for port in [port for port in self.ports if port.serial_number == '3086377C3233']:
+                # extracting only the string necessary for the connection to the usb and to the lib
 
-            return "this is a Linux"
+                sub_string = self.__substring_extractor(r'^([^ ]+)', str(port)).group(1)
 
+                """Attempts to open the serial connection."""
+                while True:
+                    try:
+                        print("Opening the serial port connection")
+                        serial_connection_inst.port = sub_string
+                        serial_connection_inst.timeout = 0.5
+                        serial_connection_inst.open()
+
+                        break
+
+                    except serial.SerialException as e:
+                        print(f"Error opening serial port: {e}")
+                        time.sleep(0.6)
+
+            if serial_connection_inst.is_open:
+                return serial_connection_inst
+
+            else:
+                return None
 
 
         elif op_sys == "Windows":
