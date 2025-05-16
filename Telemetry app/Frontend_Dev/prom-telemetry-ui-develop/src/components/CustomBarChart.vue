@@ -1,6 +1,6 @@
 <!-- Εδώ φτιάχνουμε, όπως λέει και ο τίτλος ένα barchart -->
 <template>
-  <div class="flex items-center justify-center min-h-1/2 rounded bg-gray-50 dark:bg-gray-800">
+  <div class="flex items-center justify-center min-h-[350px] rounded bg-gray-50 dark:bg-gray-800">
     <canvas ref="chartCanvas"></canvas>
   </div>
 </template>
@@ -9,7 +9,6 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, onBeforeUnmount, toRefs } from 'vue';
 import Chart, { ChartConfiguration } from 'chart.js/auto';
-import telemetry_data_obj from '../App.vue';
 
 export default defineComponent({
   name: "CustomBarChart",
@@ -34,13 +33,17 @@ export default defineComponent({
     update_ms: {
       type: Number,
       default: 1000
+    },
+    max_dp: {
+      type: Number,
+      default: 100
     }
   },
   setup(props) {
     const chartCanvas = ref<HTMLCanvasElement | null>(null); //το Canvas είναι έτοιμο element που χρησιμοποιείται
     let chartInstance: Chart | null = null;
     let timer: ReturnType<typeof setInterval> | null = null;
-    const maxDataPoints = 2 * 60 * 10; // Κρατάμε 2 λεπτά δεδομένουν που παίρνουμε ανά 100ms intervals
+    const maxDataPoints = props.max_dp;
 
     const updateChart = () => {
 
@@ -48,7 +51,7 @@ export default defineComponent({
       const currentTime = new Date().toLocaleTimeString(); //const εδώ σημαίνει ότι μπορούμε να αλλάξουμε τις τιμές μέσα αλλά όχι που δείχνει η μεταβλητη, πχ με ανάθεση ξανά
       const newValue = toRefs(props);
 
-      if (newValue !== null && newValue !== undefined && chartInstance) {
+      if (newValue.value !== null && newValue.value !== undefined && chartInstance) {
         const labels = chartInstance.data.labels as string[];
         const data = chartInstance.data.datasets[0].data as number[];
 
@@ -62,6 +65,7 @@ export default defineComponent({
         labels.push(currentTime);
         data.push(newValue.value.value);
 
+        //Εδώ είναι για να αποθηκεύονται οι τιμές των chart όταν αλλάζουμε view
         // Save the current chart data to localStorage
         // localStorage.setItem('chartLabels', JSON.stringify(labels));
         // localStorage.setItem('chartData', JSON.stringify(data));

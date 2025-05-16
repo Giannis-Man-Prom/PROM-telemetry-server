@@ -1,6 +1,6 @@
 <template>
-  <div class="flex items-center justify-center min-h-1/2 rounded bg-gray-50 dark:bg-gray-800">
-    <div class="thermometer-container min-h-[200px]"> <!-- Set a minimum height for the container -->
+  <div class="flex items-center justify-center min-h-[350-px] rounded bg-gray-50 dark:bg-gray-800">
+    <div class="thermometer-container min-h-[350px]"> <!-- Set a minimum height for the container -->
       <!-- Label at the top -->
       <div class="thermometer-top-label">{{ title }}</div>
 
@@ -67,7 +67,7 @@ export default defineComponent({
 .thermometer-top-label {
   font-weight: bold;
   font-size: 18px;  /* Adjust font size */
-  color: #333;
+  color: #fff;
   margin-bottom: 10px;  /* Spacing between the top label and thermometer */
   text-align: center;
   text-transform: uppercase;
@@ -101,7 +101,7 @@ export default defineComponent({
 .thermometer-label {
   font-weight: bold;
   font-size: 16px;
-  color: #333;
+  color: #f00;
   margin-top: 10px;
   text-align: center;
   letter-spacing: 0.5px;

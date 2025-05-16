@@ -1,11 +1,11 @@
 <template>
-    <div class="flex items-start justify-center min-h-1/2 rounded bg-gray-50 dark:bg-gray-800 ">
+    <div class="flex items-start justify-center min-h-[350px] rounded bg-gray-50 dark:bg-gray-800 ">
         <apexchart 
             type="radialBar" 
             :options="chartOptions" 
             :series="series" 
             width="125%" 
-            height="125%"
+            height="100%"
         />
     </div>
   </template>
@@ -13,7 +13,6 @@
   <script lang="ts">
   import { defineComponent, ref, watch, onMounted, onBeforeUnmount } from 'vue';
   import VueApexCharts from "vue3-apexcharts";
-  import { variableContainer } from "../types/live_telemetry.ts";
   
   export default defineComponent({
     name: "CustomGauge",
@@ -64,6 +63,7 @@
                 name: {
                 offsetY: -10,
                 fontSize: '16px',
+                color: '#f00',
                 },
                 value: {
                 fontSize: '22px',
@@ -79,18 +79,13 @@
         labels: [props.title],
         });
 
-  
-      // Update series when items prop changes
       watch(() => props.items, (newItems: number) => {
         if (newItems && newItems !== undefined) {
             const rawValue = newItems;
             const normalized = ((rawValue - props.min) / (props.max - props.min)) * 100;
-            series.value = [Math.max(0, Math.min(100, normalized))]; // Clamp between 0–100
+            series.value = [Math.max(0, Math.min(100, normalized))];
         }
       }, { immediate: true });
-  
-      // Optional: setup a periodic update, if needed (not from server now, but from props)
-      // You don't actually need setInterval here if items are coming via props
   
       return {
         series,

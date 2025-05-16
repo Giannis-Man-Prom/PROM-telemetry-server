@@ -1,9 +1,8 @@
 <!-- Παρόμοια διαδικασία με το CustomBarChart -->
 
 <template>
-  <div class="flex items-center justify-center min-h-1/2 rounded bg-gray-50 dark:bg-gray-800 ">
+  <div class="flex items-center justify-center min-h-[350px] rounded bg-gray-50 dark:bg-gray-800 ">
     <canvas ref="chartCanvas">
-
     </canvas>
   </div>
 </template>
@@ -11,7 +10,6 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, onBeforeUnmount, toRefs } from 'vue';
 import Chart, { ChartConfiguration } from 'chart.js/auto';
-import { linechartItems } from "../types/live_telemetry.ts";
 
 export default defineComponent({
   name: "CustomLine",
@@ -39,18 +37,21 @@ export default defineComponent({
     update_ms: {
       type: Number,
       default: 1000
+    },
+    max_dp: {
+      type: Number,
+      default: 100
     }
   },
   setup(props) {
     const chartCanvas = ref<HTMLCanvasElement | null>(null);
     let chartInstance: Chart | null = null;
     let timer: ReturnType<typeof setInterval> | null = null;
-    const maxDataPoints = 60 * 10; // 10 minutes at 1-second intervals
+    const maxDataPoints = props.max_dp; // 10 minutes at 1-second intervals
 
     const updateChart = () => {
       const currentTime = new Date().toLocaleTimeString();
       const items = toRefs(props);
-      //console.log(items.items.value);
 
       if (chartInstance) {
         const labels = chartInstance.data.labels as string[];
@@ -75,6 +76,9 @@ export default defineComponent({
 
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
+
+      localStorage.removeItem('lineChartLabels');
+      localStorage.removeItem('lineChartData');
 
       const savedLabels = JSON.parse(localStorage.getItem('lineChartLabels') || '[]');
       const savedData = JSON.parse(localStorage.getItem('lineChartData') || '[]');

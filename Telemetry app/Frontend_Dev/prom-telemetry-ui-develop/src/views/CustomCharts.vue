@@ -1,6 +1,6 @@
 <template>
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
-    <div class="grid grid-cols-2 grid-rows-3 gap-x-8 gap-y-4 h-screen">
+    <div class="grid grid-cols-2 gap-x-8 gap-y-4 h-screen">
       <CustomLine
           :labels="'air_m_supp'"
           :items="air_m_supp"
@@ -13,15 +13,15 @@
           :update_ms="300"
       />
       <CustomGauge
-          :labels="'accu_over_60v_dclink'"
-          :items="accu_over_60v_dclink"
-          :title="'accu_over_60v_dclink'"
+          :labels="'temperature'"
+          :items="temperature"
+          :title="'temperature'"
       />
       <LiveThermometer
           :temperature="temperature"
           :title="'whatever'"
       />
-      <div class="flex items-start justify-center min-h-1/2 rounded bg-gray-50 dark:bg-gray-800 pt-16">
+      <div class="flex items-start justify-center rounded bg-gray-50 dark:bg-gray-800 pt-16">
         <VueSpeedometer
         :value="333"
         :minValue="0"
@@ -64,7 +64,7 @@ import LiveThermometer from "../components/Thermometer.vue";
 import HorizontalBar from "../components/HorizontalBar.vue";
 import VueSpeedometer from 'vue-speedometer';
 import {io} from "socket.io-client";
-import {linechartItems, VehicleTelemetry_data} from "../types/live_telemetry.ts";
+import {VehicleTelemetry_data} from "../types/live_telemetry.ts";
 
 const socket = io(import.meta.env.VITE_SOCKET_URL).connect()
 
@@ -96,7 +96,7 @@ export default defineComponent({
       this.air_p_state = Math.random() * 20 - 10;
 
       // Simulate values for the gauge chart
-      this.accu_over_60v_dclink = Math.random() * 20 - 10;
+      this.accu_over_60v_dclink = Math.random() * 20;
 
       // Simulate temperature for the thermometer chart
       this.temperature = Math.random() * 100;

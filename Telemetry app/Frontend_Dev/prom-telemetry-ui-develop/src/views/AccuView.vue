@@ -1,6 +1,6 @@
 <template>
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
-    <div class="grid grid-cols-2 grid-rows-3 gap-x-8 gap-y-4 h-screen">
+    <div class="grid grid-cols-2 gap-x-8 gap-y-4 h-screen">
       <CustomLine
           :labels="'accu_total_voltage_vs'"
           :items="accu_total_voltage_vs"
@@ -33,7 +33,7 @@ import CustomLine from "@/components/CustomLine.vue";
 import CustomGauge from "@/components/GaugeChart.vue";
 import VueSpeedometer from 'vue-speedometer';
 import {io} from "socket.io-client";
-import {linechartItems, VehicleTelemetry_data} from "../types/live_telemetry.ts";
+import {VehicleTelemetry_data} from "../types/live_telemetry.ts";
 
 const socket = io(import.meta.env.VITE_SOCKET_URL).connect()
 

@@ -1,7 +1,7 @@
 <!-- Εδώ έχουμε το VD View που δεν είναι developped και απλά δείχνει άκυρα δεδομένα -->
 <template>
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
-    <div class="grid grid-cols-2 grid-rows-6 gap-x-8 gap-y-4 h-screen">
+    <div class="grid grid-cols-2 gap-x-8 gap-y-4 h-screen">
       <CustomLine
           :labels="'vcu_Accel_x'"
           :items="vcu_Accel_x"
@@ -63,14 +63,11 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import SideBar from '../components/SideBar.vue';
-import BarChartComponent from '@/components/CustomBarChart.vue';
-
 import CustomLine from "@/components/CustomLine.vue";
 import CustomGauge from "@/components/GaugeChart.vue";
 import {io} from "socket.io-client";
-import {api_res, event_connection_res} from "../types/socketIO.types.ts"; //"@" instead of ".."
-import {linechartItems, VehicleTelemetry_data} from "../types/live_telemetry.ts";
+import {api_res} from "../types/socketIO.types.ts"; //"@" instead of ".."
+import {VehicleTelemetry_data} from "../types/live_telemetry.ts";
 
 const socket = io(import.meta.env.VITE_SOCKET_URL).connect()
 
