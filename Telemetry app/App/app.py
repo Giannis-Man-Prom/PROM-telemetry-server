@@ -37,7 +37,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 # defining these variables to our current env
 FLASK_CONTAINER_PORT = os.getenv('FLASK_CONTAINER_PORT')
 
-DEBUG = os.getenv('DEBUG')
+DEBUG = os.getenv('DEBUG', 'False').lower() in ['true', '1', 'yes']
 
 # Adding socket functionality to our server.
 socketio = SocketIO(app, cors_allowed_origins="*")
@@ -406,6 +406,7 @@ def read_from_serial_thread(telemetry):
 def serve_frontend():
     return send_from_directory("dist", "index.html")
 
+
 if __name__ == '__main__':
-    webbrowser.open("http://127.0.0.1:8081")
-    socketio.run(app, debug=DEBUG, host='0.0.0.0', port=FLASK_CONTAINER_PORT, allow_unsafe_werkzeug=True)
+    webbrowser.open("http://127.0.0.1:5000")
+    socketio.run(app, debug=1, host='0.0.0.0', port=int(FLASK_CONTAINER_PORT), allow_unsafe_werkzeug=True)
