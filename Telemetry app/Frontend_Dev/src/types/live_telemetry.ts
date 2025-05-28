@@ -1,7 +1,6 @@
-import re
-from collections import defaultdict
-
-input_string = """//accu
+//Αυτό το datatype έχει το σύνολο των δεδομένων για την τηλεμετρία
+export type VehicleTelemetry_data = {
+    //accu
     accu_total_voltage_vs?: number;
     accu_accu_current?: number;
     accu_over_60v_dclink?: number; 
@@ -35,7 +34,6 @@ input_string = """//accu
     accu_turbine_fans?: number;
     pdu_max_temperature?: number;
     pdu_current?: number;
-    
     accu_state?: number;
     accu_last_error?: number;
     accu_dynamic_mode?: number;
@@ -58,7 +56,6 @@ input_string = """//accu
     vcu_apps_right_implausibility?: number;
     vcu_apps_left_implausibility?: number;
     vcu_apps_deviation?: number;
-    vcu_GE_right_dutyCycle?: number;
     vcu_initial_check_state?: number;
     vcu_water_temp_in_left?: number;
     vcu_water_temp_out_left?: number;
@@ -194,6 +191,8 @@ input_string = """//accu
     //sensors
     sensors_linear_rl?: number;
     sensors_linear_rr?: number;
+    sensors_linear_fl?: number;
+    sensors_linear_fr?: number;
     vcu_apps1?: number;
     vcu_apps2?: number;
     vcu_brake_front?: number;
@@ -210,61 +209,42 @@ input_string = """//accu
     vcu_Gyro_y?: number;
     vcu_Gyro_z?: number;
 
-"""
-output_string = ""
+    //radio
+    radio_rssi?: number;
+    radio_packet_loss?: number;
+    radio_wrong_crc?: number;
+    radio_kbps?: number;
+    dv_R2D?: number;
+};
 
-categories = []
-new = 0
 
-# Split the input by lines
-lines = input_string.splitlines()
 
-# Initialize variables
-current_category = None
+//Εδώ ορίζουμε έναν τύπο δεδομένων με optional (?) όνομα, υποχρεωτικό label list που περιέχει είτε string
+//είτε undefined και τέλος value list με αριθμούς optional
+export type variableContainer = {
+    containerName?: string,
+    label: (string | undefined)[]; // Indexable type for label
+    value?: (number)[]; // Indexable type for value
+};
 
-for line in lines:
-    line = line.lstrip()
-    # Check if the line starts with a comment (//) marking the category
-    if line.strip().startswith('//'):
-        category_match = re.match(r"//(\w+)", line.strip())
-        if category_match:
-            # Append the category name (not the whole match object)
-            categories.append(category_match.group(1)+'_')
-            output_string += 'this.'+categories[-1]+'containeritems = [\n'
-    elif line == "":
-        output_string += ']; \n'
-    else:
-        # Step 1: Check if the beginning of the string matches any item in the list and remove it
-        for item in categories:
-            if line.startswith(item):
-                # Remove the matched part from the start of the string
-                line = line[len(item):]
-                break  # We only want to remove the first match
+//Αντίστοιχα αλλά με τις αλλαγές που φαίνονται
+export type sidebarItems = {
+    label: (string)[];
+    value?: (number)[];
+    //lastNumber?: (number)[];
+    // label2?: string;
+    // value2?: number;
+    // label3?: string;
+    // value3?: number;
+}
 
-        # Step 2: Extract characters before the question mark
-        match = re.match(r"^[^?]+", line)  # Match everything before the '?'
-        output_string += " { label : ['"+match.group(0)+"'] },\n"
+export type statusItems = {
+    label: (string | undefined)[];
+    value?: (number)[];
+}
 
-        lines = input_string.splitlines()
-
-categories = []
-i = 0
-
-for line in lines:
-    line = line.lstrip()
-    if line.strip().startswith('//'):
-        category_match = re.match(r"//(\w+)", line.strip())
-        categories.append(category_match.group(1)+'_')
-        output_string += "////////////     "+category_match.group(1)+"     ////////////\n"
-        i = 0
-    elif line == "":
-        continue
-    else:
-        # Step 2: Extract characters before the question mark
-        match = re.match(r"^[^?]+", line)  # Match everything before the '?'
-        output_string += "\t\t\tif (this.telemetry_data_obj." + match.group(0) +" !== undefined) {\n\t\t\t\tthis."+categories[-1]+"containeritems["+str(i)+"].value = [this.telemetry_data_obj."+match.group(0)+"];\n\t\t\t}\n"
-        i += 1
-
-with open("output.txt", "w") as file:
-    # Write the string to the file
-    file.write(output_string)
+export type linechartItems = {
+    variableName?: string;
+    label?: string[];
+    value?: number[];
+}

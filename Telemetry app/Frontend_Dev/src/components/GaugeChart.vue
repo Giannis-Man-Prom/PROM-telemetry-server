@@ -68,6 +68,7 @@
                 value: {
                 fontSize: '22px',
                 offsetY: 10,
+                color: '#fff',
                 formatter: function (val: number) {
                     const actualValue = (val / 100) * (props.max - props.min) + props.min;
                     return `${actualValue}`;

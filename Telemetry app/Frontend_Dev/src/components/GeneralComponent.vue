@@ -42,7 +42,7 @@
       >
         <!-- Show the appropriate content based on the type of item -->
         <template v-if="isBoolean(String(item.label[0])) || item.label[0]==='node_status'"> <!-- write all inclusions for boolean vars. -->
-          <span> {{ item.label[0] }} </span>
+          <span> node_status: {{ item.label[0] }} </span>
         </template>
 
 
@@ -77,6 +77,9 @@
           <template v-if="item.value && rightShift(item.value[0], 3) === 1">
             <span> {{item.label[0]}}: {{item.value[0]}} <br>  HW_ST_LINK_CONNECTED </span>
           </template>
+          <template v-else>
+            <span> {{item.label[0]}}: </span>
+          </template>
         </template>
 
         <template v-if="item.label[0] === 'aux_hw_status' "> <!-- fix for ith- msb !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
@@ -95,6 +98,9 @@
           <template v-if="item.value && item.value[0] === 4">
             <span> aux_hw-status: <br> INITIALIZING </span>
           </template>
+          <template v-else>
+            <span> aux_hw-status: </span>
+          </template>
         </template>
 
         <template v-if="item.label[0] === 'latched_error' "> <!-- fix for ith- msb !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
@@ -110,7 +116,9 @@
             <span> latched_error: <br>
               WARNING_EXISTING </span>
           </template>
-
+          <template v-else>
+            <span> latched_error:</span>
+          </template>
         </template>
 
 
@@ -232,6 +240,9 @@
           </template>
           <template v-if="item.value && item.value[0] === 38">
             <span> last_error: <br> NO LV SUPPLY </span>
+          </template>
+          <template v-else>
+            <span> last_error: </span>
           </template>
         </template>
 

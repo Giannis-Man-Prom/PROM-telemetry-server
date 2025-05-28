@@ -409,4 +409,4 @@ def serve_frontend():
 
 if __name__ == '__main__':
     webbrowser.open("http://127.0.0.1:5000")
-    socketio.run(app, debug=1, host='0.0.0.0', port=int(FLASK_CONTAINER_PORT), allow_unsafe_werkzeug=True)
+    socketio.run(app, debug=DEBUG, host='0.0.0.0', port=int(FLASK_CONTAINER_PORT), allow_unsafe_werkzeug=True)

@@ -48,6 +48,10 @@
           :value="valueX"
           :update_ms="300"
       />
+      <SPScatterChart
+          :point="point"
+          :title="'whatever'"
+      />
     </div>
   </div>
 </template>
@@ -62,6 +66,7 @@ import CustomBarChart from "@/components/CustomBarChart.vue";
 import CustomGauge from "@/components/GaugeChart.vue";
 import LiveThermometer from "../components/Thermometer.vue";
 import HorizontalBar from "../components/HorizontalBar.vue";
+import SPScatterChart from "../components/SPScatter.vue";
 import VueSpeedometer from 'vue-speedometer';
 import {io} from "socket.io-client";
 import {VehicleTelemetry_data} from "../types/live_telemetry.ts";
@@ -80,6 +85,7 @@ export default defineComponent({
     LiveThermometer,
     VueSpeedometer,
     HorizontalBar,
+    SPScatterChart
   },
   setup() {
     const labels = reactive<string[]>([]);
@@ -106,6 +112,9 @@ export default defineComponent({
       this.valueY = Math.random() * 20 - 10;
 
       this.test = Math.random() * 100;
+
+      this.point = { x: this.valueX, y: this.valueY };
+      console.log(this.point);
     }, 1000); // Update every 1 second
   },
   created() {
@@ -141,7 +150,8 @@ export default defineComponent({
       temperature: 0,
       test: 0,
       valueX: 0,
-      valueY: 0
+      valueY: 0,
+      point: { x: 0, y: 0 }
     }
   }
 })

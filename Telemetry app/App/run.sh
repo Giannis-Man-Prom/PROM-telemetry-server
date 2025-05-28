@@ -17,7 +17,7 @@ python -m ensurepip --upgrade
 
 # Install dependencies from the local packages folder (offline)
 echo "Installing dependencies from local packages..."
-pip install --find-links=packages/ -r requirements.txt
+pip install --no-index --find-links=packages -r requirements.txt
 
 # Run the application
 echo "Running your application..."
