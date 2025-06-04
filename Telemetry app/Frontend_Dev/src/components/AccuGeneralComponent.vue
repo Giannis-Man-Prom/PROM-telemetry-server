@@ -141,7 +141,7 @@ export default defineComponent({
       popupContent: '',
       popupWidth: '80%',
       popupHeight: '80%',
-      BooleanList: ['over_60v_dclink', 'air_m_state', 'air_m_supp', 'air_p_state', 'air_p_supp', 'precharge_state', 'ts_active', 'vicor_overtemp']
+      BooleanList: ['over_60v_dclink', 'air_m_state', 'air_m_supp', 'air_p_state', 'air_p_supp', 'precharge_state', 'ts_active', 'vicor_overtemp', 'imd_sd_state', 'imd_ok', 'ams_sd_state', 'ams_ok']
     };
   },
   /* Εδώ έχουμε όλες τις συναρτήσεις που χρησιμοποιήσαμε πριν για να βλέπουμε αν κάτι είναι boolean και για τα popup/κουμπιά */

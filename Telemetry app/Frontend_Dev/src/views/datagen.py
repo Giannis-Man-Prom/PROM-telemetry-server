@@ -35,7 +35,6 @@ input_string = """//accu
     accu_turbine_fans?: number;
     pdu_max_temperature?: number;
     pdu_current?: number;
-    
     accu_state?: number;
     accu_last_error?: number;
     accu_dynamic_mode?: number;
@@ -45,9 +44,13 @@ input_string = """//accu
     accu_precharge_voltage?: number;
     accu_precharge_time?: number;
     accu_imd_status?: number;
+    accu_imd_ok?: number;
+    accu_imd_sd_state?:number;
+    accu_ams_ok?: number;
+    accu_ams_sd_state?:number;
 
     //vcu
-    vcu_dtorque?: number
+    vcu_dtorque?: number;
     vcu_water_temp_in_right?: number;
     vcu_water_temp_out_right?: number;
     vcu_bspdState?: number;

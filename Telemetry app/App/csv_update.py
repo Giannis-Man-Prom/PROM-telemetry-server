@@ -44,9 +44,13 @@ input_string = """//accu
     accu_precharge_voltage?: number;
     accu_precharge_time?: number;
     accu_imd_status?: number;
+    accu_imd_ok?: number;
+    accu_imd_sd_state?:number;
+    accu_ams_ok?: number;
+    accu_ams_sd_state?:number;
 
     //vcu
-    vcu_dtorque?: number
+    vcu_dtorque?: number;
     vcu_water_temp_in_right?: number;
     vcu_water_temp_out_right?: number;
     vcu_bspdState?: number;
@@ -209,6 +213,13 @@ input_string = """//accu
     vcu_Gyro_x?: number;
     vcu_Gyro_y?: number;
     vcu_Gyro_z?: number;
+
+    //radio
+    radio_rssi?: number;
+    radio_packet_loss?: number;
+    radio_wrong_crc?: number;
+    radio_kbps?: number;
+    dv_R2D?: number;
 
 """
 output_string = ""
