@@ -104,8 +104,8 @@
         <slot name="top"></slot>
       </div>
       <div class="popup-content">
-        <p v-if="showBmsErrorPopup">This is the BMS Error content.</p>
-        <p v-if="showTsacErrorPopup">This is the TSAC Error content.</p>
+        <p v-if="showBmsErrorPopup"> {{ printBMSerror(14) }} </p>
+        <p v-if="showTsacErrorPopup">{{ printTSACerror(33) }}</p>
         <p v-if="showAccuInfoPopup">This is the accu info content.</p>
         <button v-if="showBmsErrorPopup" @click="closeBmsErrorPopup" class="close-btn">Close</button>
         <button v-if="showTsacErrorPopup" @click="closeTsacErrorPopup" class="close-btn">Close</button>
@@ -149,6 +149,60 @@ export default defineComponent({
     isBoolean(label: string): boolean {
       return this.BooleanList.includes(label);
     },
+    printBMSerror(ind: number) {
+      const messages = [
+        'BMS_OK',
+        'BMS_OVERVOLTAGE',
+        'BMS_UNDERVOLTAGE',
+        'OVERCURRENT_CHARGE',
+        'OVERCURRENT_DISCHARGE',
+        'OVERTEMP',
+        'UNDERTEMP',
+        'ISABELLE_DEAD',
+        'COMMUNICATION_ERROR',
+        'SLAVE_ERROR',
+        'HUMIDITY_ERROR',
+        'ISABELLE_NO_VOLTAGE',
+        'OVERCURRENT',
+        'OVERCURRENT_REGEN'
+      ];
+
+      const errorIndex = this.items[ind]?.value?.[0];
+      return messages[errorIndex] || 'Unknown BMS error';
+    },
+    printTSACerror(ind: number) {
+      const messages = [
+        'TSAC_OK',
+        'IMD_ERROR',
+        'AVI_STATUS_ERROR',
+        'AIR_M_STUCK',
+        'AIR_P_STUCK',
+        'AIR_M_IMPLAUSIBILITY',
+        'AIR_P_IMPLAUSIBILITY',
+        'PC_RELAY_IMPLAUSIBILITY',
+        'PC_CIRCUIT_ERROR',
+        'DCDC_OVERTEMP',
+        'ELCON_HW_FAILURE',
+        'ELCON_OVERTEMP_PROTECTION',
+        'ELCON_INPUT_ERROR',
+        'ELCON_REVERSE_POLARITY',
+        'ELCON_COMMUNICATION_ERROR'
+      ];
+
+      const errorIndex = this.items[ind]?.value?.[0];
+      return messages[errorIndex] || 'Unknown TSAC error';
+    },
+    printDynamic() {
+      const messages = [
+        'Inspection',
+        'Testing',
+        'Track',
+        'Charging',
+      ];
+
+      const errorIndex = this.items[35]?.value?.[0];
+      return messages[errorIndex] || 'Unknown Value';
+    },
     showPopup(item: variableContainer): void {
       this.closeAllPopups();
 
@@ -174,6 +228,15 @@ export default defineComponent({
         if (item.label[i] && item.value && item.value[i] !== undefined) {
           content += `${item.label[i]}: ${item.value[i]} `;
         }
+      }
+      if (item.label[0] == 'last_tsac_error_code') {
+        content += `${this.printTSACerror(item.value?.[0] ?? -1)} `;
+      }
+      if (item.label[0] == 'last_bms_error_code') {
+        content += `${this.printBMSerror(item.value?.[0] ?? -1)} `;
+      }
+      if (item.label[0] == 'dynamic_mode') {
+        content += `${this.printDynamic(item.value?.[0] ?? -1)} `;
       }
 
       // if (item.label[1] && item.value[1] !== undefined) {
@@ -226,7 +289,7 @@ export default defineComponent({
       this.showTsacErrorPopup = false;
       this.showAccuInfoPopup = false;
       //window.removeEventListener('click', this.handleOutsideClick);
-    }
+    },
   }
 });
 </script>

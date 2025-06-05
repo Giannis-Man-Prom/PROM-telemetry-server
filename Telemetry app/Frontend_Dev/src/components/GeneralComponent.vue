@@ -18,7 +18,6 @@
         <span> {{containername}} </span>
       </button>
 
-
       <!-- Loop through the items and create a button for each  -->
       <button
           v-for="(item, index) in items"
@@ -278,7 +277,7 @@
       </div>
       <div class="popup-content">
 
-        <p v-if="showInfoPopup">This is the accu info content.</p>
+        <p v-if="showInfoPopup">This is the {{ containername }} info content.</p>
         <button v-if="showInfoPopup" @click="closeInfoPopup" class="close-btn">Close</button>
       </div>
     </div>
@@ -286,13 +285,6 @@
     <!-- Other popup components -->
   </div>
 </template>
-
-
-
-
-
-
-
 
 <script lang="ts">
 //import GeneralComponent from "@/components/GeneralComponent.vue";
