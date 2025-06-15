@@ -13,7 +13,7 @@ python -m ensurepip --upgrade
 
 REM Install dependencies from the packages folder (Offline)
 echo Installing dependencies from local packages...
-pip install --find-links=packages -r requirements.txt
+pip install -r requirements.txt
 
 REM Run the application
 echo Running your application...

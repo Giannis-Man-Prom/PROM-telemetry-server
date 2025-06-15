@@ -105,7 +105,7 @@
       </div>
       <div class="popup-content">
         <p v-if="showBmsErrorPopup"> {{ printBMSerror(14) }} </p>
-        <p v-if="showTsacErrorPopup">{{ printTSACerror(33) }}</p>
+        <p v-if="showTsacErrorPopup">{{ printTSACerror(15) }}</p>
         <p v-if="showAccuInfoPopup">This is the accu info content.</p>
         <button v-if="showBmsErrorPopup" @click="closeBmsErrorPopup" class="close-btn">Close</button>
         <button v-if="showTsacErrorPopup" @click="closeTsacErrorPopup" class="close-btn">Close</button>
@@ -229,14 +229,20 @@ export default defineComponent({
           content += `${item.label[i]}: ${item.value[i]} `;
         }
       }
-      if (item.label[0] == 'last_tsac_error_code') {
-        content += `${this.printTSACerror(item.value?.[0] ?? -1)} `;
+      if (item.label[0] == 'last_tsac_error') {
+        content = `${this.printTSACerror(27)} `;
       }
-      if (item.label[0] == 'last_bms_error_code') {
-        content += `${this.printBMSerror(item.value?.[0] ?? -1)} `;
+      if (item.label[0] == 'last_bms_error') {
+        content = `${this.printBMSerror(26)} `;
       }
       if (item.label[0] == 'dynamic_mode') {
-        content += `${this.printDynamic(item.value?.[0] ?? -1)} `;
+        content = `${this.printDynamic(35)} `;
+      }
+      if (item.label[0] == 'tsac_error') {
+        content = `${this.printTSACerror(15)} `;
+      }
+      if (item.label[0] == 'bms_error') {
+        content = `${this.printBMSerror(14)} `;
       }
 
       // if (item.label[1] && item.value[1] !== undefined) {

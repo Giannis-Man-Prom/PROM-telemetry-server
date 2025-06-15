@@ -314,6 +314,7 @@ export default defineComponent({
       popupHeight: '80%', // Initial popup height
       BooleanList: ['accu_over_60v_dclink', 'accu_air_m_state', 'sd_closed', 'precharge_done', 'pc_flag', 'r2d_flag', 'watchdog_status', 'bspdState',
         'fan_right', 'fan_left', 'pump_right', 'pump_left', 'apps_right_implausibility', 'apps_left_implausibility', 'res_k3_switch', 'res_k2_switch',
+        'lim_speed_limiter', 'lim_power_limiter', 'lim_stall_limiter', 'lim_l2t_limiter', 'lim_motor_temp', 'lim_igbt_temp'
         ] // enniaia lista booleans gia OLA TA CONTAINERS -- {accu}
     };
   },
@@ -377,173 +378,259 @@ export default defineComponent({
           }
         }
 
-        if (item.label[0] === 'latched_error') { // latched_error formatting
-          if (item.value[0] === 0) {
-            content += `\n ERROR_RESET\n`;
+        if (item.label[0] === 'handler_status') {
+          switch (item.value[0]) {
+            case 0:
+              content += `\n NO_ERRORS \n`;
+              break;
+            case 1:
+              content += `\n FATAL_ERROR \n`;
+              break;
+            case 2:
+              content += `\n CRITICAL_ERROR \n`;
+              break;
+            case 3:
+              content += `\n WARNING \n`;
+              break;
+            case 4:
+              content += `\n INITIALIZING \n`;
+              break;
+            default:
+              content += 'Not available'; // Handle default case if necessary
+              break;
           }
-          if (item.value[0] === 1) {
-            content += `\n CRITICAL_ERROR_EXISTING\n`;
-          }
-          if (item.value[0] === 2) {
-            content += `\n WARNING_EXISTING\n`;
-          }
-        }
-
-        if (item.label[0] === 'critical_hw_status') { // critical_hw_status formatting
-          if (this.rightShift(item.value[0], 0) === 1) {
-            content += `\n HW_TSAL_OVER60\n`;
-          }
-          if (this.rightShift(item.value[0], 1) === 1) {
-            content += `\n HW_DISCHARGE_ENABLED\n`;
-          }
-          if (this.rightShift(item.value[0], 2) === 1) {
-            content += `\n HW_USB_CONNECTED \n`;
-          }
-          if (this.rightShift(item.value[0], 3) === 1) {
-            content += `\n HW_ST_LINK_CONNECTED \n`;
-          }
-
         }
 
         if (item.label[0] === 'aux_hw_status') {
-          if (item.value[0] === 0) {
-            content += `\n NO_ERRORS\n`;
-          }
-          if (item.value[0] === 1) {
-            content += `\n FATAL_ERROR \n`;
-          }
-          if (item.value[0] === 2) {
-            content += `\n CRITICAL_ERROR\n`;
-          }
-          if (item.value[0] === 3) {
-            content += `\n WARNING \n`;
-          }
-          if (item.value[0] === 4) {
-            content += `\n INITIALIZING \n`;
+          switch (item.value[0]) {
+            case 1:
+              content += `\n HW_TSAL_OVER60 \n`;
+              break;
+            case 2:
+              content += `\n HW_DISCHARGE_ENABLED \n`;
+              break;
+            case 4:
+              content += `\n HW_USB_CONNECTED \n`;
+              break;
+            case 8:
+              content += `\n HW_ST_LINK_CONNECTED \n`;
+              break;
+            default:
+              content += 'Not available'; // Handle default case if necessary
+              break;
           }
         }
 
-        if (item.label[0] === 'last_error') {
+        if (item.label[0] === 'last_error' || item.label[0] === 'sys_status') {
           switch (item.value[0]) {
             case 0:
-              content += `\n INVERTER OK\n`;
+              content += `\n INVERTER_OK \n`;
               break;
             case 1:
-              content += `\n OCD FAULT \n`;
+              content += `\n OCD_FAULT \n`;
               break;
             case 2:
-              content += `\n CC FAILURE \n`;
+              content += `\n INVERTED_PHASE_POLARITY \n`;
               break;
             case 3:
-              content += `\n SHORT \n`;
+              content += `\n HW_FAULT \n`;
               break;
             case 4:
-              content += `\n CC WATCHDOG ERROR \n`;
-              break;
-            case 5:
               content += `\n OVERVOLTAGE \n`;
               break;
-            case 6:
+            case 5:
               content += `\n UNDERVOLTAGE \n`;
               break;
+            case 6:
+              content += `\n IGBT_OVERTEMP \n`;
+              break;
             case 7:
-              content += `\n IGBT OVERTEMP \n`;
+              content += `\n MOTOR_OVERTEMP \n`;
               break;
             case 8:
-              content += `\n MOTOR OVERTEMP \n`;
+              content += `\n ADC_ERROR \n`;
               break;
             case 9:
-              content += `\n ADC ERROR \n`;
+              content += `\n ADC_INIT_ERROR \n`;
               break;
             case 10:
-              content += `\n ADC INIT ERROR \n`;
+              content += `\n SPI_ERROR \n`;
               break;
             case 11:
-              content += `\n SPI ERROR \n`;
+              content += `\n RESOLVER_READ_ERROR \n`;
               break;
             case 12:
-              content += `\n ENCODER READ ERROR \n`;
+              content += `\n ENDAT_INIT_ERROR \n`;
               break;
             case 13:
-              content += `\n ENDAT INIT ERROR \n`;
+              content += `\n VELOCITY_EXCEEDS_MAXIMUM \n`;
               break;
             case 14:
-              content += `\n VELOCITY EXCEEDS MAXIMUM \n`;
+              content += `\n PWM_OVERMODULATION \n`;
               break;
             case 15:
-              content += `\n PWM OVERMODULATION \n`;
+              content += `\n INVERSE_TRANSFORM_TIMEOUT \n`;
               break;
             case 16:
-              content += `\n INVERSE TRANSFORM TIMEOUT \n`;
+              content += `\n TIMER_INIT_ERROR \n`;
               break;
             case 17:
-              content += `\n CANRX ERROR \n`;
+              content += `\n PWN_START_FAILURE \n`;
               break;
             case 18:
-              content += `\n CANTX ERROR \n`;
+              content += `\n PWN_STOP_FAILURE \n`;
               break;
             case 19:
-              content += `\n CAN TIMEOUT ERROR \n`;
+              content += `\n INVALID_CONTROL_MODE \n`;
               break;
             case 20:
-              content += `\n SUPPLY 3V3 ERROR \n`;
+              content += `\n CONFIGURATION_ERROR \n`;
               break;
             case 21:
-              content += `\n SUPPLY 5V0 ERROR \n`;
+              content += `\n WHILE1_TIMEOUT \n`;
               break;
             case 22:
-              content += `\n VREF ERROR \n`;
+              content += `\n CANRX_ERROR \n`;
               break;
             case 23:
-              content += `\n INVERTED PHASE POLARITY \n`;
+              content += `\n CANTX_ERROR \n`;
               break;
             case 24:
-              content += `\n TIMER INIT ERROR \n`;
+              content += `\n CAN_TIMEOUT_ERROR \n`;
               break;
             case 25:
-              content += `\n PWM START FAILURE \n`;
+              content += `\n SUPPLY_3V3_ERROR \n`;
               break;
             case 26:
-              content += `\n PWM STOP FAILURE \n`;
+              content += `\n SUPPLY_5V0_ERROR \n`;
               break;
             case 27:
-              content += `\n MCU DISABLE IMPLAUSIBILITY \n`;
+              content += `\n SUPPLY_5V6_ERROR \n`;
               break;
             case 28:
-              content += `\n MCU ENABLE IMPLAUSIBILITY \n`;
+              content += `\n SUPPLY_12V0_ERROR \n`;
               break;
             case 29:
-              content += `\n GD DISABLE IMPLAUSIBILITY \n`;
+              content += `\n VREF_ERROR \n`;
               break;
             case 30:
-              content += `\n GD ENABLE IMPLAUSIBILITY \n`;
-              break;
-            case 31:
-              content += `\n HW FAULT \n`;
-              break;
-            case 32:
-              content += `\n WHILE1 TIMEOUT \n`;
-              break;
-            case 33:
-              content += `\n INVALID CONTROL MODE \n`;
-              break;
-            case 34:
-              content += `\n EXCESSIVE REGEN REQUESTED \n`;
-              break;
-            case 35:
-              content += `\n EXCESSIVE REGEN DETECTED \n`;
-              break;
-            case 36:
-              content += `\n CONFIGURATION ERROR \n`;
-              break;
-            case 37:
-              content += `\n MCU OVERTEMP \n`;
-              break;
-            case 38:
               content += `\n NO LV SUPPLY \n`;
               break;
+            case 31:
+              content += `\n MCU OVERTEMP \n`;
+              break;
+            case 32:
+              content += `\n MCU DISABLE IMPLAUSIBILITY \n`;
+              break;
+            case 33:
+              content += `\n MCU ENABLE IMPLAUSIBILITY \n`;
+              break;
+            case 34:
+              content += `\n GD DISABLE IMPLAUSIBILITY \n`;
+              break;
             default:
-              content += ''; // Handle default case if necessary
+              content += 'Not Available'; // Handle default case if necessary
+              break;
+          }
+        }
+
+        if (item.label[0] === 'critical_hw_status') {
+          switch (item.value[0]) {
+            case 0:
+              content += `\n HW_INVERTER_ENABLED \n`;
+              break;
+            case 1:
+              content += `\n HW_INVERTER_DISABLED \n`;
+              break;
+            case 2:
+              content += `\n HW_OCD_A \n`;
+              break;
+            case 4:
+              content += `\n HW_OCD_B \n`;
+              break;
+            case 8:
+              content += `\n CC HW_OCD_C \n`;
+              break;
+            case 16:
+              content += `\n HW_INV_ERROR \n`;
+              break;
+            case 32:
+              content += `\n HW_OVERVOLTAGE \n`;
+              break;
+            case 64:
+              content += `\n HW_FAULT_LATCHED \n`;
+              break;
+            case 128:
+              content += `\n HW_MCU_DISABLE \n`;
+              break;
+            case 256:
+              content += `\n HW_GD_FLT \n`;
+              break;
+            case 512:
+              content += `\n HW_GD_RDY_ERROR \n`;
+              break;
+            case 1024:
+              content += `\n HW_SENSOR_A_DC \n`;
+              break;
+            case 2048:
+              content += `\n HW_SENSOR_B_DC \n`;
+              break;
+            case 4096:
+              content += `\n HW_SENSOR_C_DC \n`;
+              break;
+            default:
+              content += 'Not available'; // Handle default case if necessary
+              break;
+          }
+        }
+
+        if (item.label[0] === 'actual_inverter_status') {
+          switch (item.value[0]) {
+            case 0:
+              content += `\n INVERTER_DISABLE \n`;
+              break;
+            case 1:
+              content += `\n INVERTER_ENABLE \n`;
+              break;
+            default:
+              content += 'Not available'; // Handle default case if necessary
+              break;
+          }
+        }
+
+        if (item.label[0] === 'act_control_mode') {
+          switch (item.value[0]) {
+            case 0:
+              content += `\n CURRENT_CONTROL_MODE \n`;
+              break;
+            case 1:
+              content += `\n SPEED_CONTROL_MODE \n`;
+              break;
+            case 2:
+              content += `\n FAULT_MODE \n`;
+              break;
+            default:
+              content += 'Not available'; // Handle default case if necessary
+              break;
+          }
+        }
+
+        if (item.label[0] === 'latched_error') {
+          switch (item.value[0]) {
+            case 0:
+              content += `\n ERROR_RESET \n`;
+              break;
+            case 1:
+              content += `\n FATAL_ERROR_EXISTING \n`;
+              break;
+            case 2:
+              content += `\n CRITICAL_ERROR_EXISTING \n`;
+              break;
+            case 3:
+              content += `\n WARNING_EXISTING \n`;
+              break;
+            default:
+              content += 'Not available'; // Handle default case if necessary
               break;
           }
         }

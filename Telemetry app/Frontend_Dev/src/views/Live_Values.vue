@@ -79,8 +79,8 @@ this.accu_containeritems = [
  { label : ['min_cell_temp'] },
  { label : ['dcdc_temp'] },
  { label : ['max_humidity'] },
- { label : ['bms_error_code'] },
- { label : ['tsac_error_code'] },
+ { label : ['bms_error'] },
+ { label : ['tsac_error'] },
  { label : ['max_soc'] },
  { label : ['min_soc'] },
  { label : ['imd_isolation_kOhms'] },
@@ -91,19 +91,19 @@ this.accu_containeritems = [
  { label : ['error_position'] },
  { label : ['min_cell_voltage_pos'] },
  { label : ['max_cell_voltage_pos'] },
- { label : ['last_bms_error_code'] },
- { label : ['last_tsac_error_code'] },
+ { label : ['last_bms_error'] },
+ { label : ['last_tsac_error'] },
  { label : ['power'] },
  { label : ['tsac_fans'] },
  { label : ['turbine_fans'] },
- { label : ['pdu_max_temperature'] },
+ { label : ['pdu_max_temp'] },
  { label : ['pdu_current'] },
  { label : ['state'] },
  { label : ['last_error'] },
  { label : ['dynamic_mode'] },
  { label : ['comm_error_ids'] },
- { label : ['HVroom_humidity'] },
- { label : ['HVroom_temperature'] },
+ { label : ['HVroom_hum'] },
+ { label : ['HVroom_temp'] },
  { label : ['precharge_voltage'] },
  { label : ['precharge_time'] },
  { label : ['imd_status'] },
@@ -153,7 +153,7 @@ this.right_inv_containeritems = [
  { label : ['handler_status'] },
  { label : ['latched_error'] },
  { label : ['actual_inverter_status'] },
- { label : ['actual_control_mode'] },
+ { label : ['act_control_mode'] },
  { label : ['aux_hw_status'] },
  { label : ['id_ref'] },
  { label : ['iq_ref'] },
@@ -197,7 +197,7 @@ this.left_inv_containeritems = [
  { label : ['handler_status'] },
  { label : ['latched_error'] },
  { label : ['actual_inverter_status'] },
- { label : ['actual_control_mode'] },
+ { label : ['act_control_mode'] },
  { label : ['aux_hw_status'] },
  { label : ['id_ref'] },
  { label : ['iq_ref'] },
@@ -276,7 +276,7 @@ this.sensors_containeritems = [
  { label : ['Gyro_x'] },
  { label : ['Gyro_y'] },
  { label : ['Gyro_z'] },
-];
+]; 
 
 
     socket.on('telemetry_data', (telemetry_data: api_res) => {
@@ -332,11 +332,11 @@ this.sensors_containeritems = [
 			if (this.telemetry_data_obj.accu_max_humidity !== undefined) {
 				this.accu_containeritems[13].value = [this.telemetry_data_obj.accu_max_humidity];
 			}
-			if (this.telemetry_data_obj.accu_bms_error_code !== undefined) {
-				this.accu_containeritems[14].value = [this.telemetry_data_obj.accu_bms_error_code];
+			if (this.telemetry_data_obj.accu_bms_error !== undefined) {
+				this.accu_containeritems[14].value = [this.telemetry_data_obj.accu_bms_error];
 			}
-			if (this.telemetry_data_obj.accu_tsac_error_code !== undefined) {
-				this.accu_containeritems[15].value = [this.telemetry_data_obj.accu_tsac_error_code];
+			if (this.telemetry_data_obj.accu_tsac_error !== undefined) {
+				this.accu_containeritems[15].value = [this.telemetry_data_obj.accu_tsac_error];
 			}
 			if (this.telemetry_data_obj.accu_max_soc !== undefined) {
 				this.accu_containeritems[16].value = [this.telemetry_data_obj.accu_max_soc];
@@ -368,11 +368,11 @@ this.sensors_containeritems = [
 			if (this.telemetry_data_obj.accu_max_cell_voltage_pos !== undefined) {
 				this.accu_containeritems[25].value = [this.telemetry_data_obj.accu_max_cell_voltage_pos];
 			}
-			if (this.telemetry_data_obj.accu_last_bms_error_code !== undefined) {
-				this.accu_containeritems[26].value = [this.telemetry_data_obj.accu_last_bms_error_code];
+			if (this.telemetry_data_obj.accu_last_bms_error !== undefined) {
+				this.accu_containeritems[26].value = [this.telemetry_data_obj.accu_last_bms_error];
 			}
-			if (this.telemetry_data_obj.accu_last_tsac_error_code !== undefined) {
-				this.accu_containeritems[27].value = [this.telemetry_data_obj.accu_last_tsac_error_code];
+			if (this.telemetry_data_obj.accu_last_tsac_error !== undefined) {
+				this.accu_containeritems[27].value = [this.telemetry_data_obj.accu_last_tsac_error];
 			}
 			if (this.telemetry_data_obj.accu_power !== undefined) {
 				this.accu_containeritems[28].value = [this.telemetry_data_obj.accu_power];
@@ -383,8 +383,8 @@ this.sensors_containeritems = [
 			if (this.telemetry_data_obj.accu_turbine_fans !== undefined) {
 				this.accu_containeritems[30].value = [this.telemetry_data_obj.accu_turbine_fans];
 			}
-			if (this.telemetry_data_obj.pdu_max_temperature !== undefined) {
-				this.accu_containeritems[31].value = [this.telemetry_data_obj.pdu_max_temperature];
+			if (this.telemetry_data_obj.pdu_max_temp !== undefined) {
+				this.accu_containeritems[31].value = [this.telemetry_data_obj.pdu_max_temp];
 			}
 			if (this.telemetry_data_obj.pdu_current !== undefined) {
 				this.accu_containeritems[32].value = [this.telemetry_data_obj.pdu_current];
@@ -401,11 +401,11 @@ this.sensors_containeritems = [
 			if (this.telemetry_data_obj.accu_comm_error_ids !== undefined) {
 				this.accu_containeritems[36].value = [this.telemetry_data_obj.accu_comm_error_ids];
 			}
-			if (this.telemetry_data_obj.accu_HVroom_humidity !== undefined) {
-				this.accu_containeritems[37].value = [this.telemetry_data_obj.accu_HVroom_humidity];
+			if (this.telemetry_data_obj.accu_HVroom_hum !== undefined) {
+				this.accu_containeritems[37].value = [this.telemetry_data_obj.accu_HVroom_hum];
 			}
-			if (this.telemetry_data_obj.accu_HVroom_temperature !== undefined) {
-				this.accu_containeritems[38].value = [this.telemetry_data_obj.accu_HVroom_temperature];
+			if (this.telemetry_data_obj.accu_HVroom_temp !== undefined) {
+				this.accu_containeritems[38].value = [this.telemetry_data_obj.accu_HVroom_temp];
 			}
 			if (this.telemetry_data_obj.accu_precharge_voltage !== undefined) {
 				this.accu_containeritems[39].value = [this.telemetry_data_obj.accu_precharge_voltage];
@@ -544,8 +544,8 @@ this.sensors_containeritems = [
 			if (this.telemetry_data_obj.right_inv_actual_inverter_status !== undefined) {
 				this.right_inv_containeritems[6].value = [this.telemetry_data_obj.right_inv_actual_inverter_status];
 			}
-			if (this.telemetry_data_obj.right_inv_actual_control_mode !== undefined) {
-				this.right_inv_containeritems[7].value = [this.telemetry_data_obj.right_inv_actual_control_mode];
+			if (this.telemetry_data_obj.right_inv_act_control_mode !== undefined) {
+				this.right_inv_containeritems[7].value = [this.telemetry_data_obj.right_inv_act_control_mode];
 			}
 			if (this.telemetry_data_obj.right_inv_aux_hw_status !== undefined) {
 				this.right_inv_containeritems[8].value = [this.telemetry_data_obj.right_inv_aux_hw_status];
@@ -671,8 +671,8 @@ this.sensors_containeritems = [
 			if (this.telemetry_data_obj.left_inv_actual_inverter_status !== undefined) {
 				this.left_inv_containeritems[8].value = [this.telemetry_data_obj.left_inv_actual_inverter_status];
 			}
-			if (this.telemetry_data_obj.left_inv_actual_control_mode !== undefined) {
-				this.left_inv_containeritems[9].value = [this.telemetry_data_obj.left_inv_actual_control_mode];
+			if (this.telemetry_data_obj.left_inv_act_control_mode !== undefined) {
+				this.left_inv_containeritems[9].value = [this.telemetry_data_obj.left_inv_act_control_mode];
 			}
 			if (this.telemetry_data_obj.left_inv_aux_hw_status !== undefined) {
 				this.left_inv_containeritems[10].value = [this.telemetry_data_obj.left_inv_aux_hw_status];

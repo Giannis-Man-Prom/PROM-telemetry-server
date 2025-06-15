@@ -57,7 +57,7 @@ export default defineComponent({
       }
 
       this.SideBarListItems = [
-        { label: ['R2D'], value: [this.telemetry_data_obj.dv_R2D] },
+        { label: ['R2D'], value: [this.telemetry_data_obj.as_ready] },
         { label: ['precharge_done'], value: [this.telemetry_data_obj.accu_precharge_state] },
         { label: ['TS ACTIVE'], value: [this.telemetry_data_obj.accu_ts_active] },
         { label: ['max_cell_voltage'], value: [this.telemetry_data_obj.accu_max_cell_voltage] }
