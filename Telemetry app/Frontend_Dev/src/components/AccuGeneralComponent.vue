@@ -67,6 +67,21 @@
           <template v-if="isBoolean(String(item.label[0]))"> <!-- write all inclusions for boolean vars. -->
             {{ item.label[0] }}
           </template>
+          <template v-else-if="item?.label[0] === 'tsac_error'">                       <!-- INVERTER LAST ERROR -->
+            <span> {{ item?.label[0] }}: <br> {{ printTSACerror(item?.value?.[0]) }} </span>
+          </template>
+          <template v-else-if="item?.label[0] === 'bms_error'">                       <!-- INVERTER LAST ERROR -->
+            <span> {{ item?.label[0] }}: <br> {{ printBMSerror(item?.value?.[0]) }} </span>
+          </template>
+          <template v-else-if="item?.label[0] === 'last_tsac_error'">                       <!-- INVERTER LAST ERROR -->
+            <span> {{ item?.label[0] }}: <br> {{ printTSACerror(item?.value?.[0]) }} </span>
+          </template>
+          <template v-else-if="item?.label[0] === 'last_bms_error '">                       <!-- INVERTER LAST ERROR -->
+            <span> {{ item?.label[0] }}: <br> {{ printBMSerror(item?.value?.[0]) }} </span>
+          </template>
+          <template v-else-if="item?.label[0] === 'dynamic_mode '">                       <!-- INVERTER LAST ERROR -->
+            <span> {{ item?.label[0] }}: <br> {{ printDynamic(item?.value?.[0]) }} </span>
+          </template>
           <!-- Αλλιώς θέλουμε και όνομα και τιμή -->
           <template v-else> <!-- write all exceptions..... -->
             <div>
@@ -75,6 +90,7 @@
               <span> {{item.value && item.value[0]}} </span>
             </div>
           </template>
+
         </button>
 <!--      </template>-->
 <!--      <template v-else>-->
@@ -104,8 +120,8 @@
         <slot name="top"></slot>
       </div>
       <div class="popup-content">
-        <p v-if="showBmsErrorPopup"> {{ printBMSerror(14) }} </p>
-        <p v-if="showTsacErrorPopup">{{ printTSACerror(15) }}</p>
+        <p v-if="showBmsErrorPopup"> {{ printBMSerror(items?.[14].value?.[0]) }} </p>
+        <p v-if="showTsacErrorPopup">{{ printTSACerror(items?.[15].value?.[0]) }}</p>
         <p v-if="showAccuInfoPopup">This is the accu info content.</p>
         <button v-if="showBmsErrorPopup" @click="closeBmsErrorPopup" class="close-btn">Close</button>
         <button v-if="showTsacErrorPopup" @click="closeTsacErrorPopup" class="close-btn">Close</button>
@@ -167,8 +183,7 @@ export default defineComponent({
         'OVERCURRENT_REGEN'
       ];
 
-      const errorIndex = this.items[ind]?.value?.[0];
-      return messages[errorIndex] || 'Unknown BMS error';
+      return messages[ind] || 'Unknown BMS error';
     },
     printTSACerror(ind: number) {
       const messages = [
@@ -188,11 +203,10 @@ export default defineComponent({
         'ELCON_REVERSE_POLARITY',
         'ELCON_COMMUNICATION_ERROR'
       ];
-
-      const errorIndex = this.items[ind]?.value?.[0];
-      return messages[errorIndex] || 'Unknown TSAC error';
+      console.log(ind);
+      return messages[ind] || 'Unknown TSAC error';
     },
-    printDynamic() {
+    printDynamic(ind: number) {
       const messages = [
         'Inspection',
         'Testing',
@@ -200,8 +214,7 @@ export default defineComponent({
         'Charging',
       ];
 
-      const errorIndex = this.items[35]?.value?.[0];
-      return messages[errorIndex] || 'Unknown Value';
+      return messages[ind] || 'Unknown Value';
     },
     showPopup(item: variableContainer): void {
       this.closeAllPopups();
@@ -230,19 +243,19 @@ export default defineComponent({
         }
       }
       if (item.label[0] == 'last_tsac_error') {
-        content = `${this.printTSACerror(27)} `;
+        content = `${this.printTSACerror(item?.value?.[0])} `;
       }
       if (item.label[0] == 'last_bms_error') {
-        content = `${this.printBMSerror(26)} `;
+        content = `${this.printBMSerror(item?.value?.[0])} `;
       }
       if (item.label[0] == 'dynamic_mode') {
-        content = `${this.printDynamic(35)} `;
+        content = `${this.printDynamic(item?.value?.[0])} `;
       }
       if (item.label[0] == 'tsac_error') {
-        content = `${this.printTSACerror(15)} `;
+        content = `${this.printTSACerror(item?.value?.[0])} `;
       }
       if (item.label[0] == 'bms_error') {
-        content = `${this.printBMSerror(14)} `;
+        content = `${this.printBMSerror(item?.value?.[0])} `;
       }
 
       // if (item.label[1] && item.value[1] !== undefined) {

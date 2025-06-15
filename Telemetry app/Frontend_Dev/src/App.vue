@@ -36,7 +36,7 @@ export default defineComponent({
       { label: ['R2D']},
       { label: ['precharge_done']},
       { label: ['TS ACTIVE']},
-      { label: ['max_cell_voltage']}
+      { label: ['max_cell_vol']}
     ];
 
     this.StatusItemList = [
@@ -57,10 +57,10 @@ export default defineComponent({
       }
 
       this.SideBarListItems = [
-        { label: ['R2D'], value: [this.telemetry_data_obj.as_ready] },
+        { label: ['R2D'], value: [this.telemetry_data_obj.vcu_r2d_flag] },
         { label: ['precharge_done'], value: [this.telemetry_data_obj.accu_precharge_state] },
         { label: ['TS ACTIVE'], value: [this.telemetry_data_obj.accu_ts_active] },
-        { label: ['max_cell_voltage'], value: [this.telemetry_data_obj.accu_max_cell_voltage] }
+        { label: ['max_cell_vol'], value: [this.telemetry_data_obj.accu_max_cell_voltage] }
       ];
 
       this.StatusItemList = [

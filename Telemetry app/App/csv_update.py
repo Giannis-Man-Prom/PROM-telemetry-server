@@ -35,7 +35,6 @@ input_string = """//accu
     accu_turbine_fans?: number;
     pdu_max_temp?: number;
     pdu_current?: number;
-    accu_state?: number;
     accu_last_error?: number;
     accu_dynamic_mode?: number;
     accu_comm_error_ids?: number;
@@ -90,7 +89,7 @@ input_string = """//accu
     right_inv_handler_status?: number;
     right_inv_latched_error?: number;
     right_inv_actual_inverter_status?: number;
-    right_inv_actual_control_mode?: number;
+    right_inv_act_control_mode?: number;
     right_inv_aux_hw_status?: number;
     right_inv_id_ref?: number;
     right_inv_iq_ref?: number;
@@ -134,7 +133,7 @@ input_string = """//accu
     left_inv_handler_status?: number;
     left_inv_latched_error?: number;
     left_inv_actual_inverter_status?: number;
-    left_inv_actual_control_mode?: number;
+    left_inv_act_control_mode?: number;
     left_inv_aux_hw_status?: number;
     left_inv_id_ref?: number;
     left_inv_iq_ref?: number;

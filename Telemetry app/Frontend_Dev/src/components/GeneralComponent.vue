@@ -41,208 +41,40 @@
       >
         <!-- Show the appropriate content based on the type of item -->
         <template v-if="isBoolean(String(item.label[0])) || item.label[0]==='node_status'"> <!-- write all inclusions for boolean vars. -->
-          <span> node_status: {{ item.label[0] }} </span>
+          <span> {{ item.label[0] }} </span>
         </template>
 
-
-        <template v-if="item.label[0] === 'as_status' "> <!-- fix for ith- msb ----2^k-------------------->
-          <template v-if="item.value && rightShift(item.value[0], 0) === 1">
-            <span> AS OFF </span>
-          </template>
-          <template v-if="item.value && rightShift(item.value[0], 1) === 1">
-            <span> AS READY </span>
-          </template>
-          <template v-if="item.value && rightShift(item.value[0], 2) === 1">
-            <span> AS DRIVING </span>
-          </template>
-          <template v-if="item.value && rightShift(item.value[0], 3) === 1">
-            <span> AS FINISHED </span>
-          </template>
-          <template v-if="item.value && rightShift(item.value[0], 4) === 1">
-            <span> AS EMERGENCY </span>
-          </template>
+        <template v-if="item?.label?.[0] === 'last_error' || item?.label?.[0] === 'sys_status'">
+          <!-- INVERTER LAST ERROR -->
+          <span> {{ item.label?.[0] }}: <br> {{ printInverterErrors(item?.value?.[0]) }} </span>
         </template>
 
-        <template v-if="item.label[0] === 'critical_hw_status' "> <!-- fix for ith- msb !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-          <template v-if="item.value && rightShift(item.value[0], 0) === 1">
-            <span> {{item.label[0]}}: {{item.value[0]}} <br> HW_TSAL_OVER60 </span>
-          </template>
-          <template v-if="item.value && rightShift(item.value[0], 1) === 1">
-            <span> {{item.label[0]}}: {{item.value[0]}} <br>  HW_DISCHARGE_ENABLED </span>
-          </template>
-          <template v-if="item.value && rightShift(item.value[0], 2) === 1">
-            <span> {{item.label[0]}}: {{item.value[0]}} <br>  HW_USB_CONNECTED </span>
-          </template>
-          <template v-if="item.value && rightShift(item.value[0], 3) === 1">
-            <span> {{item.label[0]}}: {{item.value[0]}} <br>  HW_ST_LINK_CONNECTED </span>
-          </template>
-          <template v-else>
-            <span> {{item.label[0]}}: </span>
-          </template>
+        <template v-if="item?.label[0] === 'latched_error'">                       <!-- INVERTER LAST ERROR -->
+          <span> {{ item?.label[0] }}: <br> {{ printLatchedError(item?.value?.[0]) }} </span>
         </template>
 
-        <template v-if="item.label[0] === 'aux_hw_status' "> <!-- fix for ith- msb !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-          <template v-if="item.value && item.value[0] === 0">
-            <span> aux_hw-status: <br> NO_ERRORS </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 1">
-            <span> aux_hw-status: <br> FATAL_ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 2">
-            <span> aux_hw-status: <br> CRITICAL_ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 3">
-            <span>aux_hw-status: <br> WARNING </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 4">
-            <span> aux_hw-status: <br> INITIALIZING </span>
-          </template>
-          <template v-else>
-            <span> aux_hw-status: </span>
-          </template>
+        <template v-if="item?.label[0] === 'aux_hw_status'">                       <!-- INVERTER LAST ERROR -->
+          <span> {{ item?.label[0] }}: <br> {{ printAuxHwStatus(item?.value?.[0]) }} </span>
         </template>
 
-        <template v-if="item.label[0] === 'latched_error' "> <!-- fix for ith- msb !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-          <template v-if="item.value && item.value[0] === 0">
-            <span> latched_error: <br>
-              ERROR_RESET </span>
-          </template>
-          <template v-if="item.value &&item.value[0] === 1">
-            <span> latched_error: <br>
-              CRITICAL_ERROR_EXISTING </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 2">
-            <span> latched_error: <br>
-              WARNING_EXISTING </span>
-          </template>
-          <template v-else>
-            <span> latched_error:</span>
-          </template>
+        <template v-if="item?.label?.[0] === 'critical_hw_status'">
+          <!-- INVERTER LAST ERROR -->
+          <span> {{ item.label?.[0] }}: <br> {{ printCriticalHwStatus(item?.value?.[0]) }} </span>
         </template>
 
+        <template v-if="item?.label?.[0] === 'handler_status'">
+          <!-- INVERTER LAST ERROR -->
+          <span> {{ item.label?.[0] }}: <br> {{ printHandlerStatus(item?.value?.[0]) }} </span>
+        </template>
 
+        <template v-if="item?.label?.[0] === 'actual_inverter_status'">
+          <!-- INVERTER LAST ERROR -->
+          <span> {{ item.label?.[0] }}: <br> {{ printActualInverterStatus(item?.value?.[0]) }} </span>
+        </template>
 
-        <template v-if="item.label[0] === 'last_error' ">                       <!-- INVERTER LAST ERROR -->
-          <template v-if="item.value && item.value[0] === 0">
-            <span> last_error: <br> INVERTER OK </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 1">
-            <span> last_error: <br> OCD FAULT </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 2">
-            <span> last_error: <br> CC FAILURE </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 3">
-            <span> last_error: <br> SHORT </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 4">
-            <span> last_error: <br> CC WATCHDOG ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 5">
-            <span> last_error: <br> OVERVOLTAGE </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 6">
-            <span> last_error: <br> UNDERVOLTAGE </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 7">
-            <span> last_error: <br> IGBT OVERTEMP </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 8">
-            <span> last_error: <br> MOTOR OVERTEMP </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 9">
-            <span> last_error: <br> ADC ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 10">
-            <span> last_error: <br> ADC INIT ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 11">
-            <span> last_error: <br> SPI ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 12">
-            <span> last_error: <br> ENCODER READ ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 13">
-            <span> last_error: <br> ENDAT INIT ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 14">
-            <span> last_error: <br> VELOCITY EXCEEDS MAXIMUM </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 15">
-            <span> last_error: <br> PWM OVERMODULATION </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 16">
-            <span> last_error: <br> INVERSE TRANSFORM TIMEOUT </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 17">
-            <span> last_error: <br> CANRX ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 18">
-            <span> last_error: <br> CANTX ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 19">
-            <span> last_error: <br> CAN TIMEOUT ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 20">
-            <span> last_error: <br> SUPPLY 3V3 ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 21">
-            <span> last_error: <br> SUPPLY 5V0 ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 22">
-            <span> last_error: <br> VREF ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 23">
-            <span> last_error: <br> INVERTED PHASE POLARITY </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 24">
-            <span> last_error: <br> TIMER INIT ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 25">
-            <span> last_error: <br> PWM START FAILURE </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 26">
-            <span> last_error: <br> PWM STOP FAILURE </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 27">
-            <span> last_error: <br> MCU DISABLE IMPLAUSIBILITY </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 28">
-            <span> last_error: <br> MCU ENABLE IMPLAUSIBILITY </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 29">
-            <span> last_error: <br> GD DISABLE IMPLAUSIBILITY </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 30">
-            <span> last_error: <br> GD ENABLE IMPLAUSIBILITY </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 31">
-            <span> last_error: <br> HW FAULT </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 32">
-            <span> last_error: <br> WHILE1 TIMEOUT </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 33">
-            <span> last_error: <br> INVALID CONTROL MODE </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 34">
-            <span> last_error: <br> EXCESSIVE REGEN REQUESTED </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 35">
-            <span> last_error: <br> EXCESSIVE REGEN DETECTED </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 36">
-            <span> last_error: <br> CONFIGURATION ERROR </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 37">
-            <span> last_error: <br> MCU OVERTEMP </span>
-          </template>
-          <template v-if="item.value && item.value[0] === 38">
-            <span> last_error: <br> NO LV SUPPLY </span>
-          </template>
-          <template v-else>
-            <span> last_error: </span>
-          </template>
+        <template v-if="item?.label?.[0] === 'act_control_mode'">
+          <!-- INVERTER LAST ERROR -->
+          <span> {{ item.label?.[0] }}: <br> {{ printActControlMode(item?.value?.[0]) }} </span>
         </template>
 
         <template v-if="item.label[0]!=='node_status' && item.label[0]!=='critical_hw_status'  && item.label[0]!=='latched_error' && item.label[0]!=='aux_hw_status' && !isBoolean(String(item.label[0])) && item.label[0]!=='last_error'  "> <!-- write all exceptions..... -->
@@ -338,6 +170,148 @@ export default defineComponent({
     isBoolean(label: string): boolean {
       return this.BooleanList.includes(label);
     },
+    printInverterErrors(ind: number) {
+      const messages = [
+        'INVERTER_OK',
+        'OCD_FAULT',
+        'INVERTED_PHASE_POLARITY',
+        'HW_FAULT',
+        'OVERVOLTAGE',
+        'UNDERVOLTAGE',
+        'IGBT_OVERTEMP',
+        'MOTOR_OVERTEMP',
+        'ADC_ERROR',
+        'ADC_INIT_ERROR',
+        'SPI_ERROR',
+        'RESOLVER_READ_ERROR',
+        'ENDAT_INIT_ERROR',
+        'VELOCITY_EXCEEDS_MAXIMUM',
+        'PWM_OVERMODULATION',
+        'INVERSE_TRANSFORM_TIMEOUT',
+        'TIMER_INIT_ERROR',
+        'PWN_START_FAILURE',
+        'PWN_STOP_FAILURE',
+        'INVALID_CONTROL_MODE',
+        'CONFIGURATION_ERROR',
+        'WHILE1_TIMEOUT',
+        'CANRX_ERROR',
+        'CANTX_ERROR',
+        'CAN_TIMEOUT_ERROR',
+        'SUPPLY_3V3_ERROR',
+        'SUPPLY_5V0_ERROR',
+        'SUPPLY_5V6_ERROR',
+        'SUPPLY_12V0_ERROR',
+        'VREF_ERROR',
+        'NO LV SUPPLY',
+        'MCU OVERTEMP',
+        'MCU DISABLE IMPLAUSIBILITY',
+        'MCU ENABLE IMPLAUSIBILITY',
+        'GD DISABLE IMPLAUSIBILITY'
+      ];
+
+      return messages[ind] || 'Not Available';
+    },
+
+    printLatchedError(ind: number) {
+      const messages = [
+        'ERROR_RESET',
+        'FATAL_ERROR_EXISTING',
+        'CRITICAL_ERROR_EXISTING',
+        'WARNING_EXISTING'
+      ];
+
+      return messages[ind] || 'Not available';
+    },
+
+    printHandlerStatus(ind: number): string {
+      const messages = [
+        'NO_ERRORS',
+        'FATAL_ERROR',
+        'CRITICAL_ERROR',
+        'WARNING',
+        'INITIALIZING'
+      ];
+
+      return messages[ind] || 'Not available';
+    },
+
+    printAuxHwStatus(ind: number): string {
+      if (typeof ind !== 'number') return 'Not available';
+
+      const statusMap: { [key: number]: string } = {
+        1: 'HW_TSAL_OVER60',
+        2: 'HW_DISCHARGE_ENABLED',
+        4: 'HW_USB_CONNECTED',
+        8: 'HW_ST_LINK_CONNECTED'
+      };
+
+      const messages: string[] = [];
+
+      Object.entries(statusMap).forEach(([bit, label]) => {
+        const bitVal = Number(bit);
+        if ((ind & bitVal) === bitVal) {
+          messages.push(label);
+        }
+      });
+
+      return messages.length > 0 ? messages.join(', ') : 'Not available';
+    },
+
+    printCriticalHwStatus(ind: number): string {
+      if (typeof ind !== 'number') return 'Not available';
+
+      const statusMap: { [key: number]: string } = {
+        0: 'HW_INVERTER_ENABLED',
+        1: 'HW_INVERTER_DISABLED',
+        2: 'HW_OCD_A',
+        4: 'HW_OCD_B',
+        8: 'CC HW_OCD_C',
+        16: 'HW_INV_ERROR',
+        32: 'HW_OVERVOLTAGE',
+        64: 'HW_FAULT_LATCHED',
+        128: 'HW_MCU_DISABLE',
+        256: 'HW_GD_FLT',
+        512: 'HW_GD_RDY_ERROR',
+        1024: 'HW_SENSOR_A_DC',
+        2048: 'HW_SENSOR_B_DC',
+        4096: 'HW_SENSOR_C_DC'
+      };
+
+      // Special case: exactly zero
+      if (ind === 0) return statusMap[0];
+
+      const messages: string[] = [];
+
+      Object.entries(statusMap).forEach(([bit, label]) => {
+        const bitVal = Number(bit);
+        if (bitVal !== 0 && (ind & bitVal) === bitVal) {
+          messages.push(label);
+        }
+      });
+
+      return messages.length > 0 ? messages.join(', ') : 'Not available';
+    },
+
+    printActualInverterStatus(ind: number): string {
+      const messages = [
+        'INVERTER_DISABLE', // 0
+        'INVERTER_ENABLE'   // 1
+      ];
+
+      return messages[ind] || 'Not available';
+    },
+
+    printActControlMode(ind: number): string {
+      const modes = [
+        'CURRENT_CONTROL_MODE', // 0
+        'SPEED_CONTROL_MODE',   // 1
+        'FAULT_MODE'            // 2
+      ];
+
+      return modes[ind] || 'Not available';
+    },
+
+    
     showPopup(item: variableContainer): void {
       this.closeAllPopups();
       if (item.value )

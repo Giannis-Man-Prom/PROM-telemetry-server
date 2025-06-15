@@ -34,7 +34,6 @@ export type VehicleTelemetry_data = {
     accu_turbine_fans?: number;
     pdu_max_temp?: number;
     pdu_current?: number;
-    accu_state?: number;
     accu_last_error?: number;
     accu_dynamic_mode?: number;
     accu_comm_error_ids?: number;

@@ -19,6 +19,7 @@
             }" class="flex">
               <!-- Display the label -->
               <span>{{ item.label[0] }}:</span>
+              <br v-if="!isBoolean(String(item.label[0]))">
               <!-- Show item.value[0] if it's defined; otherwise, show the last known value -->
               <span v-if="!isBoolean(String(item.label[0]))" > {{ item.value && item.value[0] !== undefined ? item.value[0] : lastNumber[item.label[0]] }}</span>
 
