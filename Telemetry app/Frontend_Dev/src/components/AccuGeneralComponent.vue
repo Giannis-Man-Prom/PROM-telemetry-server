@@ -92,15 +92,9 @@
           </template>
 
         </button>
-<!--      </template>-->
-<!--      <template v-else>-->
-<!--        <button-->
-<!--          v-for=""-->
-<!--      </template>-->
     </div>
 
     <!-- Popup Box -->
-    <!-- Όταν κάποιο button είναι assigned για να έχει γενικό popup τότε έχουμε το από κάτω -->
     <div v-if="showPopupFlag" class="popup" :style="{ maxWidth: popupWidth, maxHeight: popupHeight }"> <!-- Adjusted style binding -->
       <!-- Slot for string at the top -->
       <div class="top-space">
@@ -120,8 +114,8 @@
         <slot name="top"></slot>
       </div>
       <div class="popup-content">
-        <p v-if="showBmsErrorPopup"> {{ printBMSerror(items?.[14].value?.[0]) }} </p>
-        <p v-if="showTsacErrorPopup">{{ printTSACerror(items?.[15].value?.[0]) }}</p>
+        <p v-if="showBmsErrorPopup"> BMS Error: {{ printBMSerror(items?.[14].value?.[0]) }} </p>
+        <p v-if="showTsacErrorPopup"> TSAC Error: {{ printTSACerror(items?.[15].value?.[0]) }}</p>
         <p v-if="showAccuInfoPopup">This is the accu info content.</p>
         <button v-if="showBmsErrorPopup" @click="closeBmsErrorPopup" class="close-btn">Close</button>
         <button v-if="showTsacErrorPopup" @click="closeTsacErrorPopup" class="close-btn">Close</button>
@@ -129,7 +123,6 @@
       </div>
     </div>
 
-    <!-- TODO: Other popup components -->
   </div>
 </template>
 
@@ -221,21 +214,11 @@ export default defineComponent({
 
       if (
           item.label[0] === undefined || (item.value && item.value[0] === undefined)
-
-          // item.value[0] === undefined ||
-          // item.label[0] === undefined ||
-          // (item.value[1] === undefined && item.label[1] !== undefined) ||
-          // (item.value[2] === undefined && item.label[2] !== undefined)
       ) {
         return;
       }
 
-      //let content = `${item.label[0]}: ${item.value[0]}`;
-      //let content = `${item.label[0]}: ${item.value && item.value[0] !== undefined ? item.value[0] : 'default value'}`;
-      // Assuming item is defined and has a label property and a value property
       let content = `${item.label[0]}: ${item.value ? item.value[0] : ''}`;
-
-
 
       for (let i = 1; i < item.label.length; i++) {
         if (item.label[i] && item.value && item.value[i] !== undefined) {
@@ -243,44 +226,29 @@ export default defineComponent({
         }
       }
       if (item.label[0] == 'last_tsac_error') {
-        content = `${this.printTSACerror(item?.value?.[0])} `;
+        content = `${item.label[0]}: ${this.printTSACerror(item?.value?.[0])} `;
       }
       if (item.label[0] == 'last_bms_error') {
-        content = `${this.printBMSerror(item?.value?.[0])} `;
+        content = `${item.label[0]}: ${this.printBMSerror(item?.value?.[0])} `;
       }
       if (item.label[0] == 'dynamic_mode') {
-        content = `${this.printDynamic(item?.value?.[0])} `;
+        content = `${item.label[0]}: ${this.printDynamic(item?.value?.[0])} `;
       }
       if (item.label[0] == 'tsac_error') {
-        content = `${this.printTSACerror(item?.value?.[0])} `;
+        content = `${item.label[0]}: ${this.printTSACerror(item?.value?.[0])} `;
       }
       if (item.label[0] == 'bms_error') {
-        content = `${this.printBMSerror(item?.value?.[0])} `;
+        content = `${item.label[0]}: ${this.printBMSerror(item?.value?.[0])} `;
       }
-
-      // if (item.label[1] && item.value[1] !== undefined) {
-      //   content += ` ${item.label[1]}: ${item.value[1]}`;
-      // }
-      //
-      // if (item.label[2] && item.value[2] !== undefined) {
-      //   content += ` ${item.label[2]}: ${item.value[2]}`;
-      // }
 
       this.popupContent = content;
       this.showPopupFlag = true;
 
-      //window.addEventListener('click', this.handleOutsideClick);
     },
     closePopup(): void {
       this.showPopupFlag = false;
-      //window.removeEventListener('click', this.handleOutsideClick);
     },
-    // handleOutsideClick(event: MouseEvent): void {
-    //   const popupContent = this.$refs.popupContent as HTMLElement;
-    //   if (popupContent && !popupContent.contains(event.target)) { /// maybe should be deleted---------------------------------------------
-    //     this.closePopup();
-    //   }
-    // },
+
     toggleBmsError(): void {
       this.closeAllPopups();
       this.showBmsErrorPopup = !this.showBmsErrorPopup;
@@ -307,13 +275,10 @@ export default defineComponent({
       this.showBmsErrorPopup = false;
       this.showTsacErrorPopup = false;
       this.showAccuInfoPopup = false;
-      //window.removeEventListener('click', this.handleOutsideClick);
     },
   }
 });
 </script>
-
-
 
 <!-- Εδώ κάνουμε css styling στα παραπάνω όπως στα popups -->
 <style scoped>

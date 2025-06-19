@@ -905,18 +905,13 @@ this.sensors_containeritems = [
 
   },
   methods: {
-
   },
   computed: {
     // // Add computed property to return SideBarListItems
-
   },
 })
 </script>
 <!-- in the numrows remember to always include the header, in your calculations!!!!!!!!!!!!!!-->
-
-
-
 
 <template>
     <!-- Main content -->
@@ -966,7 +961,6 @@ this.sensors_containeritems = [
           :numCols="6"
           containername='Sensors'
           class="row-span-2 col-span-5"
-
         />
     </div>
   </div>

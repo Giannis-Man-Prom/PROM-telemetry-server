@@ -41,51 +41,31 @@
       >
         <!-- Show the appropriate content based on the type of item -->
         <template v-if="isBoolean(String(item.label[0])) || item.label[0]==='node_status'"> <!-- write all inclusions for boolean vars. -->
-          <span> {{ item.label[0] }} </span>
+          <span> {{ item?.label?.[0] }} </span>
         </template>
-
-        <template v-if="item?.label?.[0] === 'last_error' || item?.label?.[0] === 'sys_status'">
-          <!-- INVERTER LAST ERROR -->
-          <span> {{ item.label?.[0] }}: <br> {{ printInverterErrors(item?.value?.[0]) }} </span>
+        <template v-else-if="item?.label?.[0] === 'last_error' || item?.label?.[0] === 'sys_status'">
+          <span> {{ item?.label?.[0] }}: <br> {{ printInverterErrors(item?.value?.[0]) }} </span>
         </template>
-
-        <template v-if="item?.label[0] === 'latched_error'">                       <!-- INVERTER LAST ERROR -->
-          <span> {{ item?.label[0] }}: <br> {{ printLatchedError(item?.value?.[0]) }} </span>
+        <template v-else-if="item?.label?.[0] === 'latched_error'">
+          <span> {{ item?.label?.[0] }}: <br> {{ printLatchedError(item?.value?.[0]) }} </span>
         </template>
-
-        <template v-if="item?.label[0] === 'aux_hw_status'">                       <!-- INVERTER LAST ERROR -->
-          <span> {{ item?.label[0] }}: <br> {{ printAuxHwStatus(item?.value?.[0]) }} </span>
+        <template v-else-if="item?.label?.[0] === 'aux_hw_status'">
+          <span> {{ item?.label?.[0] }}: <br> {{ printAuxHwStatus(item?.value?.[0]) }} </span>
         </template>
-
-        <template v-if="item?.label?.[0] === 'critical_hw_status'">
-          <!-- INVERTER LAST ERROR -->
-          <span> {{ item.label?.[0] }}: <br> {{ printCriticalHwStatus(item?.value?.[0]) }} </span>
+        <template v-else-if="item?.label?.[0] === 'critical_hw_status'">
+          <span> {{ item?.label?.[0] }}: <br> {{ printCriticalHwStatus(item?.value?.[0]) }} </span>
         </template>
-
-        <template v-if="item?.label?.[0] === 'handler_status'">
-          <!-- INVERTER LAST ERROR -->
-          <span> {{ item.label?.[0] }}: <br> {{ printHandlerStatus(item?.value?.[0]) }} </span>
+        <template v-else-if="item?.label?.[0] === 'handler_status'">
+          <span> {{ item?.label?.[0] }}: <br> {{ printHandlerStatus(item?.value?.[0]) }} </span>
         </template>
-
-        <template v-if="item?.label?.[0] === 'actual_inverter_status'">
-          <!-- INVERTER LAST ERROR -->
-          <span> {{ item.label?.[0] }}: <br> {{ printActualInverterStatus(item?.value?.[0]) }} </span>
+        <template v-else-if="item?.label?.[0] === 'actual_inverter_status'">
+          <span> {{ item?.label?.[0] }}: <br> {{ printActualInverterStatus(item?.value?.[0]) }} </span>
         </template>
-
-        <template v-if="item?.label?.[0] === 'act_control_mode'">
-          <!-- INVERTER LAST ERROR -->
-          <span> {{ item.label?.[0] }}: <br> {{ printActControlMode(item?.value?.[0]) }} </span>
+        <template v-else-if="item?.label?.[0] === 'act_control_mode'">
+          <span> {{ item?.label?.[0] }}: <br> {{ printActControlMode(item?.value?.[0]) }} </span>
         </template>
-
-        <template v-if="item.label[0]!=='node_status' && item.label[0]!=='critical_hw_status'  && item.label[0]!=='latched_error' && item.label[0]!=='aux_hw_status' && !isBoolean(String(item.label[0])) && item.label[0]!=='last_error'  "> <!-- write all exceptions..... -->
-          <div>
-            <span>{{ item.label[0] }}: </span>
-            <br />
-            <template v-if="item.label && item.label[0] !== undefined">
-              <span v-if="item.value && item.value[0] !== undefined"> {{ item.value[0] }} </span>
-            </template>
-
-          </div>
+        <template v-else>
+          <span>{{ item?.label?.[0] }}: <br> {{ item?.value?.[0] }} </span>
         </template>
       </button>
     </div>
@@ -108,7 +88,6 @@
         <slot name="top"></slot>
       </div>
       <div class="popup-content">
-
         <p v-if="showInfoPopup">This is the {{ containername }} info content.</p>
         <button v-if="showInfoPopup" @click="closeInfoPopup" class="close-btn">Close</button>
       </div>
@@ -211,7 +190,6 @@ export default defineComponent({
 
       return messages[ind] || 'Not Available';
     },
-
     printLatchedError(ind: number) {
       const messages = [
         'ERROR_RESET',
@@ -222,7 +200,6 @@ export default defineComponent({
 
       return messages[ind] || 'Not available';
     },
-
     printHandlerStatus(ind: number): string {
       const messages = [
         'NO_ERRORS',
@@ -234,7 +211,6 @@ export default defineComponent({
 
       return messages[ind] || 'Not available';
     },
-
     printAuxHwStatus(ind: number): string {
       if (typeof ind !== 'number') return 'Not available';
 
@@ -256,7 +232,6 @@ export default defineComponent({
 
       return messages.length > 0 ? messages.join(', ') : 'Not available';
     },
-
     printCriticalHwStatus(ind: number): string {
       if (typeof ind !== 'number') return 'Not available';
 
@@ -291,7 +266,6 @@ export default defineComponent({
 
       return messages.length > 0 ? messages.join(', ') : 'Not available';
     },
-
     printActualInverterStatus(ind: number): string {
       const messages = [
         'INVERTER_DISABLE', // 0
@@ -300,7 +274,6 @@ export default defineComponent({
 
       return messages[ind] || 'Not available';
     },
-
     printActControlMode(ind: number): string {
       const modes = [
         'CURRENT_CONTROL_MODE', // 0
@@ -310,330 +283,58 @@ export default defineComponent({
 
       return modes[ind] || 'Not available';
     },
-
-    
     showPopup(item: variableContainer): void {
       this.closeAllPopups();
-      if (item.value )
-      if (
-          item.label[0] === undefined || (item.value[0] === undefined )
-
-          // item.value1 === undefined ||
-          // item.label1 === undefined ||
-          // (item.value2 === undefined && item.label2 !== undefined) ||
-          // (item.value3 === undefined && item.label3 !== undefined) ||
-          // (item.value4 === undefined && item.label4 !== undefined) || ------------CHECK THIS!!!!!!!!!!!!!!!!!!!!!!!!
-          // (item.value5 === undefined && item.label5 !== undefined) ||
-          // (item.value6 === undefined && item.label6 !== undefined) ||
-          // (item.value7 === undefined && item.label7 !== undefined) ||
-          // (item.value8 === undefined && item.label8 !== undefined)
-      ) {
+      if (item.label[0] === undefined || (item.value[0] === undefined )) {
         return;
       }
-      if (item.value ) {
-        let content = ` \n${item.label[0]}: ${item.value[0]}\n `;
+      let content = ` \n${item.label[0]}: ${item.value[0]}\n `;
 
+      if (item.label[1] !== undefined && item.label[0] === 'node_status') { // node status popup formatting
 
-        if (item.label[1] !== undefined && item.label[0] === 'node_status') { // node status popup formatting
-
-          if (item.value && item.value[0] === 0) {
-            this.popupContent = content;
-            this.showPopupFlag = true;
-          }
-          if (item.value && item.value[0] !== 0) {
-            for (let i = 0; i <= 7; i++) { //where: -------  8 === number of labels of node_status
-              if (this.rightShift(item.value[0], i) === 1) { //here----------------------------------------------------------------------------------
-                content += `\n${item.label[i]}\n`;
-              }
+        if (item.value && item.value[0] === 0) {
+          this.popupContent = content;
+          this.showPopupFlag = true;
+        }
+        if (item.value && item.value[0] !== 0) {
+          for (let i = 0; i <= 7; i++) { //where: -------  8 === number of labels of node_status
+            if (this.rightShift(item.value[0], i) === 1) { //here----------------------------------------------------------------------------------
+              content += `\n${item.label[i]}\n`;
             }
-            // this.popupContent = content;
-            // this.showPopupFlag = true;
-            // return;
           }
         }
-
-        if (item.label[0] === 'handler_status') {
-          switch (item.value[0]) {
-            case 0:
-              content += `\n NO_ERRORS \n`;
-              break;
-            case 1:
-              content += `\n FATAL_ERROR \n`;
-              break;
-            case 2:
-              content += `\n CRITICAL_ERROR \n`;
-              break;
-            case 3:
-              content += `\n WARNING \n`;
-              break;
-            case 4:
-              content += `\n INITIALIZING \n`;
-              break;
-            default:
-              content += 'Not available'; // Handle default case if necessary
-              break;
-          }
-        }
-
-        if (item.label[0] === 'aux_hw_status') {
-          switch (item.value[0]) {
-            case 1:
-              content += `\n HW_TSAL_OVER60 \n`;
-              break;
-            case 2:
-              content += `\n HW_DISCHARGE_ENABLED \n`;
-              break;
-            case 4:
-              content += `\n HW_USB_CONNECTED \n`;
-              break;
-            case 8:
-              content += `\n HW_ST_LINK_CONNECTED \n`;
-              break;
-            default:
-              content += 'Not available'; // Handle default case if necessary
-              break;
-          }
-        }
-
-        if (item.label[0] === 'last_error' || item.label[0] === 'sys_status') {
-          switch (item.value[0]) {
-            case 0:
-              content += `\n INVERTER_OK \n`;
-              break;
-            case 1:
-              content += `\n OCD_FAULT \n`;
-              break;
-            case 2:
-              content += `\n INVERTED_PHASE_POLARITY \n`;
-              break;
-            case 3:
-              content += `\n HW_FAULT \n`;
-              break;
-            case 4:
-              content += `\n OVERVOLTAGE \n`;
-              break;
-            case 5:
-              content += `\n UNDERVOLTAGE \n`;
-              break;
-            case 6:
-              content += `\n IGBT_OVERTEMP \n`;
-              break;
-            case 7:
-              content += `\n MOTOR_OVERTEMP \n`;
-              break;
-            case 8:
-              content += `\n ADC_ERROR \n`;
-              break;
-            case 9:
-              content += `\n ADC_INIT_ERROR \n`;
-              break;
-            case 10:
-              content += `\n SPI_ERROR \n`;
-              break;
-            case 11:
-              content += `\n RESOLVER_READ_ERROR \n`;
-              break;
-            case 12:
-              content += `\n ENDAT_INIT_ERROR \n`;
-              break;
-            case 13:
-              content += `\n VELOCITY_EXCEEDS_MAXIMUM \n`;
-              break;
-            case 14:
-              content += `\n PWM_OVERMODULATION \n`;
-              break;
-            case 15:
-              content += `\n INVERSE_TRANSFORM_TIMEOUT \n`;
-              break;
-            case 16:
-              content += `\n TIMER_INIT_ERROR \n`;
-              break;
-            case 17:
-              content += `\n PWN_START_FAILURE \n`;
-              break;
-            case 18:
-              content += `\n PWN_STOP_FAILURE \n`;
-              break;
-            case 19:
-              content += `\n INVALID_CONTROL_MODE \n`;
-              break;
-            case 20:
-              content += `\n CONFIGURATION_ERROR \n`;
-              break;
-            case 21:
-              content += `\n WHILE1_TIMEOUT \n`;
-              break;
-            case 22:
-              content += `\n CANRX_ERROR \n`;
-              break;
-            case 23:
-              content += `\n CANTX_ERROR \n`;
-              break;
-            case 24:
-              content += `\n CAN_TIMEOUT_ERROR \n`;
-              break;
-            case 25:
-              content += `\n SUPPLY_3V3_ERROR \n`;
-              break;
-            case 26:
-              content += `\n SUPPLY_5V0_ERROR \n`;
-              break;
-            case 27:
-              content += `\n SUPPLY_5V6_ERROR \n`;
-              break;
-            case 28:
-              content += `\n SUPPLY_12V0_ERROR \n`;
-              break;
-            case 29:
-              content += `\n VREF_ERROR \n`;
-              break;
-            case 30:
-              content += `\n NO LV SUPPLY \n`;
-              break;
-            case 31:
-              content += `\n MCU OVERTEMP \n`;
-              break;
-            case 32:
-              content += `\n MCU DISABLE IMPLAUSIBILITY \n`;
-              break;
-            case 33:
-              content += `\n MCU ENABLE IMPLAUSIBILITY \n`;
-              break;
-            case 34:
-              content += `\n GD DISABLE IMPLAUSIBILITY \n`;
-              break;
-            default:
-              content += 'Not Available'; // Handle default case if necessary
-              break;
-          }
-        }
-
-        if (item.label[0] === 'critical_hw_status') {
-          switch (item.value[0]) {
-            case 0:
-              content += `\n HW_INVERTER_ENABLED \n`;
-              break;
-            case 1:
-              content += `\n HW_INVERTER_DISABLED \n`;
-              break;
-            case 2:
-              content += `\n HW_OCD_A \n`;
-              break;
-            case 4:
-              content += `\n HW_OCD_B \n`;
-              break;
-            case 8:
-              content += `\n CC HW_OCD_C \n`;
-              break;
-            case 16:
-              content += `\n HW_INV_ERROR \n`;
-              break;
-            case 32:
-              content += `\n HW_OVERVOLTAGE \n`;
-              break;
-            case 64:
-              content += `\n HW_FAULT_LATCHED \n`;
-              break;
-            case 128:
-              content += `\n HW_MCU_DISABLE \n`;
-              break;
-            case 256:
-              content += `\n HW_GD_FLT \n`;
-              break;
-            case 512:
-              content += `\n HW_GD_RDY_ERROR \n`;
-              break;
-            case 1024:
-              content += `\n HW_SENSOR_A_DC \n`;
-              break;
-            case 2048:
-              content += `\n HW_SENSOR_B_DC \n`;
-              break;
-            case 4096:
-              content += `\n HW_SENSOR_C_DC \n`;
-              break;
-            default:
-              content += 'Not available'; // Handle default case if necessary
-              break;
-          }
-        }
-
-        if (item.label[0] === 'actual_inverter_status') {
-          switch (item.value[0]) {
-            case 0:
-              content += `\n INVERTER_DISABLE \n`;
-              break;
-            case 1:
-              content += `\n INVERTER_ENABLE \n`;
-              break;
-            default:
-              content += 'Not available'; // Handle default case if necessary
-              break;
-          }
-        }
-
-        if (item.label[0] === 'act_control_mode') {
-          switch (item.value[0]) {
-            case 0:
-              content += `\n CURRENT_CONTROL_MODE \n`;
-              break;
-            case 1:
-              content += `\n SPEED_CONTROL_MODE \n`;
-              break;
-            case 2:
-              content += `\n FAULT_MODE \n`;
-              break;
-            default:
-              content += 'Not available'; // Handle default case if necessary
-              break;
-          }
-        }
-
-        if (item.label[0] === 'latched_error') {
-          switch (item.value[0]) {
-            case 0:
-              content += `\n ERROR_RESET \n`;
-              break;
-            case 1:
-              content += `\n FATAL_ERROR_EXISTING \n`;
-              break;
-            case 2:
-              content += `\n CRITICAL_ERROR_EXISTING \n`;
-              break;
-            case 3:
-              content += `\n WARNING_EXISTING \n`;
-              break;
-            default:
-              content += 'Not available'; // Handle default case if necessary
-              break;
-          }
-        }
-
-
-        this.popupContent = content;
-        this.showPopupFlag = true;
       }
 
-      //if item.label[0]==node_status && sum==0 ==> content = dk
-      //if item.label[0]==node_status && sum !=0 ==> for all content: content=content++ tespa, display all content whose msb!=0
+      if (item.label[0] === 'handler_status') {
+        content = `${item.label[0]} : ${this.printHandlerStatus(item?.value?.[0])}`
+      }
+      if (item.label[0] === 'aux_hw_status') {
+        content = `${item.label[0]}: ${this.printAuxHwStatus(item?.value?.[0])}`
+      }
+      if (item.label[0] === 'last_error' || item.label[0] === 'sys_status') {
+        content = `${item.label[0]} : ${this.printInverterErrors(item?.value?.[0])}`
+      }
+      if (item.label[0] === 'critical_hw_status') {
+        content = `${item.label[0]} : ${this.printCriticalHwStatus(item?.value?.[0])}`
+      }
+      if (item.label[0] === 'actual_inverter_status') {
+        content = `${item.label[0]} : ${this.printActualInverterStatus(item?.value?.[0])}`
+      }
+      if (item.label[0] === 'act_control_mode') {
+        content = `${item.label[0]} : ${this.printActControlMode(item?.value?.[0])}`
+      }
+      if (item.label[0] === 'latched_error') {
+        content = `${item.label[0]} : ${this.printLatchedError(item?.value?.[0])}`
+      }
 
-
-
-      //window.addEventListener('click', this.handleOutsideClick);
+      this.popupContent = content;
+      this.showPopupFlag = true;
     },
     closePopup(): void {
       this.showPopupFlag = false;
-      //window.removeEventListener('click', this.handleOutsideClick);
     },
-    // handleOutsideClick(event: MouseEvent): void {
-    //   const popupContent = this.$refs.popupContent as HTMLElement;
-    //   if (popupContent && !popupContent.contains(event.target)) { /// maybe should be deleted---------------------------------------------
-    //     this.closePopup();
-    //   }
-    // },
     closeAllPopups(): void {
       this.showPopupFlag = false;
-      //window.removeEventListener('click', this.handleOutsideClick);
     }
   }
 });
@@ -662,7 +363,6 @@ export default defineComponent({
 .flex {
   position: relative; /* Ensure the container is positioned relative */
 }
-
 
 .popup-content {
   /* Add styles for the popup content */

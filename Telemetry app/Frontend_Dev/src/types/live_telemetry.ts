@@ -234,11 +234,6 @@ export type variableContainer = {
 export type sidebarItems = {
     label: (string)[];
     value?: (number)[];
-    //lastNumber?: (number)[];
-    // label2?: string;
-    // value2?: number;
-    // label3?: string;
-    // value3?: number;
 }
 
 export type statusItems = {

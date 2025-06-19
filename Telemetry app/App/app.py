@@ -1,4 +1,3 @@
-import logging
 import time
 
 from flask import Flask, request, jsonify, send_from_directory
@@ -8,8 +7,6 @@ from dotenv import load_dotenv
 import os
 import pandas as pd
 import threading
-from services.telemetry_data_class import telemetry_data_class
-from typing import Type
 from flask_socketio import SocketIO, emit
 from threading import Lock
 from services.live_telemetry_class import SerialRead
@@ -43,147 +40,9 @@ DEBUG = os.getenv('DEBUG', 'False').lower() in ['true', '1', 'yes']
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 """
-    Prom-Telemetry Data analysis VD, API server
-    ~~~~
-"""
-
-
-# Define API routes
-@app.route('/api/v1/data_analysis', methods=['GET'])
-def data_analysis_health_check():
-    test = request.args.get('test')
-    return jsonify(
-        status=200,
-        data=f"Data analysis alive!! {test}"
-    )
-
-
-@app.route('/api/v1/data_analysis/file_upload', methods=['POST'])
-def upload_data_file():
-    # Get the uploaded file from the request object
-    uploaded_file = request.files['file']
-
-    if f"data_{uploaded_file.filename}" in list(dict(app.config['uploaded_files']).keys()):
-        return {
-            'status': 400,
-            'data': {
-                'message': f'The file with filename: data_{uploaded_file.filename} already exists in the server'
-            }
-        }
-
-    df = pd.read_csv(request.files['file'])
-
-    try:
-
-        df_telem_data_class = telemetry_data_class(df)
-
-        # Here we are storing the telemetry data class to the config object of flask in order to keep it and retrive it when we want
-        app.config['uploaded_files'][f'data_{uploaded_file.filename}'] = df_telem_data_class
-
-        # ONLY FOR DEBUG
-        print(app.config['uploaded_files'])
-
-        return jsonify(
-            {
-                'status': 200,
-                'data': {
-                    'message': f'File uploaded successfully with name: data_{uploaded_file.filename}'
-                }
-            }
-        )
-
-    except Exception as e:
-        return jsonify(
-            {
-                'status': 500,
-                'data': {
-                    'error': f'could not load the file{e}'
-                }
-            }
-
-        )
-
-
-@app.route('/api/v1/data_analysis/get_collumns/<file_name>', methods=['GET'])
-def fetch_two_columns(file_name: str):
-    # Definition of a type
-    telemetry_data: Type[telemetry_data_class]
-
-    # Get the JSON data from the request body
-    data = request.get_json()
-
-    # Extract variables coll_1 and coll_2 from the JSON data
-    col_1 = data.get('col_1')
-    col_2 = data.get('col_2')
-
-    try:
-        # Fetching the telemetry object by file name
-        telemetry_data = app.config['uploaded_files'][file_name]
-
-    except KeyError as keyErr:
-        return jsonify({
-            'status': 500,
-            "msg": "There is no file with this name in the database"
-        })
-
-    return {
-        'status': 200,
-        'data': {
-            'data': telemetry_data.get_two_cols(col_1, col_2)
-        }
-    }
-
-
-@app.route('/api/v1/data_analysis/get_file_ids', methods=['GET'])
-def fetch_file_names():
-    try:
-
-        file_names = list(dict(app.config['uploaded_files']).keys())
-
-        print(file_names)
-
-    except Exception as e:
-        return {
-            'status': 500,
-            'data': {
-                'message': 'There was an error while fetching the names'
-            }
-        }
-
-    return {
-        'status': 200,
-        'data': {
-            'data': file_names
-        }
-    }
-
-
-@app.route('/api/v1/data_analysis/get_all_cols/<file_name>', methods=['GET'])
-def get_all_cols_in_file(file_name: str):
-    # Definition of a type
-    telemetry_data: Type[telemetry_data_class]
-
-    try:
-        # Fetching the telemetry object by file name
-        telemetry_data = app.config['uploaded_files'][file_name]
-
-        return jsonify({
-            "status": 200,
-            "data": telemetry_data.get_cols_all()
-        })
-
-    except KeyError as keyErr:
-        return jsonify({
-            'status': 500,
-            "msg": f"There is no file with this name in the database {keyErr}"
-        })
-
-
-"""
     Prom-Telemetry Live Telemetry, API server
     ~~~~
 """
-
 
 @app.route('/api/v1/live_telemetry/', methods=['GET'])
 def telemetry_health_check():
@@ -197,10 +56,8 @@ def telemetry_health_check():
 def disconnect():
     print('Client disconnected')
 
-
 thread = None
 thread_lock = Lock()
-
 
 # Essentialy what we are doing here is to emit an event, but instead of doing it once we are enabling a backstage process with threading
 # so we will have a concurrent procedure emiting event, in this case our procudure is the infinite while from the telemetry module.
@@ -230,7 +87,6 @@ def connect():
 # Global variable to track the thread status
 is_thread_running = 0
 logging_thread = None
-
 
 # With this endpoint, we are starting the logging process, if there is a thread running we will stop it and return the apropriate
 # message, and if there is no thread running we will start the logging process and return the apropriate message.
@@ -312,9 +168,7 @@ def logging_status():
             msg="The logging process is stopped"
         )
 
-
 temp_packages = []
-
 
 def logging_process():
     global is_thread_running
@@ -382,9 +236,6 @@ def read_from_serial_thread(telemetry):
         package = None
         try:
             package = telemetry.serialInst.readline().decode('utf-8').strip()
-            #package = '{"vcu_water_temp_in_right":444,"vcu_water_temp_out_right":57,"vcu_pc_flag":1,"vcu_r2d_flag":0,"vcu_watchdog_status":2,"vcu_bspdState":89,"vcu_fan_right":34,"vcu_fan_left":76,"vcu_pump_right":23,"vcu_pump_left":45,"vcu_gearbox_ntc_left":67,"vcu_apps1":56,"vcu_apps2":92,"vcu_brake_front":38,"vcu_brake_rear":14,"vcu_hall_fr":63,"vcu_hall_fl":88,"vcu_Vx":0,"vcu_Vy":0,"vcu_yaw_rate":0,"vcu_accel_x":0,"vcu_accel_y":0,"vcu_accel_z":0,"vcu_gyro_x":0,"vcu_gyro_y":0,"vcu_gyro_z":0,"vcu_TVtrqLeft":0,"vcu_TVtrqRight":0,"vcu_antiw":0,"vcu_error":0,"vcu_integral":0,"vcu_integral_error":0,"vcu_m_z_nonsat":0,"vcu_m_z_sat":0,"vcu_prevError":0,"vcu_SteeringLinear_mm":0,"vcu_proportional":0,"vcu_yaw_rate_ref":0,"vcu_Vx1":0,"vcu_Vy1":0,"radio_rssi":0,"radio_packet_loss":0,"radio_wrong_crc":0,"radio_kbps":0}'
-
-            # print(package)
 
             if package:
                 pass

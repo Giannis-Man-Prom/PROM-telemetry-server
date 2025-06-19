@@ -57,9 +57,6 @@
               <li>
                 <router-link to="/charts" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Custom Charts</router-link>
               </li>
-              <li>
-                <router-link to="/vd-csv" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">CSV VD</router-link>
-              </li>
             </ul>
           </div>
         </li>
@@ -68,15 +65,9 @@
   </aside>
 </template>
 
-
-
-
 <script lang="ts">
 import { defineComponent } from 'vue';
-//import { telemetry_data_obj } from '@/ContainerData/TelemetryData.ts';
-//import {variableContainer, VehicleTelemetry_data} from "@/types/live_telemetry.ts";
 
-import SideBar from '@/components/SideBar.vue';
 import { sidebarItems, variableContainer, VehicleTelemetry_data } from '../types/live_telemetry.ts';
 
 export default defineComponent({
@@ -121,9 +112,6 @@ export default defineComponent({
     toggleDropdown() {
       this.isDropdownOpen = !this.isDropdownOpen;
     },
-    // lastnumber(label: string): number {
-    //
-    // }
   }
 });
 </script>

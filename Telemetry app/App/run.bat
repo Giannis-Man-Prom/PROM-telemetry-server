@@ -11,8 +11,8 @@ REM Install pip if not available
 echo Ensuring pip is installed...
 python -m ensurepip --upgrade
 
-REM Install dependencies from the packages folder (Offline)
-echo Installing dependencies from local packages...
+REM Install dependencies
+echo Installing dependencies
 pip install -r requirements.txt
 
 REM Run the application

@@ -26,7 +26,6 @@ class SerialRead:
     __serial_bytesize = os.getenv('BYTESIZE')
 
     def __init__(self):
-
         self.ports = serial.tools.list_ports.comports()
         self.serialInst = self.establish_connection_based_on_op_sys()
 
@@ -47,8 +46,8 @@ class SerialRead:
 
         seth = re.compile(r'.*(usbserial|usbmodem|serial|stm|STM|STM32|Σειριακή συσκευή ).*')
 
-        if op_sys == "Linux":
-            for port in [port for port in self.ports if port.serial_number == '3086377C3233']:
+        if op_sys == "Linux" or op_sys == "Windows" or op_sys == "Darwin":
+            for port in [port for port in self.ports if port.serial_number == '3086377C3233' or 'COM9' in port.description]:
                 # extracting only the string necessary for the connection to the usb and to the lib
 
                 sub_string = self.__substring_extractor(r'^([^ ]+)', str(port)).group(1)
@@ -57,7 +56,7 @@ class SerialRead:
                 while True:
                     try:
                         print("Opening the serial port connection")
-                        serial_connection_inst.port = sub_string
+                        serial_connection_inst.port = port.name
                         serial_connection_inst.timeout = 0.5
                         serial_connection_inst.open()
 
@@ -72,97 +71,5 @@ class SerialRead:
 
             else:
                 return None
-
-
-        elif op_sys == "Windows":
-
-            for port in [port for port in self.ports if port.serial_number == '3086377C3233' or port.device == 'COM9']: #
-                # extracting only the string necessary for the connection to the usb and to the lib
-
-                sub_string = self.__substring_extractor(r'^([^ ]+)', str(port)).group(1)
-
-                """Attempts to open the serial connection."""
-                while True:
-                    try:
-                        print("Opening the serial port connection")
-                        serial_connection_inst.port = sub_string
-                        serial_connection_inst.timeout = 0.5
-                        serial_connection_inst.open()
-
-                        break
-
-                    except serial.SerialException as e:
-                        print(f"Error opening serial port: {e}")
-                        time.sleep(0.6)
-
-            if serial_connection_inst.is_open:
-                return serial_connection_inst
-
-            else:
-                return None
-
-        elif op_sys == "Darwin":  # Mac
-
-            for port in [port for port in self.ports if seth.search(str(port))]:
-                #extracting only the string necessary for the connection to the usb and to the lib
-                sub_string = self.__substring_extractor(r'^([^ ]+)', str(port)).group(1)
-
-                """Attempts to open the serial connection."""
-                while True:
-                    try:
-                        print("Opening the serial port connection")
-                        serial_connection_inst.port = sub_string
-                        serial_connection_inst.timeout = 0.5
-                        serial_connection_inst.open()
-                        print("Serial connection Oppened")
-                        break
-
-                    except serial.SerialException as e:
-                        print(f"Error opening serial port: {e}")
-                        time.sleep(0.6)
-
-            if serial_connection_inst.is_open:
-                return serial_connection_inst
-            else:
-                return None
-
         else:
             return None  # If platform does not match any of the operating systems from above we will not try something
-
-    def read_from_serial(self):
-
-        if self.serialInst is None:
-            raise SerialConnectionException("The serial connection did not open")
-
-        try:
-            if self.serialInst.in_waiting > 0:
-                # Read a line from the serial buffer
-                line = self.serialInst.read_until(b'\n').decode('utf-8').strip()
-
-                # Print the JSON data
-                return line
-
-        except Exception as e:
-            print(f"An error occurred: {e}")
-
-
-if __name__ == "__main__":
-
-    telemetry = SerialRead()
-
-    while 1:
-        # print(telemetry.serialInst.in_waiting)
-
-        print(telemetry.serialInst.read_until(b'\n').decode('utf-8').strip())
-
-        time.sleep(0.1)
-    # with open('serial_data.txt', 'w') as file:
-
-        # while 1:
-        #
-        #     print(telemetry.read_from_serial())
-        #
-        #
-        #     if telemetry.read_from_serial() is not None:
-        #         # Write data to text file
-        #         file.write(telemetry.read_from_serial() + '\n')
