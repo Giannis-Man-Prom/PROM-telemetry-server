@@ -79,6 +79,12 @@ export type VehicleTelemetry_data = {
     vcu_prevError?: number;
     vcu_SteeringLinear_mm?: number;
     vcu_proportional?: number;
+    vcu_Ku?: number;
+    vcu_bb?: number;
+    vcu_IsdTrqLeft?: number;
+    vcu_IsdTrqRight?: number;
+    vcu_deltaW?: number;
+    vcu_u_x?: number;
 
     //right_inv
     right_inv_critical_hw_status?: number;
@@ -211,6 +217,10 @@ export type VehicleTelemetry_data = {
     vcu_Gyro_x?: number;
     vcu_Gyro_y?: number;
     vcu_Gyro_z?: number;
+    sensors_strain_fr?: number;
+    sensors_strain_fl?: number;
+    sensors_strain_rr?: number;
+    sensors_strain_rl?: number;
 
     //radio
     radio_rssi?: number;

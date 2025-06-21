@@ -51,11 +51,6 @@ const routes: Array<RouteRecordRaw> = [
         name: "Charts",
         component: CustomCharts,
     },
-	{
-		path: "/vd-csv",
-		name: "CSVReceiver",
-		component: csvreceiver,
-	},
 	{ 
 		path: "/:pathMatch(.*)*", 
 		name: "NotFound", 
