@@ -2,9 +2,9 @@
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
     <div class="grid grid-cols-2 gap-x-8 gap-y-4 h-screen">
       <CustomLine
-          :labels="'vcu_inv_motor_torque_right'"
-          :items="vcu_inv_motor_torque_right"
-          :title="'vcu_inv_motor_torque_right'"
+          :labels="'vcu_IsdTrqRight'"
+          :items="vcu_IsdTrqRight"
+          :title="'vcu_IsdTrqRight'"
       />
       <CustomLine
           :labels="'right_inv_trq_actual'"
@@ -12,9 +12,9 @@
           :title="'right_inv_trq_actual'"
       />
       <CustomLine
-          :labels="'vcu_inv_motor_torque_left'"
-          :items="vcu_inv_motor_torque_left"
-          :title="'vcu_inv_motor_torque_left'"
+          :labels="'vcu_IsdTrqLeft'"
+          :items="vcu_IsdTrqLeft"
+          :title="'vcu_IsdTrqLeft'"
       />
       <CustomLine
           :labels="'left_inv_trq_actual'"
@@ -80,14 +80,14 @@ export default defineComponent({
         return null;
       }
 
-      if (this.telemetry_data_obj.vcu_inv_motor_torque_right !== undefined) {
-        this.vcu_inv_motor_torque_right = this.telemetry_data_obj.vcu_inv_motor_torque_right;
+      if (this.telemetry_data_obj.vcu_IsdTrqRight !== undefined) {
+        this.vcu_IsdTrqRight = this.telemetry_data_obj.vcu_IsdTrqRight;
       }
       if (this.telemetry_data_obj.right_inv_trq_actual !== undefined) {
         this.right_inv_trq_actual = this.telemetry_data_obj.right_inv_trq_actual;
       }
-      if (this.telemetry_data_obj.vcu_inv_motor_torque_left !== undefined) {
-        this.vcu_inv_motor_torque_left = this.telemetry_data_obj.vcu_inv_motor_torque_left;
+      if (this.telemetry_data_obj.vcu_IsdTrqLeft !== undefined) {
+        this.vcu_IsdTrqLeft = this.telemetry_data_obj.vcu_IsdTrqLeft;
       }
       if (this.telemetry_data_obj.left_inv_trq_actual !== undefined) {
         this.left_inv_trq_actual = this.telemetry_data_obj.left_inv_trq_actual;
@@ -116,10 +116,10 @@ export default defineComponent({
     return {
       telemetry_data_obj: {} as VehicleTelemetry_data,
 
-      vcu_inv_motor_torque_right: 0,
+      vcu_IsdTrqRight: 0,
       right_inv_trq_actual: 0,
 
-      vcu_inv_motor_torque_left: 0,
+      vcu_IsdTrqLeft: 0,
       left_inv_trq_actual: 0,
 
       right_inv_motor_rpm: 0,

@@ -42,7 +42,8 @@
       apexchart: VueApexCharts,
     },
     setup(props) {
-      const series = ref<number[]>([0]);
+        const series = ref<number[]>([0]);
+        const actualValue = ref<number>(0);  // new ref to store raw value
         const chartOptions = ref({
         chart: {
             type: 'radialBar',
@@ -66,13 +67,12 @@
                 color: '#f00',
                 },
                 value: {
-                fontSize: '22px',
-                offsetY: 10,
-                color: '#fff',
-                formatter: function (val: number) {
-                    const actualValue = (val / 100) * (props.max - props.min) + props.min;
-                    return `${actualValue}`;
-                }
+                    fontSize: '22px',
+                    offsetY: 10,
+                    color: '#fff',
+                    formatter: function () {
+                        return `${actualValue.value}`;
+                    }
                 }
             }
             }
@@ -80,13 +80,13 @@
         labels: [props.title],
         });
 
-      watch(() => props.items, (newItems: number) => {
-        if (newItems && newItems !== undefined) {
-            const rawValue = newItems;
-            const normalized = ((rawValue - props.min) / (props.max - props.min)) * 100;
-            series.value = [Math.max(0, Math.min(100, normalized))];
-        }
-      }, { immediate: true });
+        watch(() => props.items, (newItems: number) => {
+            if (typeof newItems === 'number') {
+            actualValue.value = newItems;  // store raw value
+            const normalized = ((newItems - props.min) / (props.max - props.min)) * 100;
+            series.value = [Math.max(0, Math.min(100, normalized))];  // clamp only for chart fill
+            }
+        }, { immediate: true });
   
       return {
         series,

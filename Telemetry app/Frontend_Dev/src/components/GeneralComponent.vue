@@ -221,16 +221,7 @@ export default defineComponent({
         8: 'HW_ST_LINK_CONNECTED'
       };
 
-      const messages: string[] = [];
-
-      Object.entries(statusMap).forEach(([bit, label]) => {
-        const bitVal = Number(bit);
-        if ((ind & bitVal) === bitVal) {
-          messages.push(label);
-        }
-      });
-
-      return messages.length > 0 ? messages.join(', ') : 'Not available';
+      return statusMap[ind] ?? 'Not available';
     },
     printCriticalHwStatus(ind: number): string {
       if (typeof ind !== 'number') return 'Not available';
@@ -252,19 +243,7 @@ export default defineComponent({
         4096: 'HW_SENSOR_C_DC'
       };
 
-      // Special case: exactly zero
-      if (ind === 0) return statusMap[0];
-
-      const messages: string[] = [];
-
-      Object.entries(statusMap).forEach(([bit, label]) => {
-        const bitVal = Number(bit);
-        if (bitVal !== 0 && (ind & bitVal) === bitVal) {
-          messages.push(label);
-        }
-      });
-
-      return messages.length > 0 ? messages.join(', ') : 'Not available';
+      return statusMap[ind] ?? 'Not available';
     },
     printActualInverterStatus(ind: number): string {
       const messages = [

@@ -76,10 +76,10 @@
           <template v-else-if="item?.label[0] === 'last_tsac_error'">                       <!-- INVERTER LAST ERROR -->
             <span> {{ item?.label[0] }}: <br> {{ printTSACerror(item?.value?.[0]) }} </span>
           </template>
-          <template v-else-if="item?.label[0] === 'last_bms_error '">                       <!-- INVERTER LAST ERROR -->
+          <template v-else-if="item?.label[0] === 'last_bms_error'">                       <!-- INVERTER LAST ERROR -->
             <span> {{ item?.label[0] }}: <br> {{ printBMSerror(item?.value?.[0]) }} </span>
           </template>
-          <template v-else-if="item?.label[0] === 'dynamic_mode '">                       <!-- INVERTER LAST ERROR -->
+          <template v-else-if="item?.label[0] === 'dynamic_mode'">                       <!-- INVERTER LAST ERROR -->
             <span> {{ item?.label[0] }}: <br> {{ printDynamic(item?.value?.[0]) }} </span>
           </template>
           <!-- Αλλιώς θέλουμε και όνομα και τιμή -->
@@ -196,7 +196,6 @@ export default defineComponent({
         'ELCON_REVERSE_POLARITY',
         'ELCON_COMMUNICATION_ERROR'
       ];
-      console.log(ind);
       return messages[ind] || 'Unknown TSAC error';
     },
     printDynamic(ind: number) {

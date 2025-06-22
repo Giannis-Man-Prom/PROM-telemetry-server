@@ -52,6 +52,11 @@
           :point="point"
           :title="'whatever'"
       />
+      <CustomLineMul
+        :items="[3.7, 3.6, 3.65]"
+        :datasetLabels="['Cell 1', 'Cell 2', 'Cell 3']"
+        title="Cell Voltages"
+      />
     </div>
   </div>
 </template>
@@ -62,6 +67,7 @@ import SideBar from '../components/SideBar.vue';
 import BarChartComponent from '@/components/CustomBarChart.vue';
 
 import CustomLine from "@/components/CustomLine.vue";
+import CustomLineMul from "@/components/CustomLineMul.vue";
 import CustomBarChart from "@/components/CustomBarChart.vue";
 import CustomGauge from "@/components/GaugeChart.vue";
 import LiveThermometer from "../components/Thermometer.vue";
@@ -81,6 +87,7 @@ export default defineComponent({
     SideBar,
     BarChartComponent,
     CustomLine,
+    CustomLineMul,
     CustomGauge,
     LiveThermometer,
     VueSpeedometer,
@@ -114,7 +121,6 @@ export default defineComponent({
       this.test = Math.random() * 100;
 
       this.point = { x: this.valueX, y: this.valueY };
-      console.log(this.point);
     }, 1000); // Update every 1 second
   },
   created() {

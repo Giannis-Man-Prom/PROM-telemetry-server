@@ -59,8 +59,8 @@ export default defineComponent({
       if (this.telemetry_data_obj.accu_total_voltage_vs !== undefined) {
         this.accu_total_voltage_vs = this.telemetry_data_obj.accu_total_voltage_vs;
       }
-      if (this.telemetry_data_obj.accu_current !== undefined) {
-        this.accu_current = this.telemetry_data_obj.accu_current;
+      if (this.telemetry_data_obj.accu_accu_current !== undefined) {
+        this.accu_current = this.telemetry_data_obj.accu_accu_current;
       }
       if (this.telemetry_data_obj.accu_wh_consumed !== undefined) {
         this.accu_wh_consumed = this.telemetry_data_obj.accu_wh_consumed;
