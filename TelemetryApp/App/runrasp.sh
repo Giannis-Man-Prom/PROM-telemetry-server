@@ -17,6 +17,7 @@ python -m ensurepip --upgrade
 
 # Install dependencies
 echo "Installing dependencies"
+pip install --no-index --find-links=/home/user/App/packages -r /home/user/App/requirements.txt
 pip install -r /home/user/App/requirements.txt
 
 # Run the application

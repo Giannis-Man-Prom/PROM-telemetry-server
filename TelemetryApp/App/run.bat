@@ -13,7 +13,7 @@ python -m ensurepip --upgrade
 
 REM Install dependencies
 echo Installing dependencies
-pip install -r requirements.txt
+pip install --no-index --find-links=./packages -r requirements.txt
 
 REM Run the application
 echo Running your application...
