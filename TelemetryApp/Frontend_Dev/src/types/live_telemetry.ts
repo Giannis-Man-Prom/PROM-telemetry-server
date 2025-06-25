@@ -46,16 +46,15 @@ export type VehicleTelemetry_data = {
     accu_imd_sd_state?:number;
     accu_ams_ok?: number;
     accu_ams_sd_state?:number;
+    accu_avg_cell_temp?: number;
 
     //vcu
     vcu_dtorque?: number;
     vcu_water_temp_in_right?: number;
     vcu_water_temp_out_right?: number;
     vcu_bspdState?: number;
-    vcu_fan_right?: number;
-    vcu_fan_left?: number;
-    vcu_pump_right?: number;
-    vcu_pump_left?: number;
+    vcu_fan1?: number;
+    vcu_fan2?: number;
     vcu_apps_right_implausibility?: number;
     vcu_apps_left_implausibility?: number;
     vcu_apps_deviation?: number;
@@ -85,6 +84,7 @@ export type VehicleTelemetry_data = {
     vcu_IsdTrqRight?: number;
     vcu_deltaW?: number;
     vcu_u_x?: number;
+    vcu_pumps_state?: number;
 
     //right_inv
     right_inv_critical_hw_status?: number;
