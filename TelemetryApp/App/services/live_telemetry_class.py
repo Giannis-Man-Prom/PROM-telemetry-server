@@ -47,7 +47,7 @@ class SerialRead:
         seth = re.compile(r'.*(usbserial|usbmodem|serial|stm|STM|STM32|Σειριακή συσκευή ).*')
 
         if op_sys == "Linux" or op_sys == "Windows" or op_sys == "Darwin":
-            for port in [port for port in self.ports if port.serial_number == '3086377C3233' or port.vid == 12346]:
+            for port in [port for port in self.ports if port.serial_number == '3086377C3233' or port.serial_number =='58CD180181']:
                 # extracting only the string necessary for the connection to the usb and to the lib
 
                 sub_string = self.__substring_extractor(r'^([^ ]+)', str(port)).group(1)
