@@ -125,7 +125,7 @@ export default defineComponent({
       popupHeight: '80%', // Initial popup height
       BooleanList: ['accu_over_60v_dclink', 'accu_air_m_state', 'sd_closed', 'precharge_done', 'pc_flag', 'r2d_flag', 'watchdog_status', 'bspdState',
         'fan_right', 'fan_left', 'pump_right', 'pump_left', 'apps_right_implausibility', 'apps_left_implausibility', 'res_k3_switch', 'res_k2_switch',
-        'lim_speed_limiter', 'lim_power_limiter', 'lim_stall_limiter', 'lim_l2t_limiter', 'lim_motor_temp', 'lim_igbt_temp', 'pumps_state'
+        'lim_speed_limiter', 'lim_power_limiter', 'lim_stall_limiter', 'lim_l2t_limiter', 'lim_motor_temp', 'lim_igbt_temp', 'pumps_state', 'service_hatch_fan'
         ] // enniaia lista booleans gia OLA TA CONTAINERS -- {accu}
     };
   },

@@ -49,7 +49,6 @@ export type VehicleTelemetry_data = {
     accu_avg_cell_temp?: number;
 
     //vcu
-    vcu_dtorque?: number;
     vcu_water_temp_in_right?: number;
     vcu_water_temp_out_right?: number;
     vcu_bspdState?: number;
@@ -58,7 +57,6 @@ export type VehicleTelemetry_data = {
     vcu_apps_right_implausibility?: number;
     vcu_apps_left_implausibility?: number;
     vcu_apps_deviation?: number;
-    vcu_initial_check_state?: number;
     vcu_water_temp_in_left?: number;
     vcu_water_temp_out_left?: number;
     dash_power_limiter?: number;
@@ -85,6 +83,7 @@ export type VehicleTelemetry_data = {
     vcu_deltaW?: number;
     vcu_u_x?: number;
     vcu_pumps_state?: number;
+    vcu_service_hatch_fan?: number;
 
     //right_inv
     right_inv_critical_hw_status?: number;
@@ -196,6 +195,7 @@ export type VehicleTelemetry_data = {
     vcu_dv_yaw_rate?: number;
     vcu_pc_flag?: number;
     vcu_as_ready_delay_passed?: number;
+    vcu_initial_check_state?: number;
 
     //sensors
     sensors_linear_rl?: number;
