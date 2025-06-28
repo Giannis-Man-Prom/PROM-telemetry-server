@@ -28,6 +28,16 @@
           :title="'vcu_hall_fl'"
       />
       <CustomLine
+          :labels="'left_inv_motor_rpm'"
+          :items="left_inv_motor_rpm"
+          :title="'left_inv_motor_rpm'"
+      />
+      <CustomLine
+          :labels="'right_inv_motor_rpm'"
+          :items="right_inv_motor_rpm"
+          :title="'right_inv_motor_rpm'"
+      />
+      <CustomLine
           :labels="'sensors_linear_rr'"
           :items="sensors_linear_rr"
           :title="'sensors_linear_rr'"
@@ -36,6 +46,26 @@
           :labels="'sensors_linear_rl'"
           :items="sensors_linear_rl"
           :title="'sensors_linear_rl'"
+      />
+      <CustomLine
+          :labels="'sensors_linear_fl'"
+          :items="sensors_linear_fl"
+          :title="'sensors_linear_fl'"
+      />
+      <CustomLine
+          :labels="'sensors_linear_fr'"
+          :items="sensors_linear_fr"
+          :title="'sensors_linear_fr'"
+      />
+      <CustomLine
+          :labels="'vcu_brake_front'"
+          :items="vcu_brake_front"
+          :title="'vcu_brake_front'"
+      />
+      <CustomLine
+          :labels="'vcu_brake_rear'"
+          :items="vcu_brake_rear"
+          :title="'vcu_brake_rear'"
       />
       <CustomLine
           :labels="'vcu_apps1'"
@@ -56,6 +86,26 @@
           :labels="'vcu_yaw_rate'"
           :items="vcu_yaw_rate"
           :title="'vcu_yaw_rate'"
+      />
+      <CustomLine
+          :labels="'vcu_requested_torque_right'"
+          :items="vcu_requested_torque_right"
+          :title="'vcu_requested_torque_right'"
+      />
+      <CustomLine
+          :labels="'vcu_requested_torque_left'"
+          :items="vcu_requested_torque_left"
+          :title="'vcu_requested_torque_left'"
+      />
+      <CustomLine
+          :labels="'vcu_Ku'"
+          :items="vcu_Ku"
+          :title="'vcu_Ku'"
+      />
+      <CustomLine
+          :labels="'vcu_bb'"
+          :items="vcu_bb"
+          :title="'vcu_bb'"
       />
     </div>
   </div>
@@ -106,6 +156,12 @@ export default defineComponent({
       if (this.telemetry_data_obj.vcu_hall_fr !== undefined) {
         this.vcu_hall_fr = [this.telemetry_data_obj.vcu_hall_fr];
       }
+      if (this.telemetry_data_obj.left_inv_motor_rpm !== undefined) {
+        this.left_inv_motor_rpm = [this.telemetry_data_obj.left_inv_motor_rpm];
+      }
+      if (this.telemetry_data_obj.right_inv_motor_rpm !== undefined) {
+        this.right_inv_motor_rpm = [this.telemetry_data_obj.right_inv_motor_rpm];
+      }
       if (this.telemetry_data_obj.vcu_hall_fl !== undefined) {
         this.vcu_hall_fl = [this.telemetry_data_obj.vcu_hall_fl];
       }
@@ -121,6 +177,18 @@ export default defineComponent({
       if (this.telemetry_data_obj.sensors_linear_rl !== undefined) {
         this.sensors_linear_rl = [this.telemetry_data_obj.sensors_linear_rl];
       }
+      if (this.telemetry_data_obj.sensors_linear_fl !== undefined) {
+        this.sensors_linear_rl = [this.telemetry_data_obj.sensors_linear_rl];
+      }
+      if (this.telemetry_data_obj.vcu_brake_front !== undefined) {
+        this.vcu_brake_front = [this.telemetry_data_obj.vcu_brake_front];
+      }
+      if (this.telemetry_data_obj.vcu_brake_rear !== undefined) {
+        this.vcu_brake_rear = [this.telemetry_data_obj.vcu_brake_rear];
+      }
+      if (this.telemetry_data_obj.sensors_linear_rl !== undefined) {
+        this.sensors_linear_rl = [this.telemetry_data_obj.sensors_linear_rl];
+      }
       if (this.telemetry_data_obj.vcu_apps1 !== undefined) {
         this.vcu_apps1 = [this.telemetry_data_obj.vcu_apps1];
       }
@@ -130,9 +198,20 @@ export default defineComponent({
       if (this.telemetry_data_obj.vcu_yaw_rate !== undefined) {
         this.vcu_yaw_rate = [this.telemetry_data_obj.vcu_yaw_rate];
       }
-      
       if (this.telemetry_data_obj.vcu_SteeringLinear_mm !== undefined) {
         this.vcu_SteeringLinear_mm = [this.telemetry_data_obj.vcu_SteeringLinear_mm];
+      }
+      if (this.telemetry_data_obj.vcu_requested_torque_right !== undefined) {
+        this.vcu_requested_torque_right = [this.telemetry_data_obj.vcu_requested_torque_right];
+      }
+      if (this.telemetry_data_obj.vcu_requested_torque_left !== undefined) {
+        this.vcu_requested_torque_left = [this.telemetry_data_obj.vcu_requested_torque_left];
+      }
+      if (this.telemetry_data_obj.vcu_Ku !== undefined) {
+        this.vcu_Ku = [this.telemetry_data_obj.vcu_Ku];
+      }
+      if (this.telemetry_data_obj.vcu_bb !== undefined) {
+        this.vcu_bb = [this.telemetry_data_obj.vcu_bb];
       }
     });
   },
@@ -145,14 +224,24 @@ export default defineComponent({
       vcu_Accel_z: 0,
       vcu_hall_fr: 0,
       vcu_hall_fl: 0,
+      vcu_requested_torque_right: 0,
+      vcu_requested_torque_left: 0,
       vcu_VelX: 0,
       vcu_VelY: 0,
       sensors_linear_rr: 0,
       sensors_linear_rl: 0,
+      sensors_linear_fr: 0,
+      sensors_linear_fl: 0,
+      left_inv_motor_rpm: 0,
+      right_inv_motor_rpm: 0,
+      vcu_brake_front: 0,
+      vcu_brake_rear: 0,
       vcu_apps1:0 ,
       vcu_apps2: 0,
       vcu_SteeringLinear_mm: 0,
-      vcu_yaw_rate: 0
+      vcu_yaw_rate: 0,
+      vcu_Ku: 0,
+      vcu_bb: 0
     }
   }
 })
