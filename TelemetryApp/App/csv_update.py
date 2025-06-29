@@ -48,6 +48,7 @@ input_string = """//accu
     accu_ams_ok?: number;
     accu_ams_sd_state?:number;
     accu_avg_cell_temp?: number;
+    accu_soc?: number;
 
     //vcu
     vcu_water_temp_in_right?: number;
@@ -60,8 +61,6 @@ input_string = """//accu
     vcu_apps_deviation?: number;
     vcu_water_temp_in_left?: number;
     vcu_water_temp_out_left?: number;
-    dash_power_limiter?: number;
-    dash_traction_def?: number;
     vcu_yaw_rate_ref?: number;
     vcu_torque_left?: number;
     vcu_torque_right?: number;
@@ -75,7 +74,7 @@ input_string = """//accu
     vcu_m_z_nonsat?: number;
     vcu_m_z_sat?: number;
     vcu_prevError?: number;
-    vcu_SteeringLinear_mm?: number;
+    vcu_SteeringLinear_rad?: number;
     vcu_proportional?: number;
     vcu_Ku?: number;
     vcu_bb?: number;
@@ -125,12 +124,11 @@ input_string = """//accu
     right_inv_trq_actual?: number;
     right_inv_max_velocity?: number;
     right_inv_min_velocity?: number;
-    right_inv_distance?: number;
     vcu_requested_torque_right?: number;
+    right_inv_ctrl_limit_Imax?: number;
+    right_inv_motor_temp_lousimo?: number;
 
     //left_inv
-    left_inv_ar?: number;
-    left_inv_Imax_ar?: number;
     left_inv_critical_hw_status?: number;
     left_inv_last_error?: number;
     left_inv_can_state?: number;
@@ -146,7 +144,6 @@ input_string = """//accu
     left_inv_iq?: number;
     left_inv_iq_ref_request?: number;
     left_inv_vdc_max?: number;
-    left_inv_dtorque?: number;
     left_inv_vdc?: number;
     left_inv_i1max?: number;
     left_inv_i2max?: number;
@@ -170,8 +167,9 @@ input_string = """//accu
     left_inv_trq_actual?: number;
     left_inv_max_velocity?: number;
     left_inv_min_velocity?: number;
-    left_inv_distance?: number;
     vcu_requested_torque_left?: number;
+    left_inv_ctrl_limit_Imax?: number;
+    left_inv_motor_temp_lousimo?: number;
 
     //dv
     vcu_as_ready?: number;
@@ -222,7 +220,10 @@ input_string = """//accu
     sensors_strain_fl?: number;
     sensors_strain_rr?: number;
     sensors_strain_rl?: number;
-
+    vcu_longitude?: number;
+    vcu_latitude?: number;
+    vcu_altitude?: number;
+    
     //radio
     radio_rssi?: number;
     radio_packet_loss?: number;

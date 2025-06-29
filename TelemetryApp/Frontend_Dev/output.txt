@@ -1,69 +1,3 @@
-<!-- Εδώ είναι το view που έχει τις περισσότερες μετρήσεις -->
-
-<script lang="ts">
-import {defineComponent, onMounted, ref} from 'vue'
-import {io} from "socket.io-client";
-import {api_res, event_connection_res} from "../types/socketIO.types.ts"; //"@" instead of ".."
-import AccuGeneralComponent from "@/components/AccuGeneralComponent.vue";
-import {
-  sidebarItems,
-  statusItems,
-  variableContainer,
-  VehicleTelemetry_data
-} from "../types/live_telemetry.ts";
-import GeneralComponent from "@/components/GeneralComponent.vue";
-import SideBar from "@/components/SideBar.vue";
-import StatusBar from "@/App.vue";
-const socket = io(import.meta.env.VITE_SOCKET_URL).connect()
-
-export default defineComponent({
-  name: "Live_Values",
-  components: {
-      StatusBar,
-      AccuGeneralComponent,
-      GeneralComponent,
-      SideBar
-      },
-  setup() {
-    const showPopup = ref(false);
-    //const SideBarListItems = ref<sidebarItems[]>([]);
-    const closePopup = () => {
-      showPopup.value = false;
-    };
-
-    // Close popup when clicking outside of it
-    const handleClickOutside = (event: MouseEvent) => {
-      const popup = document.querySelector('.popup');
-      if (popup && !popup.contains(event.target as Node)) {
-        closePopup();
-      }
-    };
-
-    onMounted(() => {
-      document.body.addEventListener('click', handleClickOutside);
-    });
-
-    return { showPopup, closePopup };
-  },
-  data() {
-
-    return {
-      accu_containeritems: [] as variableContainer[],
-      vcu_containeritems: [] as variableContainer[],
-      left_inv_containeritems: [] as variableContainer[],
-      right_inv_containeritems: [] as variableContainer[],
-      dv_containeritems: [] as variableContainer[],
-	  sensors_containeritems: [] as variableContainer[],
-
-      telemetry_data_obj: {} as VehicleTelemetry_data, //Object as typeof VehicleTelemetry_data
-    }
-  },
-  watch: {
-
-  },
-  created() {
-    //Listen for 'telemetry_data' event from server
-
 this.accu_containeritems = [
  { label : ['total_voltage_vs'] },
  { label : ['accu_current'] },
@@ -207,6 +141,7 @@ this.left_inv_containeritems = [
  { label : ['iq'] },
  { label : ['iq_ref_request'] },
  { label : ['vdc_max'] },
+ { label : ['dtorque'] },
  { label : ['vdc'] },
  { label : ['i1max'] },
  { label : ['i2max'] },
@@ -287,18 +222,7 @@ this.sensors_containeritems = [
  { label : ['latitude'] },
  { label : ['altitude'] },
 ]; 
-
-    socket.on('telemetry_data', (telemetry_data: api_res) => {
-      //Here we are updating the object every time we get a new message from the socket,
-
-      //TODO - FIXXXX
-      try {
-        this.telemetry_data_obj = JSON.parse(telemetry_data.data as unknown as string) as VehicleTelemetry_data;
-      } catch (e) {
-        return null;
-      }
-
-	  ////////////     accu     ////////////
+////////////     accu     ////////////
 			if (this.telemetry_data_obj.accu_total_voltage_vs !== undefined) {
 				this.accu_containeritems[0].value = [this.telemetry_data_obj.accu_total_voltage_vs];
 			}
@@ -710,83 +634,86 @@ this.sensors_containeritems = [
 			if (this.telemetry_data_obj.left_inv_vdc_max !== undefined) {
 				this.left_inv_containeritems[14].value = [this.telemetry_data_obj.left_inv_vdc_max];
 			}
+			if (this.telemetry_data_obj.left_inv_dtorque !== undefined) {
+				this.left_inv_containeritems[15].value = [this.telemetry_data_obj.left_inv_dtorque];
+			}
 			if (this.telemetry_data_obj.left_inv_vdc !== undefined) {
-				this.left_inv_containeritems[15].value = [this.telemetry_data_obj.left_inv_vdc];
+				this.left_inv_containeritems[16].value = [this.telemetry_data_obj.left_inv_vdc];
 			}
 			if (this.telemetry_data_obj.left_inv_i1max !== undefined) {
-				this.left_inv_containeritems[16].value = [this.telemetry_data_obj.left_inv_i1max];
+				this.left_inv_containeritems[17].value = [this.telemetry_data_obj.left_inv_i1max];
 			}
 			if (this.telemetry_data_obj.left_inv_i2max !== undefined) {
-				this.left_inv_containeritems[17].value = [this.telemetry_data_obj.left_inv_i2max];
+				this.left_inv_containeritems[18].value = [this.telemetry_data_obj.left_inv_i2max];
 			}
 			if (this.telemetry_data_obj.left_inv_i3max !== undefined) {
-				this.left_inv_containeritems[18].value = [this.telemetry_data_obj.left_inv_i3max];
+				this.left_inv_containeritems[19].value = [this.telemetry_data_obj.left_inv_i3max];
 			}
 			if (this.telemetry_data_obj.left_inv_Imax !== undefined) {
-				this.left_inv_containeritems[19].value = [this.telemetry_data_obj.left_inv_Imax];
+				this.left_inv_containeritems[20].value = [this.telemetry_data_obj.left_inv_Imax];
 			}
 			if (this.telemetry_data_obj.left_inv_Imin !== undefined) {
-				this.left_inv_containeritems[20].value = [this.telemetry_data_obj.left_inv_Imin];
+				this.left_inv_containeritems[21].value = [this.telemetry_data_obj.left_inv_Imin];
 			}
 			if (this.telemetry_data_obj.left_inv_trq_ref !== undefined) {
-				this.left_inv_containeritems[21].value = [this.telemetry_data_obj.left_inv_trq_ref];
+				this.left_inv_containeritems[22].value = [this.telemetry_data_obj.left_inv_trq_ref];
 			}
 			if (this.telemetry_data_obj.left_inv_pwr_ref !== undefined) {
-				this.left_inv_containeritems[22].value = [this.telemetry_data_obj.left_inv_pwr_ref];
+				this.left_inv_containeritems[23].value = [this.telemetry_data_obj.left_inv_pwr_ref];
 			}
 			if (this.telemetry_data_obj.left_inv_pwr_actual !== undefined) {
-				this.left_inv_containeritems[23].value = [this.telemetry_data_obj.left_inv_pwr_actual];
+				this.left_inv_containeritems[24].value = [this.telemetry_data_obj.left_inv_pwr_actual];
 			}
 			if (this.telemetry_data_obj.left_inv_lim_speed_limiter !== undefined) {
-				this.left_inv_containeritems[24].value = [this.telemetry_data_obj.left_inv_lim_speed_limiter];
+				this.left_inv_containeritems[25].value = [this.telemetry_data_obj.left_inv_lim_speed_limiter];
 			}
 			if (this.telemetry_data_obj.left_inv_lim_power_limiter !== undefined) {
-				this.left_inv_containeritems[25].value = [this.telemetry_data_obj.left_inv_lim_power_limiter];
+				this.left_inv_containeritems[26].value = [this.telemetry_data_obj.left_inv_lim_power_limiter];
 			}
 			if (this.telemetry_data_obj.left_inv_lim_stall_limiter !== undefined) {
-				this.left_inv_containeritems[26].value = [this.telemetry_data_obj.left_inv_lim_stall_limiter];
+				this.left_inv_containeritems[27].value = [this.telemetry_data_obj.left_inv_lim_stall_limiter];
 			}
 			if (this.telemetry_data_obj.left_inv_lim_l2t_limiter !== undefined) {
-				this.left_inv_containeritems[27].value = [this.telemetry_data_obj.left_inv_lim_l2t_limiter];
+				this.left_inv_containeritems[28].value = [this.telemetry_data_obj.left_inv_lim_l2t_limiter];
 			}
 			if (this.telemetry_data_obj.left_inv_lim_motor_temp !== undefined) {
-				this.left_inv_containeritems[28].value = [this.telemetry_data_obj.left_inv_lim_motor_temp];
+				this.left_inv_containeritems[29].value = [this.telemetry_data_obj.left_inv_lim_motor_temp];
 			}
 			if (this.telemetry_data_obj.left_inv_lim_igbt_temp !== undefined) {
-				this.left_inv_containeritems[29].value = [this.telemetry_data_obj.left_inv_lim_igbt_temp];
+				this.left_inv_containeritems[30].value = [this.telemetry_data_obj.left_inv_lim_igbt_temp];
 			}
 			if (this.telemetry_data_obj.left_inv_motor_rpm !== undefined) {
-				this.left_inv_containeritems[30].value = [this.telemetry_data_obj.left_inv_motor_rpm];
+				this.left_inv_containeritems[31].value = [this.telemetry_data_obj.left_inv_motor_rpm];
 			}
 			if (this.telemetry_data_obj.left_inv_num_max_trq !== undefined) {
-				this.left_inv_containeritems[31].value = [this.telemetry_data_obj.left_inv_num_max_trq];
+				this.left_inv_containeritems[32].value = [this.telemetry_data_obj.left_inv_num_max_trq];
 			}
 			if (this.telemetry_data_obj.left_inv_vcu_max_velocity !== undefined) {
-				this.left_inv_containeritems[32].value = [this.telemetry_data_obj.left_inv_vcu_max_velocity];
+				this.left_inv_containeritems[33].value = [this.telemetry_data_obj.left_inv_vcu_max_velocity];
 			}
 			if (this.telemetry_data_obj.left_inv_motor_temp !== undefined) {
-				this.left_inv_containeritems[33].value = [this.telemetry_data_obj.left_inv_motor_temp];
+				this.left_inv_containeritems[34].value = [this.telemetry_data_obj.left_inv_motor_temp];
 			}
 			if (this.telemetry_data_obj.left_inv_igbt_temp !== undefined) {
-				this.left_inv_containeritems[34].value = [this.telemetry_data_obj.left_inv_igbt_temp];
+				this.left_inv_containeritems[35].value = [this.telemetry_data_obj.left_inv_igbt_temp];
 			}
 			if (this.telemetry_data_obj.left_inv_trq_actual !== undefined) {
-				this.left_inv_containeritems[35].value = [this.telemetry_data_obj.left_inv_trq_actual];
+				this.left_inv_containeritems[36].value = [this.telemetry_data_obj.left_inv_trq_actual];
 			}
 			if (this.telemetry_data_obj.left_inv_max_velocity !== undefined) {
-				this.left_inv_containeritems[36].value = [this.telemetry_data_obj.left_inv_max_velocity];
+				this.left_inv_containeritems[37].value = [this.telemetry_data_obj.left_inv_max_velocity];
 			}
 			if (this.telemetry_data_obj.left_inv_min_velocity !== undefined) {
-				this.left_inv_containeritems[37].value = [this.telemetry_data_obj.left_inv_min_velocity];
+				this.left_inv_containeritems[38].value = [this.telemetry_data_obj.left_inv_min_velocity];
 			}
 			if (this.telemetry_data_obj.vcu_requested_torque_left !== undefined) {
-				this.left_inv_containeritems[38].value = [this.telemetry_data_obj.vcu_requested_torque_left];
+				this.left_inv_containeritems[39].value = [this.telemetry_data_obj.vcu_requested_torque_left];
 			}
 			if (this.telemetry_data_obj.left_inv_ctrl_limit_Imax !== undefined) {
-				this.left_inv_containeritems[39].value = [this.telemetry_data_obj.left_inv_ctrl_limit_Imax];
+				this.left_inv_containeritems[40].value = [this.telemetry_data_obj.left_inv_ctrl_limit_Imax];
 			}
 			if (this.telemetry_data_obj.left_inv_motor_temp_lousimo !== undefined) {
-				this.left_inv_containeritems[40].value = [this.telemetry_data_obj.left_inv_motor_temp_lousimo];
+				this.left_inv_containeritems[41].value = [this.telemetry_data_obj.left_inv_motor_temp_lousimo];
 			}
 ////////////     dv     ////////////
 			if (this.telemetry_data_obj.vcu_as_ready !== undefined) {
@@ -937,78 +864,3 @@ this.sensors_containeritems = [
 			if (this.telemetry_data_obj.vcu_altitude !== undefined) {
 				this.sensors_containeritems[25].value = [this.telemetry_data_obj.vcu_altitude];
 			}
-
-    });
-
-    // Listen for event transmitting the connection status.
-    socket.on('connection_response', (message: event_connection_res) => {
-      console.log("Connection Status: " + message.status)
-      console.log("Connection Msg: " + message.msg)
-    });
-
-  },
-  methods: {
-  },
-  computed: {
-    // // Add computed property to return SideBarListItems
-  },
-})
-</script>
-<!-- in the numrows remember to always include the header, in your calculations!!!!!!!!!!!!!!-->
-
-<template>
-    <!-- Main content -->
-  <div class="p-0 mx-0 ml-40 mt-20 min-w-full overflow-y-auto"> <!-- ml==40 because max-w of side bar == 40 AND mt==20 bc statusbar height==3 -->
-	<div class="grid grid-rows-20 grid-cols-12 gap-5">
-      <AccuGeneralComponent
-          :items="accu_containeritems"
-          :numRows="9"
-          :numCols="6"
-          class="row-span-2 col-span-5"
-      />
-
-      <GeneralComponent
-          :items="vcu_containeritems"
-          :numRows="9"
-          :numCols="6"
-          containername="VCU"
-          class="row-span-2 col-span-5"
-      />
-
-      <GeneralComponent
-          :items="left_inv_containeritems"
-          :numRows="8"
-          :numCols="6"
-          containername="Left_INV"
-          class="row-span-5 col-span-5"
-      />
-      <GeneralComponent
-          :items="right_inv_containeritems"
-          :numRows="8"
-          :numCols="6"
-          containername="Right_INV"
-          class="row-span-5 col-span-5"
-      />
-
-      <GeneralComponent
-          :items="dv_containeritems"
-          :numRows="4"
-          :numCols="6"
-          containername='DV'
-          class="row-span-2 col-span-5"
-      />
-
-      <GeneralComponent
-          :items="sensors_containeritems"
-          :numRows="4"
-          :numCols="6"
-          containername='Sensors'
-          class="row-span-2 col-span-5"
-        />
-    </div>
-  </div>
-</template>
-
-<style scoped>
-/* Adjust sidebar width and other styles as needed */
-</style>
