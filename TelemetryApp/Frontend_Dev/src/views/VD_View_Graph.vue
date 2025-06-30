@@ -1,111 +1,72 @@
 <!-- Εδώ έχουμε το VD View που δεν είναι developped και απλά δείχνει άκυρα δεδομένα -->
 <template>
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
-    <div class="grid grid-cols-2 gap-x-8 gap-y-4 h-screen">
-      <CustomLine
-        :datasetLabels="['vcu_Accel_x']"
-        :items="[vcu_Accel_x]"
-        :title="'vcu_Accel_x'"
+    <div class="grid grid-cols-3 gap-x-8 gap-y-4 h-screen">
+      <SPScatterChart
+          :point="point"
+          :title="'Acceleration Chart'"
+          :minx="{ x: -2, y: 2 }"
+          :miny="{ x: -2, y: 2 }"
       />
       <CustomLine
-        :datasetLabels="['vcu_Accel_y']"
-        :items="[vcu_Accel_y]"
-        :title="'vcu_Accel_y'"
+          :datasetLabels="['vcu_Accel_z']"
+          :items="[vcu_Accel_z]"
+          :title="'Z Accel'"
       />
       <CustomLine
-        :datasetLabels="['vcu_Accel_z']"
-        :items="[vcu_Accel_z]"
-        :title="'vcu_Accel_z'"
+          :datasetLabels="['vcu_hall_fr', 'vcu_hall_fl']"
+          :items="[vcu_hall_fr, vcu_hall_fl]"
+          :title="'Hall sensors'"
       />
       <CustomLine
-        :datasetLabels="['vcu_hall_fr']"
-        :items="[vcu_hall_fr]"
-        :title="'vcu_hall_fr'"
+          :datasetLabels="['left_inv_motor_rpm', 'right_inv_motor_rpm']"
+          :items="[left_inv_motor_rpm,right_inv_motor_rpm]"
+          :title="'Motor RPM'"
       />
       <CustomLine
-        :datasetLabels="['vcu_hall_fl']"
-        :items="[vcu_hall_fl]"
-        :title="'vcu_hall_fl'"
+          :datasetLabels="['sensors_linear_rr', 'sensors_linear_rl']"
+          :items="[sensors_linear_rr, sensors_linear_rl]"
+          :title="'Rear Linears'"
       />
       <CustomLine
-        :datasetLabels="['left_inv_motor_rpm']"
-        :items="[left_inv_motor_rpm]"
-        :title="'left_inv_motor_rpm'"
+          :datasetLabels="['sensors_linear_fl', 'sensors_linear_fr']"
+          :items="[sensors_linear_fl, sensors_linear_fr]"
+          :title="'Front Linears'"
       />
       <CustomLine
-        :datasetLabels="['right_inv_motor_rpm']"
-        :items="[right_inv_motor_rpm]"
-        :title="'right_inv_motor_rpm'"
+          :datasetLabels="['vcu_brake_front', 'vcu_brake_rear']"
+          :items="[vcu_brake_front, vcu_brake_rear]"
+          :title="'VCU Brakes'"
       />
       <CustomLine
-        :datasetLabels="['sensors_linear_rr']"
-        :items="[sensors_linear_rr]"
-        :title="'sensors_linear_rr'"
+          :datasetLabels="['vcu_apps1', 'vcu_apps2']"
+          :items="[vcu_apps1, vcu_apps2]"
+          :title="'APPS'"
       />
       <CustomLine
-        :datasetLabels="['sensors_linear_rl']"
-        :items="[sensors_linear_rl]"
-        :title="'sensors_linear_rl'"
+          :datasetLabels="['vcu_SteeringLinear_angle']"
+          :items="[vcu_SteeringLinear_angle]"
+          :title="'vcu_SteeringLinear_angle'"
       />
       <CustomLine
-        :datasetLabels="['sensors_linear_fl']"
-        :items="[sensors_linear_fl]"
-        :title="'sensors_linear_fl'"
+          :datasetLabels="['vcu_yaw_rate']"
+          :items="[vcu_yaw_rate]"
+          :title="'vcu_yaw_rate'"
       />
       <CustomLine
-        :datasetLabels="['sensors_linear_fr']"
-        :items="[sensors_linear_fr]"
-        :title="'sensors_linear_fr'"
+          :datasetLabels="['vcu_requested_torque_right', 'vcu_requested_torque_left']"
+          :items="[vcu_requested_torque_right, vcu_requested_torque_left]"
+          :title="'vcu_requested_torque'"
       />
       <CustomLine
-        :datasetLabels="['vcu_brake_front']"
-        :items="[vcu_brake_front]"
-        :title="'vcu_brake_front'"
+          :datasetLabels="['vcu_Ku']"
+          :items="[vcu_Ku]"
+          :title="'vcu_Ku'"
       />
       <CustomLine
-        :datasetLabels="['vcu_brake_rear']"
-        :items="[vcu_brake_rear]"
-        :title="'vcu_brake_rear'"
-      />
-      <CustomLine
-        :datasetLabels="['vcu_apps1']"
-        :items="[vcu_apps1]"
-        :title="'vcu_apps1'"
-      />
-      <CustomLine
-        :datasetLabels="['vcu_apps2']"
-        :items="[vcu_apps2]"
-        :title="'vcu_apps2'"
-      />
-      <CustomLine
-        :datasetLabels="['vcu_SteeringLinear_angle']"
-        :items="[vcu_SteeringLinear_angle]"
-        :title="'vcu_SteeringLinear_angle'"
-      />
-      <CustomLine
-        :datasetLabels="['vcu_yaw_rate']"
-        :items="[vcu_yaw_rate]"
-        :title="'vcu_yaw_rate'"
-      />
-      <CustomLine
-        :datasetLabels="['vcu_requested_torque_right']"
-        :items="[vcu_requested_torque_right]"
-        :title="'vcu_requested_torque_right'"
-      />
-      <CustomLine
-        :datasetLabels="['vcu_requested_torque_left']"
-        :items="[vcu_requested_torque_left]"
-        :title="'vcu_requested_torque_left'"
-      />
-      <CustomLine
-        :datasetLabels="['vcu_Ku']"
-        :items="[vcu_Ku]"
-        :title="'vcu_Ku'"
-      />
-      <CustomLine
-        :datasetLabels="['vcu_bb']"
-        :items="[vcu_bb]"
-        :title="'vcu_bb'"
+          :datasetLabels="['vcu_bb']"
+          :items="[vcu_bb]"
+          :title="'vcu_bb'"
       />
     </div>
   </div>
@@ -115,6 +76,7 @@
 import { defineComponent, reactive } from 'vue';
 import CustomLine from "@/components/CustomLine.vue";
 import CustomGauge from "@/components/GaugeChart.vue";
+import SPScatterChart from "../components/SPScatter.vue";
 import {io} from "socket.io-client";
 import {api_res} from "../types/socketIO.types.ts"; //"@" instead of ".."
 import {VehicleTelemetry_data} from "../types/live_telemetry.ts";
@@ -126,7 +88,8 @@ export default defineComponent({
   name: 'CustomCharts',
   components: {
     CustomLine,
-    CustomGauge
+    CustomGauge,
+    SPScatterChart
   },
   setup() {
     const labels = reactive<string[]>([]);
@@ -144,11 +107,9 @@ export default defineComponent({
         return null;
       }
 
-      if (this.telemetry_data_obj.vcu_Accel_x !== undefined) {
-        this.vcu_Accel_x = [this.telemetry_data_obj.vcu_Accel_x];
-      }
-      if (this.telemetry_data_obj.vcu_Accel_y !== undefined) {
-        this.vcu_Accel_y = [this.telemetry_data_obj.vcu_Accel_y];
+      if (this.telemetry_data_obj.vcu_Accel_x !== undefined && this.telemetry_data_obj.vcu_Accel_y !== undefined) {
+        this.vcu_Accel_x = [];
+        this.point = { x: this.telemetry_data_obj.vcu_Accel_x, y: this.telemetry_data_obj.vcu_Accel_y };
       }
       if (this.telemetry_data_obj.vcu_Accel_z !== undefined) {
         this.vcu_Accel_z = [this.telemetry_data_obj.vcu_Accel_z];
@@ -219,8 +180,7 @@ export default defineComponent({
     return {
       telemetry_data_obj: {} as VehicleTelemetry_data,
 
-      vcu_Accel_x: 0,
-      vcu_Accel_y: 0,
+      point: { x: 0, y: 0 },
       vcu_Accel_z: 0,
       vcu_hall_fr: 0,
       vcu_hall_fl: 0,

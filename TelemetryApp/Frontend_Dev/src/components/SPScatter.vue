@@ -21,6 +21,18 @@ const props = defineProps({
   title: {
     type: String,
     required: true
+  },
+  minx: {
+    type: Object,
+    default: [-1, 1]
+  },
+  miny: {
+    type: Object,
+    default: [-1, 1]
+  },
+  precision: {
+    type: Number,
+    default: 5
   }
 });
 
@@ -42,28 +54,31 @@ const chartOptions = {
     x: {
       type: 'linear',
       position: 'bottom',
-      min: -10,
-      max: 10
+      min: props.minx.x,
+      max: props.minx.y
     },
     y: {
-      min: -10,
-      max: 10
+      min: props.miny.x,
+      max: props.miny.y
     }
   }
 };
 
 // Watch the point prop
 watch(() => props.point, (newPoint) => {
-  if (newPoint && typeof newPoint.x === 'number' && typeof newPoint.y === 'number') {
-    chartData.value = {
-      datasets: [{
-        label: props.title,
-        data: [{ x: newPoint.x, y: newPoint.y }],
-        backgroundColor: 'rgba(75, 192, 192, 1)',
-        pointRadius: 6
-      }]
-    };
-  }
+  const isValid =
+    newPoint &&
+    typeof newPoint.x === 'number' &&
+    typeof newPoint.y === 'number';
+
+  chartData.value = {
+    datasets: [{
+      label: isValid ? props.title : props.title + ' (No Data)',
+      data: isValid ? [{ x: newPoint.x, y: newPoint.y }] : [],
+      backgroundColor: isValid ? 'rgba(75, 192, 192, 1)' : 'rgba(200, 200, 200, 0.5)',
+      pointRadius: isValid ? 6 : 0
+    }]
+  };
 }, { immediate: true });
 </script>
 
@@ -80,10 +95,10 @@ watch(() => props.point, (newPoint) => {
     <!-- Buttons for showing X and Y -->
     <div class="flex flex-col space-y-4">
       <button class="bg-blue-500 text-white px-4 py-2 rounded">
-        X Value: {{ props.point.x }}
+        X Value: {{ props.point.x.toFixed(precision) }}
       </button>
       <button class="bg-green-500 text-white px-4 py-2 rounded">
-        Y Value: {{ props.point.y }}
+        Y Value: {{ props.point.y.toFixed(precision) }}
       </button>
     </div>
 

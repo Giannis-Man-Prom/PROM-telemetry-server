@@ -1,38 +1,31 @@
 <template>
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
-    <div class="grid grid-cols-2 gap-x-8 gap-y-4 h-screen">
+    <div class="grid grid-cols-3 gap-x-8 gap-y-4 h-screen">
       <CustomGauge
-          :labels="'vcu_VelX'"
           :items="vcu_VelX"
           :title="'vcu_VelX'"
       />
       <CustomGauge
-          :labels="'vcu_VelY'"
           :items="vcu_VelY"
           :title="'vcu_VelY'"
       />
       <CustomGauge
-          :labels="'vcu_Accel_x'"
           :items="vcu_Accel_x"
           :title="'vcu_Accel_x'"
       />
       <CustomGauge
-          :labels="'vcu_Accel_y'"
           :items="vcu_Accel_y"
           :title="'vcu_Accel_y'"
       />
       <CustomGauge
-          :labels="'vcu_Accel_z'"
           :items="vcu_Accel_z"
           :title="'vcu_Accel_z'"
       />
       <CustomGauge
-          :labels="'vcu_brake_front'"
           :items="vcu_brake_front"
           :title="'vcu_brake_front'"
       />
       <CustomGauge
-          :labels="'vcu_brake_rear'"
           :items="vcu_brake_rear"
           :title="'vcu_brake_rear'"
       />      

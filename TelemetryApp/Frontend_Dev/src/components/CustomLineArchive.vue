@@ -12,7 +12,7 @@ import { defineComponent, ref, onMounted, onBeforeUnmount, toRefs } from 'vue';
 import Chart, { ChartConfiguration } from 'chart.js/auto';
 
 export default defineComponent({
-  name: "CustomLineMul",
+  name: "CustomLineArchive",
   props: {
     borderColor: {
       type: String,
@@ -27,11 +27,7 @@ export default defineComponent({
       required: true
     },
     items: {
-      type: Array as () => number[],
-      required: true
-    },
-    datasetLabels: {
-      type: Array as () => string[],
+      type: Number,
       required: true
     },
     title: {
@@ -55,17 +51,20 @@ export default defineComponent({
 
     const updateChart = () => {
       const currentTime = new Date().toLocaleTimeString();
+      const items = toRefs(props);
 
       if (chartInstance) {
         const labels = chartInstance.data.labels as string[];
-        if (labels.length >= maxDataPoints) labels.shift();
-        labels.push(currentTime);
+        const data = chartInstance.data.datasets[0].data as number[];
 
-        chartInstance.data.datasets.forEach((dataset, i) => {
-          const data = dataset.data as number[];
-          if (data.length >= maxDataPoints) data.shift();
-          data.push(props.items[i]); // Push corresponding value
-        });
+        // Maintain a buffer of data points for the last 10 minutes
+        if (labels.length >= maxDataPoints) {
+          labels.shift();
+          data.shift();
+        }
+
+        labels.push(currentTime);
+        data.push(items.items.value); // Assuming items is an array and accessing the first item's value1
 
         chartInstance.update();
       }
@@ -86,12 +85,14 @@ export default defineComponent({
 
       const data = {
         labels: savedLabels,
-        datasets: props.datasetLabels.map((label, index) => ({
-          label: label,
-          data: savedData[index] || [],
-          borderColor: props.borderColor,
-          backgroundColor: props.backgroundColor,
-        }))
+        datasets: [
+          {
+            label: 'Max Cell Voltage',
+            data: savedData,
+            borderColor: props.borderColor,
+            backgroundColor: props.backgroundColor,
+          }
+        ],
       };
 
       const config: ChartConfiguration = {

@@ -1,51 +1,81 @@
 <template>
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
-    <div class="grid grid-cols-2 gap-x-8 gap-y-4 h-screen">
+    <div class="grid grid-cols-4 gap-x-8 gap-y-4 h-screen">
       <CustomLine
-          :labels="'vcu_IsdTrqRight'"
-          :items="vcu_IsdTrqRight"
-          :title="'vcu_IsdTrqRight'"
-      />
-      <CustomLine
-          :labels="'right_inv_trq_actual'"
-          :items="right_inv_trq_actual"
-          :title="'right_inv_trq_actual'"
+        :items="[vcu_IsdTrqRight]"
+        :datasetLabels="['vcu_IsdTrqRight']"
+        :title="'vcu_IsdTrqRight'"
+        :chartPercent="70"
       />
       <CustomLine
-          :labels="'vcu_IsdTrqLeft'"
-          :items="vcu_IsdTrqLeft"
-          :title="'vcu_IsdTrqLeft'"
+        :items="[right_inv_trq_actual]"
+        :datasetLabels="['right_inv_trq_actual']"
+        :title="'right_inv_trq_actual'"
+        :chartPercent="70"
       />
       <CustomLine
-          :labels="'left_inv_trq_actual'"
-          :items="left_inv_trq_actual"
-          :title="'left_inv_trq_actual'"
+        :items="[vcu_IsdTrqLeft]"
+        :datasetLabels="['vcu_IsdTrqLeft']"
+        :title="'vcu_IsdTrqLeft'"
+        :chartPercent="70"
       />
-      <CustomGauge
-          :labels="'right_inv_motor_rpm'"
-          :items="right_inv_motor_rpm"
-          :title="'right_inv_motor_rpm'"
+      <CustomLine
+        :items="[left_inv_trq_actual]"
+        :datasetLabels="['left_inv_trq_actual']"
+        :title="'left_inv_trq_actual'"
+        :chartPercent="70"
       />
-      <CustomGauge
-          :labels="'left_inv_motor_rpm'"
-          :items="left_inv_motor_rpm"
-          :title="'left_inv_motor_rpm'"
+      <div class="flex items-start justify-center rounded bg-gray-50 dark:bg-gray-800 pt-16">
+        <VueSpeedometer
+        :value="right_inv_motor_rpm"
+        :minValue="0"
+        :maxValue="30000"
+        :segments="5"
+        :needleHeightRatio="0.7"
+        :needleTransitionDuration="4000"
+        needleTransition="easeElastic"
+        needleColor="steelblue"
+        :segmentColors='["limegreen", "gold", "tomato"]'
+        :customSegmentStops="[0, 20000, 25000, 30000]"
+        :maxSegmentLabels="5"
+        currentValueText="right_inv_motor_rpm ${value}"
+        :ringWidth="47"
+        textColor="#d8dee9"
+      />
+      </div>
+      <div class="flex items-start justify-center rounded bg-gray-50 dark:bg-gray-800 pt-16">
+        <VueSpeedometer
+        :value="left_inv_motor_rpm"
+        :minValue="0"
+        :maxValue="30000"
+        :segments="4"
+        :needleHeightRatio="0.7"
+        :needleTransitionDuration="4000"
+        needleTransition="easeElastic"
+        needleColor="steelblue"
+        :segmentColors='["limegreen", "gold", "tomato"]'
+        :customSegmentStops="[0, 20000, 25000, 30000]"
+        :maxSegmentLabels="5"
+        currentValueText="left_inv_motor_rpm: ${value}"
+        :ringWidth="47"
+        textColor="#d8dee9"
+      />
+      </div>
+      <LiveThermometer
+        :temperature="right_inv_motor_temp"
+        :title="'right_inv_motor_temp'"
       />
       <LiveThermometer
-          :temperature="right_inv_motor_temp"
-          :title="'right_inv_motor_temp'"
+        :temperature="left_inv_motor_temp"
+        :title="'left_inv_motor_temp'"
       />
       <LiveThermometer
-          :temperature="left_inv_motor_temp"
-          :title="'left_inv_motor_temp'"
+        :temperature="right_inv_igbt_temp"
+        :title="'right_inv_igbt_temp'"
       />
       <LiveThermometer
-          :temperature="right_inv_igbt_temp"
-          :title="'right_inv_igbt_temp'"
-      />
-      <LiveThermometer
-          :temperature="left_inv_igbt_temp"
-          :title="'left_inv_igbt_temp'"
+        :temperature="left_inv_igbt_temp"
+        :title="'left_inv_igbt_temp'"
       />
       
     </div>
@@ -57,6 +87,7 @@ import { defineComponent, reactive, ref } from 'vue';
 import CustomLine from "@/components/CustomLine.vue";
 import CustomGauge from "@/components/GaugeChart.vue";
 import LiveThermometer from "../components/Thermometer.vue";
+import VueSpeedometer from 'vue-speedometer';
 import {io} from "socket.io-client";
 import {VehicleTelemetry_data} from "../types/live_telemetry.ts";
 
@@ -68,6 +99,7 @@ export default defineComponent({
     CustomLine,
     CustomGauge,
     LiveThermometer,
+    VueSpeedometer,
   },
   setup() {
   },

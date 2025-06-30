@@ -137,7 +137,7 @@ this.vcu_containeritems = [
  { label : ['m_z_nonsat'] },
  { label : ['m_z_sat'] },
  { label : ['prevError'] },
- { label : ['SteeringLinear_rad'] },
+ { label : ['SteeringLinear_angle'] },
  { label : ['proportional'] },
  { label : ['Ku'] },
  { label : ['bb'] },
@@ -510,8 +510,8 @@ this.sensors_containeritems = [
 			if (this.telemetry_data_obj.vcu_prevError !== undefined) {
 				this.vcu_containeritems[22].value = [this.telemetry_data_obj.vcu_prevError];
 			}
-			if (this.telemetry_data_obj.vcu_SteeringLinear_rad !== undefined) {
-				this.vcu_containeritems[23].value = [this.telemetry_data_obj.vcu_SteeringLinear_rad];
+			if (this.telemetry_data_obj.vcu_SteeringLinear_angle !== undefined) {
+				this.vcu_containeritems[23].value = [this.telemetry_data_obj.vcu_SteeringLinear_angle];
 			}
 			if (this.telemetry_data_obj.vcu_proportional !== undefined) {
 				this.vcu_containeritems[24].value = [this.telemetry_data_obj.vcu_proportional];

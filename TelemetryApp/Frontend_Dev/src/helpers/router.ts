@@ -8,9 +8,8 @@ import AccuView from "../views/AccuView.vue"
 import InvView from "../views/InvView.vue"
 import SensorsView from "../views/SensorsView.vue"
 import VcuView from "../views/VcuView.vue"
+import VcuViewGraph from "../views/VD_View_Graph.vue"
 import CustomCharts from "../views/CustomCharts.vue";
-import csvreceiver from "../views/csvreceiver.vue";
-import Debug from "../views/Debug.vue";
 import NotFound from "../views/NotFound.vue"
 
 
@@ -50,6 +49,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/charts",
         name: "Charts",
         component: CustomCharts,
+    },
+	{
+        path: "/vd/telemetry_graph",
+        name: "VD_View_Graph",
+        component: VcuViewGraph,
     },
 	{ 
 		path: "/:pathMatch(.*)*", 

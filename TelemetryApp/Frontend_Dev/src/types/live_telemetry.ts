@@ -73,7 +73,7 @@ export type VehicleTelemetry_data = {
     vcu_m_z_nonsat?: number;
     vcu_m_z_sat?: number;
     vcu_prevError?: number;
-    vcu_SteeringLinear_rad?: number;
+    vcu_SteeringLinear_angle?: number;
     vcu_proportional?: number;
     vcu_Ku?: number;
     vcu_bb?: number;

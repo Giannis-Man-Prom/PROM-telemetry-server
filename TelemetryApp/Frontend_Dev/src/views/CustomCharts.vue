@@ -2,13 +2,13 @@
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
     <div class="grid grid-cols-2 gap-x-8 gap-y-4 h-screen">
       <CustomLine
-          :labels="'air_m_supp'"
-          :items="air_m_supp"
+          :datasetLabels="['air_m_supp']"
+          :items="[air_m_supp]"
           :title="'air_m_supp'"
       />
       <CustomLine
-          :labels="'air_p_state'"
-          :items="air_p_state"
+          :datasetLabels="['air_p_state']"
+          :items="[air_p_state]"
           :title="'air_p_state'"
           :update_ms="300"
       />
@@ -52,11 +52,6 @@
           :point="point"
           :title="'whatever'"
       />
-      <CustomLineMul
-        :items="[3.7, 3.6, 3.65]"
-        :datasetLabels="['Cell 1', 'Cell 2', 'Cell 3']"
-        title="Cell Voltages"
-      />
     </div>
   </div>
 </template>
@@ -67,7 +62,6 @@ import SideBar from '../components/SideBar.vue';
 import BarChartComponent from '@/components/CustomBarChart.vue';
 
 import CustomLine from "@/components/CustomLine.vue";
-import CustomLineMul from "@/components/CustomLineMul.vue";
 import CustomBarChart from "@/components/CustomBarChart.vue";
 import CustomGauge from "@/components/GaugeChart.vue";
 import LiveThermometer from "../components/Thermometer.vue";
@@ -87,7 +81,6 @@ export default defineComponent({
     SideBar,
     BarChartComponent,
     CustomLine,
-    CustomLineMul,
     CustomGauge,
     LiveThermometer,
     VueSpeedometer,

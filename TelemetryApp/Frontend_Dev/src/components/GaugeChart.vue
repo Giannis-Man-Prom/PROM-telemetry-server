@@ -17,10 +17,6 @@
   export default defineComponent({
     name: "CustomGauge",
     props: {
-        labels: {
-            type: String,
-            required: true
-        },
         items: {
             type: Number,
             required: true
@@ -36,6 +32,10 @@
         max: {
             type: Number,
             default: 100,
+        },
+        precision: {
+            type: Number,
+            default: 5,
         }
     },
     components: {
@@ -47,37 +47,66 @@
         const chartOptions = ref({
         chart: {
             type: 'radialBar',
+            dropShadow: {
+            enabled: true,
+            top: 5,
+            left: 0,
+            blur: 5,
+            opacity: 0.1,
+            color: '#white',
+            },
         },
         plotOptions: {
             radialBar: {
-            startAngle: -120,
-            endAngle: 120,
+            startAngle: -135,
+            endAngle: 135,
             hollow: {
-                size: '65%',
+                size: '60%',
+                background: 'transparent',
             },
             track: {
-                background: '#f0f0f0',
+                background: '#e0e0e0',
                 strokeWidth: '100%',
-                margin: 10,
             },
             dataLabels: {
                 name: {
-                offsetY: -10,
-                fontSize: '16px',
-                color: '#f00',
+                show: true,
+                offsetY: -20,
+                fontSize: '18px',
+                fontWeight: '600',
+                color: 'red',
                 },
                 value: {
-                    fontSize: '22px',
-                    offsetY: 10,
-                    color: '#fff',
-                    formatter: function () {
-                        return `${actualValue.value}`;
-                    }
+                show: true,
+                fontSize: '28px',
+                fontWeight: '700',
+                color: 'white',
+                offsetY: 10,
+                formatter: function () {
+                    return actualValue.value.toFixed(props.precision);
                 }
-            }
-            }
+                }
+            },
+            // Make the bar ends rounded
+            stroke: {
+                lineCap: 'round',
+            },
+            },
         },
+        colors: ['#4caf50'], // 🟢 green
         labels: [props.title],
+        // Responsive adjustments
+        responsive: [{
+            breakpoint: 480,
+            options: {
+            chart: {
+                width: 280
+            },
+            legend: {
+                position: 'bottom'
+            }
+            }
+        }],
         });
 
         watch(() => props.items, (newItems: number) => {

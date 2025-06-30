@@ -2,24 +2,24 @@
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
     <div class="grid grid-cols-2 gap-x-8 gap-y-4 h-screen">
       <CustomLine
-          :labels="'accu_total_voltage_vs'"
-          :items="accu_total_voltage_vs"
-          :title="'accu_total_voltage_vs'"
+        :items="[accu_total_voltage_vs]"
+        :datasetLabels="['accu_total_voltage_vs']"
+         :title="'accu_total_voltage_vs'"
       />
       <CustomGauge
-          :labels="'accu_current'"
-          :items="accu_current"
-          :title="'accu_current'"
+        :items="accu_current"
+        :datasetLabels="'accu_current'"
+        :title="'accu_current'"
       />
       <CustomLine
-          :labels="'accu_wh_consumed'"
-          :items="accu_wh_consumed"
-          :title="'accu_wh_consumed'"
+        :items="[accu_wh_consumed]"
+        :datasetLabels="['accu_wh_consumed']"
+        :title="'accu_wh_consumed'"
       />
       <CustomGauge
-          :labels="'accu_power'"
-          :items="accu_power"
-          :title="'accu_power'"
+        :items="accu_power"
+        :datasetLabels="'accu_power'"
+        :title="'accu_power'"
       />
       
     </div>
@@ -73,6 +73,7 @@ export default defineComponent({
   data() {
     return {
       telemetry_data_obj: {} as VehicleTelemetry_data,
+      
       accu_total_voltage_vs: 0,
       accu_current:0,
       accu_wh_consumed: 0,

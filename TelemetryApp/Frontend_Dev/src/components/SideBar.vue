@@ -55,6 +55,9 @@
                 <router-link to="/vd/telemetry" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">VD View</router-link>
               </li>
               <li>
+                <router-link to="/vd/telemetry_graph" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">VD View Graph</router-link>
+              </li>
+              <li>
                 <router-link to="/charts" class="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Custom Charts</router-link>
               </li>
             </ul>
