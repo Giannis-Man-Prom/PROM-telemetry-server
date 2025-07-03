@@ -59,6 +59,22 @@ def disconnect():
 thread = None
 thread_lock = Lock()
 
+def wait_for_serial_connection(retry_delay=2):
+    serial_obj = None
+    while serial_obj is None or serial_obj.serialInst is None:
+        try:
+            serial_obj = SerialRead()  # Assuming default constructor tries to connect
+            if serial_obj.serialInst is not None:
+                print("Serial connected!")
+                return serial_obj
+            else:
+                print("SerialInst is None, retrying...")
+        except Exception as e:
+            print(f"Exception during SerialRead init: {e}")
+        time.sleep(retry_delay)
+        print("Retrying to connect serial...")
+    return serial_obj
+
 # Essentialy what we are doing here is to emit an event, but instead of doing it once we are enabling a backstage process with threading
 # so we will have a concurrent procedure emiting event, in this case our procudure is the infinite while from the telemetry module.
 @socketio.event
@@ -70,11 +86,14 @@ def connect():
         with thread_lock:
             if thread is None:
 
-                telemetry_serial_obj = SerialRead()
+                while (True):
+                    telemetry_serial_obj = wait_for_serial_connection()
 
-                if telemetry_serial_obj.serialInst is None:
-                    raise SerialConnectionException(
-                        "Could not establish connection with usb serial, connect usb device")
+                    if telemetry_serial_obj.serialInst is None:
+                        raise SerialConnectionException(
+                            "Could not establish connection with usb serial, connect usb device")
+                    else:
+                        break
 
                 thread = socketio.start_background_task(read_from_serial_thread, telemetry_serial_obj)
 

@@ -123,7 +123,7 @@ const socket = io(import.meta.env.VITE_SOCKET_URL).connect()
 
 
 export default defineComponent({
-  name: 'CustomCharts',
+  name: 'VD_View',
   components: {
     CustomLine,
     CustomGauge
@@ -145,73 +145,73 @@ export default defineComponent({
       }
 
       if (this.telemetry_data_obj.vcu_Accel_x !== undefined) {
-        this.vcu_Accel_x = [this.telemetry_data_obj.vcu_Accel_x];
-      }
-      if (this.telemetry_data_obj.vcu_Accel_y !== undefined) {
-        this.vcu_Accel_y = [this.telemetry_data_obj.vcu_Accel_y];
+        this.vcu_Accel_x = this.telemetry_data_obj.vcu_Accel_x;
       }
       if (this.telemetry_data_obj.vcu_Accel_z !== undefined) {
-        this.vcu_Accel_z = [this.telemetry_data_obj.vcu_Accel_z];
+        this.vcu_Accel_y = this.telemetry_data_obj.vcu_Accel_y;
+      }
+      if (this.telemetry_data_obj.vcu_Accel_z !== undefined) {
+        this.vcu_Accel_z = this.telemetry_data_obj.vcu_Accel_z;
       }
       if (this.telemetry_data_obj.vcu_hall_fr !== undefined) {
-        this.vcu_hall_fr = [this.telemetry_data_obj.vcu_hall_fr];
+        this.vcu_hall_fr = this.telemetry_data_obj.vcu_hall_fr;
       }
       if (this.telemetry_data_obj.left_inv_motor_rpm !== undefined) {
-        this.left_inv_motor_rpm = [this.telemetry_data_obj.left_inv_motor_rpm];
+        this.left_inv_motor_rpm = this.telemetry_data_obj.left_inv_motor_rpm;
       }
       if (this.telemetry_data_obj.right_inv_motor_rpm !== undefined) {
-        this.right_inv_motor_rpm = [this.telemetry_data_obj.right_inv_motor_rpm];
+        this.right_inv_motor_rpm = this.telemetry_data_obj.right_inv_motor_rpm;
       }
       if (this.telemetry_data_obj.vcu_hall_fl !== undefined) {
-        this.vcu_hall_fl = [this.telemetry_data_obj.vcu_hall_fl];
+        this.vcu_hall_fl = this.telemetry_data_obj.vcu_hall_fl;
       }
       if (this.telemetry_data_obj.vcu_VelX !== undefined) {
-        this.vcu_VelX = [this.telemetry_data_obj.vcu_VelX];
+        this.vcu_VelX = this.telemetry_data_obj.vcu_VelX;
       }
       if (this.telemetry_data_obj.vcu_VelY !== undefined) {
-        this.vcu_VelY = [this.telemetry_data_obj.vcu_VelY];
+        this.vcu_VelY = this.telemetry_data_obj.vcu_VelY;
       }
       if (this.telemetry_data_obj.sensors_linear_rr !== undefined) {
-        this.sensors_linear_rr = [this.telemetry_data_obj.sensors_linear_rr];
+        this.sensors_linear_rr = this.telemetry_data_obj.sensors_linear_rr;
       }
       if (this.telemetry_data_obj.sensors_linear_rl !== undefined) {
-        this.sensors_linear_rl = [this.telemetry_data_obj.sensors_linear_rl];
+        this.sensors_linear_rl = this.telemetry_data_obj.sensors_linear_rl;
       }
       if (this.telemetry_data_obj.sensors_linear_fl !== undefined) {
-        this.sensors_linear_fl = [this.telemetry_data_obj.sensors_linear_fl];
+        this.sensors_linear_fl = this.telemetry_data_obj.sensors_linear_fl;
       }
       if (this.telemetry_data_obj.sensors_linear_fr !== undefined) {
-        this.sensors_linear_fr = [this.telemetry_data_obj.sensors_linear_fr];
+        this.sensors_linear_fr = this.telemetry_data_obj.sensors_linear_fr;
       }
       if (this.telemetry_data_obj.vcu_brake_front !== undefined) {
-        this.vcu_brake_front = [this.telemetry_data_obj.vcu_brake_front];
+        this.vcu_brake_front = this.telemetry_data_obj.vcu_brake_front;
       }
       if (this.telemetry_data_obj.vcu_brake_rear !== undefined) {
-        this.vcu_brake_rear = [this.telemetry_data_obj.vcu_brake_rear];
+        this.vcu_brake_rear = this.telemetry_data_obj.vcu_brake_rear;
       }
       if (this.telemetry_data_obj.vcu_apps1 !== undefined) {
-        this.vcu_apps1 = [this.telemetry_data_obj.vcu_apps1];
+        this.vcu_apps1 = this.telemetry_data_obj.vcu_apps1;
       }
       if (this.telemetry_data_obj.vcu_apps2 !== undefined) {
-        this.vcu_apps2 = [this.telemetry_data_obj.vcu_apps2];
+        this.vcu_apps2 = this.telemetry_data_obj.vcu_apps2;
       }
       if (this.telemetry_data_obj.vcu_yaw_rate !== undefined) {
-        this.vcu_yaw_rate = [this.telemetry_data_obj.vcu_yaw_rate];
+        this.vcu_yaw_rate = this.telemetry_data_obj.vcu_yaw_rate;
       }
       if (this.telemetry_data_obj.vcu_SteeringLinear_angle !== undefined) {
-        this.vcu_SteeringLinear_angle = [this.telemetry_data_obj.vcu_SteeringLinear_angle];
+        this.vcu_SteeringLinear_angle = this.telemetry_data_obj.vcu_SteeringLinear_angle;
       }
       if (this.telemetry_data_obj.vcu_requested_torque_right !== undefined) {
-        this.vcu_requested_torque_right = [this.telemetry_data_obj.vcu_requested_torque_right];
+        this.vcu_requested_torque_right = this.telemetry_data_obj.vcu_requested_torque_right;
       }
       if (this.telemetry_data_obj.vcu_requested_torque_left !== undefined) {
-        this.vcu_requested_torque_left = [this.telemetry_data_obj.vcu_requested_torque_left];
+        this.vcu_requested_torque_left = this.telemetry_data_obj.vcu_requested_torque_left;
       }
       if (this.telemetry_data_obj.vcu_Ku !== undefined) {
-        this.vcu_Ku = [this.telemetry_data_obj.vcu_Ku];
+        this.vcu_Ku = this.telemetry_data_obj.vcu_Ku;
       }
       if (this.telemetry_data_obj.vcu_bb !== undefined) {
-        this.vcu_bb = [this.telemetry_data_obj.vcu_bb];
+        this.vcu_bb = this.telemetry_data_obj.vcu_bb;
       }
     });
   },

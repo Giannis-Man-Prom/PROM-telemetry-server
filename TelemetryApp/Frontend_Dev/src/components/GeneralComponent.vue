@@ -64,6 +64,9 @@
         <template v-else-if="item?.label?.[0] === 'act_control_mode'">
           <span> {{ item?.label?.[0] }}: <br> {{ printActControlMode(item?.value?.[0]) }} </span>
         </template>
+        <template v-else-if="item?.label?.[0] === 'ins_status'">
+          <span> {{ item?.label?.[0] }}: <br> {{ printINSStatus(item?.value?.[0]) }} </span>
+        </template>
         <template v-else>
           <span>{{ item?.label?.[0] }}: <br> {{ item?.value?.[0] }} </span>
         </template>
@@ -126,7 +129,7 @@ export default defineComponent({
       BooleanList: ['accu_over_60v_dclink', 'accu_air_m_state', 'sd_closed', 'precharge_done', 'pc_flag', 'r2d_flag', 'watchdog_status', 'bspdState',
         'fan_right', 'fan_left', 'pump_right', 'pump_left', 'apps_right_implausibility', 'apps_left_implausibility', 'res_k3_switch', 'res_k2_switch',
         'lim_speed_limiter', 'lim_power_limiter', 'lim_stall_limiter', 'lim_l2t_limiter', 'lim_motor_temp', 'lim_igbt_temp', 'pumps_state', 'service_hatch_fan',
-        'motor_temp_lousimo', 'motor_temp_lousimo'
+        'motor_temp_lousimo', 'motor_temp_lousimo', 'precharge_1', 'precharge_2'
         ] // enniaia lista booleans gia OLA TA CONTAINERS -- {accu}
     };
   },
@@ -259,6 +262,15 @@ export default defineComponent({
         'CURRENT_CONTROL_MODE', // 0
         'SPEED_CONTROL_MODE',   // 1
         'FAULT_MODE'            // 2
+      ];
+
+      return modes[ind] || 'Not available';
+    },
+    printINSStatus(ind: number): string {
+      const modes = [
+        'Not Tracking', // 0
+        'Sufficient',   // 1
+        'Tracking and Operating'            // 2
       ];
 
       return modes[ind] || 'Not available';

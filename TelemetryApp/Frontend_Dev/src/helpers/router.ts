@@ -3,12 +3,12 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 
 /* Εδώ κάνουμε import τα views μας */
 import Live_Values from "../views/Live_Values.vue"
-import VD_View from "../views/VD_View.vue"
 import AccuView from "../views/AccuView.vue"
 import InvView from "../views/InvView.vue"
 import SensorsView from "../views/SensorsView.vue"
 import VcuView from "../views/VcuView.vue"
-import VcuViewGraph from "../views/VD_View_Graph.vue"
+import VD_View from "../views/VD_View.vue"
+import VD_View_Graph from "../views/VD_View_Graph.vue"
 import CustomCharts from "../views/CustomCharts.vue";
 import NotFound from "../views/NotFound.vue"
 
@@ -53,7 +53,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
         path: "/vd/telemetry_graph",
         name: "VD_View_Graph",
-        component: VcuViewGraph,
+        component: VD_View_Graph,
     },
 	{ 
 		path: "/:pathMatch(.*)*", 

@@ -74,7 +74,7 @@ input_string = """//accu
     vcu_m_z_nonsat?: number;
     vcu_m_z_sat?: number;
     vcu_prevError?: number;
-    vcu_SteeringLinear_rad?: number;
+    vcu_SteeringLinear_angle?: number;
     vcu_proportional?: number;
     vcu_Ku?: number;
     vcu_bb?: number;
@@ -84,6 +84,9 @@ input_string = """//accu
     vcu_u_x?: number;
     vcu_pumps_state?: number;
     vcu_service_hatch_fan?: number;
+    vcu_ins_status?: number;
+    vcu_precharge_1?: number;
+    vcu_precharge_2?: number;
 
     //right_inv
     right_inv_critical_hw_status?: number;

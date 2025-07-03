@@ -1,27 +1,44 @@
 <template>
   <div class="p-35 mb-40 ml-10 mx-2 min-w-full">
-    <div class="grid grid-cols-2 gap-x-8 gap-y-4 h-screen">
+    <div class="grid grid-cols-3 gap-x-1 gap-y-4 h-screen">
       <CustomLine
         :items="[accu_total_voltage_vs]"
-        :datasetLabels="['accu_total_voltage_vs']"
-         :title="'accu_total_voltage_vs'"
-      />
-      <CustomGauge
-        :items="accu_current"
-        :datasetLabels="'accu_current'"
-        :title="'accu_current'"
+        :datasetLabels="['total_voltage_vs']"
+        :title="'voltage_vs'"
       />
       <CustomLine
-        :items="[accu_wh_consumed]"
-        :datasetLabels="['accu_wh_consumed']"
-        :title="'accu_wh_consumed'"
+        :items="[accu_current]"
+        :datasetLabels="['current']"
+        :title="'current'"
       />
-      <CustomGauge
-        :items="accu_power"
-        :datasetLabels="'accu_power'"
-        :title="'accu_power'"
+      <CustomLine
+        :items="[accu_power]"
+        :datasetLabels="['power']"
+        :title="'power'"
       />
-      
+      <CustomLine
+        :items="[accu_avg_cell_temp]"
+        :datasetLabels="['avg_cell_temp']"
+        :title="'avg_cell_temp'"
+      />
+      <div class="flex items-start justify-center rounded bg-gray-50 dark:bg-gray-800 pt-16">
+      <VueSpeedometer
+      :value="accu_soc"
+      :minValue="0"
+      :maxValue="100"
+      :segments="5"
+      :needleHeightRatio="0.7"
+      :needleTransitionDuration="4000"
+      needleTransition="easeElastic"
+      needleColor="steelblue"
+      :segmentColors='["green", "limegreen", "yellow", "firebrick"]'
+      :customSegmentStops="[0, 15, 25, 50, 100]"
+      :maxSegmentLabels="5"
+      currentValueText="SoC: ${value}"
+      :ringWidth="47"
+      textColor="#d8dee9"
+      />
+      </div>
     </div>
   </div>
 </template>
@@ -62,11 +79,14 @@ export default defineComponent({
       if (this.telemetry_data_obj.accu_accu_current !== undefined) {
         this.accu_current = this.telemetry_data_obj.accu_accu_current;
       }
-      if (this.telemetry_data_obj.accu_wh_consumed !== undefined) {
-        this.accu_wh_consumed = this.telemetry_data_obj.accu_wh_consumed;
+      if (this.telemetry_data_obj.accu_avg_cell_temp !== undefined) {
+        this.accu_avg_cell_temp = this.telemetry_data_obj.accu_avg_cell_temp;
       }
       if (this.telemetry_data_obj.accu_power !== undefined) {
         this.accu_power = this.telemetry_data_obj.accu_power;
+      }
+      if (this.telemetry_data_obj.accu_soc !== undefined) {
+        this.accu_soc = this.telemetry_data_obj.accu_soc;
       }
     });
   },
@@ -76,8 +96,9 @@ export default defineComponent({
       
       accu_total_voltage_vs: 0,
       accu_current:0,
-      accu_wh_consumed: 0,
-      accu_power:0
+      accu_avg_cell_temp: 0,
+      accu_power:0,
+      accu_soc:0
     }
   }
 })

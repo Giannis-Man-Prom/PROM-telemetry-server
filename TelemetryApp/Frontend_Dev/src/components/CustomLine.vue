@@ -1,8 +1,7 @@
 <!-- Παρόμοια διαδικασία με το CustomBarChart -->
 
 <template>
-  <div class="flex w-full h-[500px] min-h-[350px] rounded bg-gray-50 dark:bg-gray-800 p-4 gap-4">
-    
+  <div class="flex w-full h-[500px] min-h-[350px] rounded bg-gray-50 dark:bg-gray-800 p-4 gap-4 overflow-x-auto">
     <!-- Chart Container -->
     <div :style="chartStyle" class="h-full min-w-0 relative">
       <canvas ref="chartCanvas" class="absolute inset-0 w-full h-full"></canvas>
@@ -29,10 +28,10 @@
         </li>
       </ul>
     </div>
-
-
   </div>
 </template>
+
+
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, onBeforeUnmount, computed } from 'vue';
@@ -80,7 +79,7 @@ export default defineComponent({
     },
     chartPercent: {
       type: Number,
-      default: 80, // default to 80% chart, 20% box
+      default: 70, // default to 80% chart, 20% box
       validator: (value: number) => value > 0 && value < 100
     }
   },
@@ -98,9 +97,9 @@ export default defineComponent({
 
     const boxStyle = computed(() => ({
       flexGrow: 0,
-      flexShrink: 0,
+      flexShrink: 1,
       flexBasis: `${100 - props.chartPercent}%`,
-      minWidth: '120px' // Optional for safety on small values
+      minWidth: '50px' // Optional for safety on small values
     }));
 
     const updateChart = () => {

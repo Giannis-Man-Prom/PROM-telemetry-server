@@ -147,6 +147,9 @@ this.vcu_containeritems = [
  { label : ['u_x'] },
  { label : ['pumps_state'] },
  { label : ['service_hatch_fan'] },
+ { label : ['ins_status'] },
+ { label : ['precharge_1'] },
+ { label : ['precharge_2'] },
 ]; 
 this.right_inv_containeritems = [
  { label : ['critical_hw_status'] },
@@ -539,6 +542,15 @@ this.sensors_containeritems = [
 			}
 			if (this.telemetry_data_obj.vcu_service_hatch_fan !== undefined) {
 				this.vcu_containeritems[32].value = [this.telemetry_data_obj.vcu_service_hatch_fan];
+			}
+			if (this.telemetry_data_obj.vcu_ins_status !== undefined) {
+				this.vcu_containeritems[33].value = [this.telemetry_data_obj.vcu_ins_status];
+			}
+			if (this.telemetry_data_obj.vcu_precharge_1 !== undefined) {
+				this.vcu_containeritems[34].value = [this.telemetry_data_obj.vcu_precharge_1];
+			}
+			if (this.telemetry_data_obj.vcu_precharge_2 !== undefined) {
+				this.vcu_containeritems[35].value = [this.telemetry_data_obj.vcu_precharge_2];
 			}
 ////////////     right_inv     ////////////
 			if (this.telemetry_data_obj.right_inv_critical_hw_status !== undefined) {
@@ -937,6 +949,7 @@ this.sensors_containeritems = [
 			if (this.telemetry_data_obj.vcu_altitude !== undefined) {
 				this.sensors_containeritems[25].value = [this.telemetry_data_obj.vcu_altitude];
 			}
+
 
     });
 

@@ -57,7 +57,7 @@ class SerialRead:
                     try:
                         print("Opening the serial port connection")
                         serial_connection_inst.port = port.device
-                        serial_connection_inst.timeout = 0.5
+                        serial_connection_inst.timeout = 1
                         serial_connection_inst.open()
 
                         break

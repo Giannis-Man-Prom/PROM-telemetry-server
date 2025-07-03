@@ -71,7 +71,7 @@ this.vcu_containeritems = [
  { label : ['m_z_nonsat'] },
  { label : ['m_z_sat'] },
  { label : ['prevError'] },
- { label : ['SteeringLinear_rad'] },
+ { label : ['SteeringLinear_angle'] },
  { label : ['proportional'] },
  { label : ['Ku'] },
  { label : ['bb'] },
@@ -81,6 +81,9 @@ this.vcu_containeritems = [
  { label : ['u_x'] },
  { label : ['pumps_state'] },
  { label : ['service_hatch_fan'] },
+ { label : ['ins_status'] },
+ { label : ['precharge_1'] },
+ { label : ['precharge_2'] },
 ]; 
 this.right_inv_containeritems = [
  { label : ['critical_hw_status'] },
@@ -433,8 +436,8 @@ this.sensors_containeritems = [
 			if (this.telemetry_data_obj.vcu_prevError !== undefined) {
 				this.vcu_containeritems[22].value = [this.telemetry_data_obj.vcu_prevError];
 			}
-			if (this.telemetry_data_obj.vcu_SteeringLinear_rad !== undefined) {
-				this.vcu_containeritems[23].value = [this.telemetry_data_obj.vcu_SteeringLinear_rad];
+			if (this.telemetry_data_obj.vcu_SteeringLinear_angle !== undefined) {
+				this.vcu_containeritems[23].value = [this.telemetry_data_obj.vcu_SteeringLinear_angle];
 			}
 			if (this.telemetry_data_obj.vcu_proportional !== undefined) {
 				this.vcu_containeritems[24].value = [this.telemetry_data_obj.vcu_proportional];
@@ -462,6 +465,15 @@ this.sensors_containeritems = [
 			}
 			if (this.telemetry_data_obj.vcu_service_hatch_fan !== undefined) {
 				this.vcu_containeritems[32].value = [this.telemetry_data_obj.vcu_service_hatch_fan];
+			}
+			if (this.telemetry_data_obj.vcu_ins_status !== undefined) {
+				this.vcu_containeritems[33].value = [this.telemetry_data_obj.vcu_ins_status];
+			}
+			if (this.telemetry_data_obj.vcu_precharge_1 !== undefined) {
+				this.vcu_containeritems[34].value = [this.telemetry_data_obj.vcu_precharge_1];
+			}
+			if (this.telemetry_data_obj.vcu_precharge_2 !== undefined) {
+				this.vcu_containeritems[35].value = [this.telemetry_data_obj.vcu_precharge_2];
 			}
 ////////////     right_inv     ////////////
 			if (this.telemetry_data_obj.right_inv_critical_hw_status !== undefined) {
