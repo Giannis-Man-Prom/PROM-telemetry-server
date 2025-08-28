@@ -226,7 +226,7 @@ def logging_process():
                     print("ALL OKAY: temp packages indeed <= 10000")
                     for package in temp_packages:
                         # Add the current timestamp to the package
-                        package_with_time = {'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+                        package_with_time = {'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")}
                         # Add the rest of the data from the package
                         for key in os.getenv('CSV_HEADERS').split(','):
                             if key in package and package[key] != '':
